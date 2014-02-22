@@ -8,7 +8,7 @@
         <dc:creator>C.G. Yarvin, J.C. Burnham, M.D. Hartl</dc:creator>
         <dc:publisher>Softcover</dc:publisher>
         <dc:identifier id="BookID">urn:uuid:b1e1c858-a2ca-487a-9279-bf2ffcd664d2</dc:identifier>
-        <meta property="dcterms:modified">2014-01-27T17:18:44Z</meta>
+        <meta property="dcterms:modified">2014-02-22T15:17:45Z</meta>
         <meta name="cover" content="img-cover-png"/>
     </metadata>
     <manifest>
@@ -19,14 +19,10 @@
         <item id="softcover.css" href="styles/softcover.css" media-type="text/css"/>
         <item id="epub.css" href="styles/epub.css" media-type="text/css"/>
         <item id="custom.css" href="styles/custom.css" media-type="text/css"/>
+        <item id="custom_epub.css" href="styles/custom_epub.css" media-type="text/css"/>
         <item id="cover" href="cover.html" media-type="application/xhtml+xml"/>
         <item id="frontmatter" href="frontmatter_fragment.html" media-type="application/xhtml+xml"/>
 <item id="preface" href="preface_fragment.html" media-type="application/xhtml+xml"/>
-<item id="introduction" href="introduction_fragment.html" media-type="application/xhtml+xml"/>
-<item id="ch1_intro_to_nock" href="ch1_intro_to_nock_fragment.html" media-type="application/xhtml+xml"/>
-<item id="ch2_nock_macros" href="ch2_nock_macros_fragment.html" media-type="application/xhtml+xml"/>
-<item id="ch3_cores" href="ch3_cores_fragment.html" media-type="application/xhtml+xml"/>
-<item id="ch4_nock_reference" href="ch4_nock_reference_fragment.html" media-type="application/xhtml+xml"/>
         <item id="img-2011_michael_hartl-png" href="images/2011_michael_hartl.png" media-type="image/png"/>
 <item id="img-cover-web-png" href="images/cover-web.png" media-type="image/png"/>
 <item id="img-cover-png" href="images/cover.png" media-type="image/png"/>
@@ -35,10 +31,5 @@
       <itemref idref="cover" linear="no" />
       <itemref idref="frontmatter"/>
 <itemref idref="preface"/>
-<itemref idref="introduction"/>
-<itemref idref="ch1_intro_to_nock"/>
-<itemref idref="ch2_nock_macros"/>
-<itemref idref="ch3_cores"/>
-<itemref idref="ch4_nock_reference"/>
     </spine>
   </package>

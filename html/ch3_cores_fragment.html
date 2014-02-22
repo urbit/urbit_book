@@ -1,4 +1,4 @@
-<div id="cid16" data-tralics-id="cid16" class="chapter" data-number="5" data-chapter="ch3_cores"><h1><a href="ch3_cores_fragment.html#cid16" class="heading hyperref"><span class="number">Chapter 5 </span>Cores and Gates</a></h1>
+<div id="cid16" data-tralics-id="cid16" class="chapter" data-number="5" data-chapter="ch3_cores"><h1><a href="ch3_cores_fragment.html#cid16" class="heading hyperref"><span class="number">Chapter 5 </span>Cores and Gates</a></h1>
 <blockquote class="quotation"><p class="noindent"><em>But are you crazy enough?</em></p>
 <p style="margin-top: 6.0pt"><span class="break"></span>
 —<strong>Point Break</strong></p>
@@ -12,14 +12,14 @@ have to do are a little bit cumbersome.</p>
 evaluate Nock from Hoon, much the way you can put inline assembly
 in C. Through this indirection, we have two ways to run Nock in
 Hoon: on the command line and via an app file.</p>
-<div id="uid29" data-tralics-id="uid29" class="subsection" data-number="5.1.1"><h3><a href="ch3_cores_fragment.html#uid29" class="heading hyperref"><span class="number">5.1.1 </span>Command line</a></h3>
+<div id="uid39" data-tralics-id="uid39" class="subsection" data-number="5.1.1"><h3><a href="ch3_cores_fragment.html#uid39" class="heading hyperref"><span class="number">5.1.1 </span>Command line</a></h3>
 <p>From the Arvo command line, you can run one-liners with the Hoon
 rune <code>.*</code>:</p>
 <div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [4 0 1])
 43
 </pre></div></div>
 </div>
-<div id="uid30" data-tralics-id="uid30" class="subsection" data-number="5.1.2"><h3><a href="ch3_cores_fragment.html#uid30" class="heading hyperref"><span class="number">5.1.2 </span>Application file</a></h3>
+<div id="uid40" data-tralics-id="uid40" class="subsection" data-number="5.1.2"><h3><a href="ch3_cores_fragment.html#uid40" class="heading hyperref"><span class="number">5.1.2 </span>Application file</a></h3>
 <p>Unfortunately, the Arvo command line doesn’t do multiline input
 well, and if there’s any hope of writing complex Nock formulas
 it’s by using plenty of whitespace and linebreaks.</p>
@@ -252,7 +252,7 @@ at <code>/b</code> within the core.</p>
 <p>You’ll have to hit <code>C</code>, and you’ll see a big ugly error stack.<span class="intersentencespace"></span> Nock can work wonders but it can’t decrement 0.<span class="intersentencespace"></span> (Yes, you can
 build signed integers in Hoon - they are represented as atoms
 with the sign bit low.)</p>
-<div id="uid31" data-tralics-id="uid31" class="subsection" data-number="5.2.1"><h3><a href="ch3_cores_fragment.html#uid31" class="heading hyperref"><span class="number">5.2.1 </span>A function</a></h3>
+<div id="uid41" data-tralics-id="uid41" class="subsection" data-number="5.2.1"><h3><a href="ch3_cores_fragment.html#uid41" class="heading hyperref"><span class="number">5.2.1 </span>A function</a></h3>
 <p>As we start to build up toward language-level primitives, it
 behooves us to do things the way a higher-level language would do
 them.<span class="intersentencespace"></span> Well, more exactly, the way Hoon does things.</p>

@@ -1,5 +1,7 @@
 \chapter{Nock Macros}
 
+\label{cha:nock_macros}
+
 \begin{quote}
 \noindent \emph{You get used to it. I don't even see the code.
 All I see is blonde, brunette, redhead.}
@@ -11,7 +13,7 @@ In the last chapter we showed you the Nock specification with lines 32 through 3
 This chapter will explain what these lines are and what they do:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
 33 ::    *[a 7 b c]       *[a 2 b 1 c]
 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
@@ -30,14 +32,14 @@ They add no new functionality to Nock, but we include them in the specification 
 We'll start with the easiest macro: Nock 7
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 33 ::    *[a 7 b c]       *[a 2 b 1 c]
 \end{Verbatim}
 \end{framed_shaded}
 We actually already used Nock 7 in the last chapter while we were explaining Nock 2.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [2 [4 0 3] 1 [3 0 1]])
 1
 \end{Verbatim}
@@ -47,7 +49,7 @@ Which sequentially applies the formulas \kode{[4 0 3]} and \kode{[3 0 1]} to our
 Let's work through a full reduction of the above example, refer to the specification at the end of the last chapter to get a better sense of where these rules are coming from. And as always, please copy along on pen and paper or in a text file.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[42 43] [2 [4 0 3] 1 [3 0 1]]]
 
       27 ::    *[a 2 b c]       *[*[a b] *[a c]]
@@ -93,12 +95,12 @@ Let's work through a full reduction of the above example, refer to the specifica
 \end{Verbatim}
 \end{framed_shaded}
 
-This reduction is overly long because we've included the full reduction sequences for the Nock 0, 3 and 4 operators, which can usually be omitted without loss of clarity. The notation is often helpful, but must be balanced against the needs of conciseness. 
+This reduction is overly long because we've included the full reduction sequences for the Nock 0, 3 and 4 operators, which can usually be omitted without loss of clarity. The notation is often helpful, but must be balanced against the needs of conciseness.
 
 Like so:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[42 43] [2 [4 0 3] 1 [3 0 1]]]
 
     27 ::    *[a 2 b c]       *[*[a b] *[a c]]
@@ -124,7 +126,7 @@ Informally, the formula \kode{[7 b c]} composes the formulas \kode{b} and
 \kode{c}.  To use a bit of math notation, if \kode{d} is \kode{[7 b c]},
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 d(a) == c(b(a))
 \end{Verbatim}
 \end{framed_shaded}
@@ -135,24 +137,24 @@ doesn't look like a macro:
 \textbf{\kode{7} Reduction:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 29 ::    *[a 7 b c]        *[a 2 b 1 c]
 
 *[a 2 b 1 c]
 
-23 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+23 ::    *[a 2 b c]        *[*[a b] *[a c]]
 
 *[*[a b] *[a 1 c]]
 
 22:    *[a 1 b]          b
- 
+
 *[*[a b] c]
 \end{Verbatim}
 \end{framed_shaded}
 \textbf{\kode{7} Reduced:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 7r ::     *[a 7 b c]         *[*[a b] c]
 \end{Verbatim}
 \end{framed_shaded}
@@ -161,7 +163,7 @@ We'll skip the full reduction process for the rest of these macros and simply us
 \section{Nock 8}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
 
 34r ::    *[a 8 b c]       *[[*[a b] a] c]
@@ -172,7 +174,7 @@ Nock 8 evaluates the formula \kode{c} with the cell of \kode{*[a b]} and the ori
 subject \kode{a}.  In other words, in math notation, if \kode{d} is \kode{[8 b c]},
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 d(a) == c([b(a) a])
 \end{Verbatim}
 \end{framed_shaded}
@@ -185,7 +187,7 @@ unlike pushing a new variable on the stack.
 Let's work through some examples:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [8 [4 0 1] [0 1]])
 [43 42]
 
@@ -196,7 +198,7 @@ Let's work through some examples:
 For extra credit, a good question to ask yourself: In line 34,
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
     34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
 \end{Verbatim}
 \end{framed_shaded}
@@ -205,7 +207,7 @@ why do we need to write \kode{[7 [0 1] b]} and not just \kode{b}?
 \section{Nock 6}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
 
 32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
@@ -219,7 +221,7 @@ to \kode{1}, we produce \kode{d}; otherwise, we crash.
 For instance:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [6 [1 0] [4 0 1] [1 233]])
 43
 \end{Verbatim}
@@ -227,7 +229,7 @@ For instance:
 and
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [6 [1 1] [4 0 1] [1 233]])
 233
 \end{Verbatim}
@@ -240,14 +242,14 @@ breaking the system a little, by creating a macro that works as
 This simpler ``if'' would be:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32s::    *[a 6 b c d]    *[a 2 [0 1] 2 [1 c d] [1 0] [4 4 b]]
 \end{Verbatim}
 \end{framed_shaded}
 This reduces to
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -255,7 +257,7 @@ Let's describe what each of \kode{a}, \kode{b}, \kode{c} and \kode{d} are.
 
 \kode{a} is our subject, some data that we want to run our \kode{if} on
 
-\kode{b} is our test formula, which returns a \kode{yes} or a \kode{no} when we apply it to our subject. 
+\kode{b} is our test formula, which returns a \kode{yes} or a \kode{no} when we apply it to our subject.
 
 \kode{c} is our \kode{then} formula, which we want to apply to our subject if our test formula produces a \kode{yes}, i.e. a 0.
 
@@ -264,7 +266,7 @@ Let's describe what each of \kode{a}, \kode{b}, \kode{c} and \kode{d} are.
 Let's say we have the following Nock expression:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [6 [3 0 1] [4 0 2] [4 0 1]])
 43
 \end{Verbatim}
@@ -278,7 +280,7 @@ Our \kode{else} is the formula [4 0 1], which increments an atom.
 If we changed our subject to a cell:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([40 43] [6 [3 0 1] [4 0 2] [4 0 1]])
 41
 \end{Verbatim}
@@ -286,41 +288,41 @@ If we changed our subject to a cell:
 With our simpler reduced if rule:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
 \end{Verbatim}
 \end{framed_shaded}
-we could rewrite 
+we could rewrite
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[42 [6 [3 0 1] [4 0 2] [4 0 1]]]
 \end{Verbatim}
 \end{framed_shaded}
-as 
+as
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[42  *[[[4 0 2] [4 0 1]] [0 ++*[42 [3 0 1]]]]]
 \end{Verbatim}
 \end{framed_shaded}
 Since \kode{*[42 [3 0 1]]} produces a \kode{no}, i.e a \kode{1}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[42  *[[[4 0 2] [4 0 1]] [0 ++1]]]]
 \end{Verbatim}
 \end{framed_shaded}
 which gets incremented twice
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[42  *[[[4 0 2] [4 0 1]] [0 3]]]
 \end{Verbatim}
 \end{framed_shaded}
 and goes into a Nock 0 to select the tail of \kode{[[4 0 2] [4 0 1]]}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[42 [4 0 1]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -329,11 +331,11 @@ which increments 42 to produce 43. You should be able to see how changing the su
 Our real \kode{if} is only slightly more complicated:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
 \end{Verbatim}
 \end{framed_shaded}
-There appears to be an extra step here, using Nock 0 twice, first to select from the cell [2 3], and then to select from the cell [c d]. 
+There appears to be an extra step here, using Nock 0 twice, first to select from the cell [2 3], and then to select from the cell [c d].
 
 The reason is fairly simple, if we just used the simpler version of \kode{if}, tests that returned values other than 0 or 1 would have unexpected behaviour. If our our test produced a \kode{3} we would then try to reference the axis /5 in our cell [c d]. Since the tail of \kode{d} could very well be a valid formula, strange things could result.
 
@@ -342,8 +344,8 @@ We add the step of selecting from [2 3] because trying to reference anything oth
 \section{Nock 9}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]]
 \end{Verbatim}
 \end{framed_shaded}
 We'll discuss what Nock 9 does in the next chapter, when we introduce how to
@@ -357,7 +359,7 @@ expressions that loop, this is how.
 \section{Nock 10}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
 37 ::    *[a 10 b c]      *[a c]
 \end{Verbatim}
@@ -365,7 +367,7 @@ expressions that loop, this is how.
 The second case of 10 is so easy it's puzzling:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 37 ::    *[a 10 b c]      *[a c]
 \end{Verbatim}
 \end{framed_shaded}
@@ -383,14 +385,14 @@ the results of the computation.
 And the other reduction of \kode{10}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
     36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
 \end{Verbatim}
 \end{framed_shaded}
 Reducing:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a 8 c 7 [0 3] d]
 
   \PYZlt{}\PYZlt{}34r::    *[a 8 b c]       *[[*[a b] a] c]\PYZgt{}\PYZgt{}
@@ -406,14 +408,14 @@ If you've assimilated a bit of Nock already, you may feel the
 temptation to reduce this to
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a d]
 \end{Verbatim}
 \end{framed_shaded}
 since it would be very reasonable to think that
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[*[a c] a] 0 3]
 \end{Verbatim}
 \end{framed_shaded}
@@ -422,19 +424,19 @@ is just \kode{a}.  And it seems to be - given the semantics of 8 as
 we've explained them.
 
 But there's a problem, which is that \kode{c} might not terminate.
-If \kode{c} terminates, this reduction is correct.  Otherwise it's not. 
+If \kode{c} terminates, this reduction is correct.  Otherwise it's not.
 So the best we can do is:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 36r::    *[a 10 [b c] d]  *[*[[*[a c] a] 0 3] d]
 \end{Verbatim}
 \end{framed_shaded}
 
-And that's it! That's the entirety of the Nock specification! 
+And that's it! That's the entirety of the Nock specification!
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 1  ::    A noun is an atom or a cell.
 2  ::    An atom is a natural number.
 3  ::    A cell is an ordered pair of nouns.

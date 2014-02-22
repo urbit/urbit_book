@@ -1,5 +1,7 @@
 \chapter{Nock Macros}
 
+\label{cha:nock_macros}
+
 \begin{quote}
 \noindent \emph{You get used to it. I don't even see the code.
 All I see is blonde, brunette, redhead.}
@@ -89,7 +91,7 @@ Let's work through a full reduction of the above example, refer to the specifica
 1
 \end{code}
 
-This reduction is overly long because we've included the full reduction sequences for the Nock 0, 3 and 4 operators, which can usually be omitted without loss of clarity. The notation is often helpful, but must be balanced against the needs of conciseness. 
+This reduction is overly long because we've included the full reduction sequences for the Nock 0, 3 and 4 operators, which can usually be omitted without loss of clarity. The notation is often helpful, but must be balanced against the needs of conciseness.
 
 Like so:
 
@@ -134,12 +136,12 @@ doesn't look like a macro:
 
 *[a 2 b 1 c]
 
-23 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+23 ::    *[a 2 b c]        *[*[a b] *[a c]]
 
 *[*[a b] *[a 1 c]]
 
 22:    *[a 1 b]          b
- 
+
 *[*[a b] c]
 \end{code}
 \textbf{\kode{7} Reduced:}
@@ -238,7 +240,7 @@ Let's describe what each of \kode{a}, \kode{b}, \kode{c} and \kode{d} are.
 
 \kode{a} is our subject, some data that we want to run our \kode{if} on
 
-\kode{b} is our test formula, which returns a \kode{yes} or a \kode{no} when we apply it to our subject. 
+\kode{b} is our test formula, which returns a \kode{yes} or a \kode{no} when we apply it to our subject.
 
 \kode{c} is our \kode{then} formula, which we want to apply to our subject if our test formula produces a \kode{yes}, i.e. a 0.
 
@@ -270,13 +272,13 @@ With our simpler reduced if rule:
 \begin{code}
 32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
 \end{code}
-we could rewrite 
+we could rewrite
 
 %= lang:text
 \begin{code}
 *[42 [6 [3 0 1] [4 0 2] [4 0 1]]]
 \end{code}
-as 
+as
 
 %= lang:text
 \begin{code}
@@ -307,7 +309,7 @@ Our real \kode{if} is only slightly more complicated:
 \begin{code}
 32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
 \end{code}
-There appears to be an extra step here, using Nock 0 twice, first to select from the cell [2 3], and then to select from the cell [c d]. 
+There appears to be an extra step here, using Nock 0 twice, first to select from the cell [2 3], and then to select from the cell [c d].
 
 The reason is fairly simple, if we just used the simpler version of \kode{if}, tests that returned values other than 0 or 1 would have unexpected behaviour. If our our test produced a \kode{3} we would then try to reference the axis /5 in our cell [c d]. Since the tail of \kode{d} could very well be a valid formula, strange things could result.
 
@@ -317,7 +319,7 @@ We add the step of selecting from [2 3] because trying to reference anything oth
 
 %= lang:text
 \begin{code}
-9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]]
 \end{code}
 We'll discuss what Nock 9 does in the next chapter, when we introduce how to
 use \emph{cores}, which are subjects containing both code and data.  If you have a
@@ -389,7 +391,7 @@ is just \kode{a}.  And it seems to be - given the semantics of 8 as
 we've explained them.
 
 But there's a problem, which is that \kode{c} might not terminate.
-If \kode{c} terminates, this reduction is correct.  Otherwise it's not. 
+If \kode{c} terminates, this reduction is correct.  Otherwise it's not.
 So the best we can do is:
 
 %= lang:text
@@ -397,7 +399,7 @@ So the best we can do is:
 36r::    *[a 10 [b c] d]  *[*[[*[a c] a] 0 3] d]
 \end{code}
 
-And that's it! That's the entirety of the Nock specification! 
+And that's it! That's the entirety of the Nock specification!
 
 %= lang:text
 \begin{code}

@@ -39,7 +39,7 @@ phep: "\\kode{-{}-}"
   <body>
     
     <div id="book">
-      <div id="cid10" data-tralics-id="cid10" class="chapter" data-number="4" data-chapter="ch2_nock_macros"><h1><a href="ch2_nock_macros_fragment.html#cid10" class="heading hyperref"><span class="number">Chapter 4 </span>Nock Macros</a></h1>
+      <div id="cha-nock_macros" data-tralics-id="cid10" class="chapter" data-number="4" data-chapter="ch2_nock_macros"><h1><a href="ch2_nock_macros_fragment.html#cha-nock_macros" class="heading hyperref"><span class="number">Chapter 4 </span>Nock Macros</a></h1>
 <blockquote class="quotation"><p class="noindent"><em>You get used to it.<span class="intersentencespace"></span> I don’t even see the code.<span class="intersentencespace"></span> All I see is blonde, brunette, redhead.</em></p>
 <p style="margin-top: 6.0pt"><span class="break"></span>
 —<strong>The Matrix</strong></p>
@@ -140,12 +140,12 @@ doesn’t look like a macro:</p>
 
 *[a 2 b 1 c]
 
-23 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+23 ::    *[a 2 b c]        *[*[a b] *[a c]]
 
 *[*[a b] *[a 1 c]]
 
 22:    *[a 1 b]          b
- 
+
 *[*[a b] c]
 </pre></div></div>
 <p><strong><code>7</code> Reduced:</strong></p>
@@ -247,7 +247,7 @@ breaking the system a little, by creating a macro that works as
 <p>We add the step of selecting from [2 3] because trying to reference anything other than /2 or /3 within [2 3] will crash, which is exactly what we want.<span class="intersentencespace"></span> (/1 of [2 3] won’t crash, but this is fine since our test can never produce a -1)</p>
 </div>
 <div id="cid14" data-tralics-id="cid14" class="section" data-number="4.4"><h2><a href="ch2_nock_macros_fragment.html#cid14" class="heading hyperref"><span class="number">4.4 </span>Nock 9</a></h2>
-<div class="code"><div class="highlight"><pre>9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+<div class="code"><div class="highlight"><pre>9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]]
 </pre></div></div>
 <p>We’ll discuss what Nock 9 does in the next chapter, when we introduce how to
 use <em>cores</em>, which are subjects containing both code and data.<span class="intersentencespace"></span> If you have a
@@ -295,8 +295,7 @@ temptation to reduce this to</p>
 </pre></div></div>
 <p>is just <code>a</code>.<span class="intersentencespace"></span> And it seems to be - given the semantics of 8 as
 we’ve explained them.</p>
-<p>But there’s a problem, which is that <code>c</code> might not terminate.<span class="intersentencespace"></span> If <code>c</code> terminates, this reduction is correct.<span class="intersentencespace"></span> Otherwise it’s not.
-So the best we can do is:</p>
+<p>But there’s a problem, which is that <code>c</code> might not terminate.<span class="intersentencespace"></span> If <code>c</code> terminates, this reduction is correct.<span class="intersentencespace"></span> Otherwise it’s not.<span class="intersentencespace"></span> So the best we can do is:</p>
 <div class="code"><div class="highlight"><pre>36r::    *[a 10 [b c] d]  *[*[[*[a c] a] 0 3] d]
 </pre></div></div>
 <p>And that’s it!<span class="intersentencespace"></span> That’s the entirety of the Nock specification!</p>

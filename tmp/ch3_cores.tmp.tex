@@ -27,7 +27,7 @@ From the Arvo command line, you can run one-liners with the Hoon
 rune \kode{.*}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [4 0 1])
 43
 \end{Verbatim}
@@ -49,14 +49,14 @@ Let's assume your \kode{\$URBIT\_HOME} is \kode{urb/}, and your ship is
 \kode{\ensuremath{\sim}tomsyt-balsen}.  The Nock application template is in
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 urb/tomsyt\PYZhy{}balsen/try/bin/nock.hoon
 \end{Verbatim}
 \end{framed_shaded}
 Its text should be:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 !:             ::  To write Nock as an Arvo application in Hoon
 |=  *          ::
 |=  [a=* \PYZti{}]    ::  For educational purposes only
@@ -73,7 +73,7 @@ For the rest of this document we'll simply assume you can copy
 boilerplate, and write the rest of the file:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [4 0 1]                                      ::    bump /1
 \end{Verbatim}
 \end{framed_shaded}
@@ -84,7 +84,7 @@ make itself obvious by the end of the document.)
 Test this by running:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :nock 42
 43
 \end{Verbatim}
@@ -93,7 +93,7 @@ Our first complex example will be a decrement function.  With or
 without \kode{vere} running, copy the template from Unix:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZdl{} cp urb/tomsyt\PYZhy{}balsen/try/bin/nock.hoon urb/tomsyt\PYZhy{}balsen/try/bin/dec.hoon
 \end{Verbatim}
 \end{framed_shaded}
@@ -104,14 +104,14 @@ Either next time you start \kode{vere}, or on your next keyboard event
 if you're already running it, you'll see something like
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
  + /\PYZti{}tomsyt\PYZhy{}balsen/try/1/bin/dec/hoon
 \end{Verbatim}
 \end{framed_shaded}
 Arvo has slurped up dec.hoon from your filesystem.  To test it,
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 42
 43
 \end{Verbatim}
@@ -139,7 +139,7 @@ Let's try to put the counter into the subject with one of our
 macros operators, \kode{8}.  Recall our revised rule for \kode{8}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 34r::    *[a 8 b c]       *[[*[a b] a] c]
 \end{Verbatim}
 \end{framed_shaded}
@@ -151,7 +151,7 @@ put this counter in the subject, and then increment as usual.
 Edit \kode{dec.hoon} so that the formula reads
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [1 0]                                      ::  just 0
   [4 0 1]                                    ::  bump /1
@@ -163,7 +163,7 @@ is essential.  Then, you'll see the file automatically update in
 Arvo:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 : /\PYZti{}tomsyt\PYZhy{}balsen/try/2/bin/dec/hoon
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 42
 \end{Verbatim}
@@ -171,7 +171,7 @@ Arvo:
 Whoops!  It crashed:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 ! /\PYZti{}tomsyt\PYZhy{}balsen/try/\PYZti{}2013.11.26..00.01.38..499b/bin/dec/:\PYZlt{}[4 1].[13 2]\PYZgt{}
 ! /\PYZti{}tomsyt\PYZhy{}balsen/try/\PYZti{}2013.11.26..00.01.38..499b/bin/dec/:\PYZlt{}[4 8].[13 2]\PYZgt{}
 ! /\PYZti{}tomsyt\PYZhy{}balsen/try/\PYZti{}2013.11.26..00.01.38..499b/bin/dec/:\PYZlt{}[5 1].[13 2]\PYZgt{}
@@ -186,7 +186,7 @@ the counter is there.  So our original argument, \kode{42}, is
 actually at \kode{/3}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [1 0]                                      ::  just 0
   [4 0 3]                                    ::  bump /3
@@ -210,7 +210,7 @@ is at \kode{/3}, and the counter is at \kode{/2}; we use the if operator,
 fails, we shrug our shoulders and keep incrementing the argument.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [1 0]                                      ::  just 0
   [ 6                                        ::  pick
@@ -245,7 +245,7 @@ the addresses again.  The counter is now \kode{/6} and the argument
 is now \kode{/7}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [1 0]                                      ::  just 0
   [ 8                                        ::  push
@@ -264,7 +264,7 @@ is now \kode{/7}:
 This does exactly the same thing as before:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 : /\PYZti{}tomsyt\PYZhy{}balsen/try/5/bin/dec/hoon
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 42
 43
@@ -285,28 +285,28 @@ So, \kode{formula} is \kode{[0 2]}, \kode{counter} is \kode{[0 6]}, and \kode{ar
 (superfluous) formula for \kode{[formula counter argument]} - ie,
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [[0 2] [0 6] [0 7]]               ::  cons /2 /6 /7
 \end{Verbatim}
 \end{framed_shaded}
 But we actually want to increment the counter:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [[0 2] [4 0 6] [0 7]]             ::  cons /2 (bump /6) /7
 \end{Verbatim}
 \end{framed_shaded}
 And to invoke our formula on this modified core:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [2 [[0 2] [4 0 6] [0 7]] [0 2]]   ::  nock (cons /2 (bump /6) /7) /2
 \end{Verbatim}
 \end{framed_shaded}
 If we put this into the decrement, it should actually work:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [1 0]                                      ::  just 0
   [ 8                                        ::  push
@@ -328,7 +328,7 @@ If we put this into the decrement, it should actually work:
 And it does:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 : /\PYZti{}tomsyt\PYZhy{}balsen/try/6/bin/dec/hoon
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 42
 41
@@ -337,7 +337,7 @@ And it does:
 But there's one more step.  Remember operator \kode{9}?
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
 35r::    *[a 9 b c]       *[*[a c] *[*[a c] 0 b]]
 \end{Verbatim}
@@ -349,7 +349,7 @@ at \kode{/b} within the core.
 So we can rewrite our decrement to use \kode{9}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [1 0]                                      ::  just 0
   [ 8                                        ::  push
@@ -368,7 +368,7 @@ So we can rewrite our decrement to use \kode{9}:
 Seems to work nicely:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 : /\PYZti{}tomsyt\PYZhy{}balsen/try/6/bin/dec/hoon
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 42
 41
@@ -377,7 +377,7 @@ Seems to work nicely:
 Of course, there are limits:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 0
 \end{Verbatim}
 \end{framed_shaded}
@@ -419,7 +419,7 @@ So the standard convention for a Nock function - or a Hoon
 function - is
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [formula sample context]
 \end{Verbatim}
 \end{framed_shaded}
@@ -434,7 +434,7 @@ First, we'll build an increment function to keep things simple.
 We actually don't need anything in the context, so we'll put 0.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [                                          ::  cons
     [1 [4 0 6]]                              ::  quid bump /6  ::  formula
@@ -458,7 +458,7 @@ we wrap the formula from the default core, at \kode{/4}, and the
 Let's fit our decrement into this framework:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [                                          ::  cons
     [ 1                                      ::  quid    ::  formula
@@ -519,7 +519,7 @@ the context.  So, let's say we need to write subtract, which
 obviously is going to use decrement.  So, the context will be
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [subtract\PYZhy{}gate decrement\PYZhy{}gate]
 \end{Verbatim}
 \end{framed_shaded}
@@ -542,7 +542,7 @@ Let's build a trivial library core of this form, with one
 function, good old increment.  Then, we'll call it.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [                                          ::  cons
     [ 1                                      ::  quid          ::  battery
@@ -579,7 +579,7 @@ use is \kode{[0 7]} rather than \kode{[0 3]} - everything else is the same.
 But does it work?  C'mon, you know it works:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec 42
 43
 \end{Verbatim}
@@ -588,7 +588,7 @@ Okay, let's go ahead and put our actual decrement function in
 the library.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [                                          ::  cons
     [ 1                                      ::  quid     :: formula
@@ -629,7 +629,7 @@ Then, let's go crazy and add a subtract function, which calls
 decrement.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [ 8                                          ::  push
   [                                          ::  cons
     [                                        ::  cons
@@ -693,7 +693,7 @@ core - ie, \kode{/2} within \kode{/2} - ie, \kode{/4}.
 Does this work?  Really?
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :dec [42 12]
 30
 \end{Verbatim}
@@ -711,7 +711,7 @@ generally).  We are torturing ourselves by using Nock, but we
 might as well use Hoon to calculate axes:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
     \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} (peg 3 3)
     7
     \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} (peg 3 5)

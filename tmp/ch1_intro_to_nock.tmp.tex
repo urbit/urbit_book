@@ -26,27 +26,29 @@ a simple mechanical device and it's meant to feel that way.
 Let's get start by learning how to use Urbit's operating system, Arvo, to
 evaluate Nock code.
 
-\section{Section I: Getting Started}
+\section{Getting Started}
+
+\label{sec:getting_started}
 
 We'll assume that you've gone through the Urbit setup process and have an Arvo
 prompt that looks something like this:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}
 \end{Verbatim}
 \end{framed_shaded}
 
 At your prompt, type the following exactly:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [0 1])
 \end{Verbatim}
 \end{framed_shaded}
 This should return \kode{42}. Don't worry about what this is doing yet.
 
 It's very important that you actually go to your prompt and type in our
-examples. Copying and pasting is cheating. This might seem silly, but to learn
+examples. Copying and pasting is cheating, although using your up-arrow is not. This might seem silly, but to learn
 Nock (or any language)  it's very important that your fingers get
 comfortable writing it. 
 
@@ -54,33 +56,32 @@ If you accidentally make a mistake typing in a Nock expression, you'll get a
 syntax error:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42[0 1]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42[0 1])
 \PYZti{} \PYZlt{}syntax error at [1 6]\PYZgt{}
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*( 42 [0 1]) 
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*( 42 [0 1])
 \PYZti{} \PYZlt{}syntax error at [1 4]\PYZgt{}
 \end{Verbatim}
 \end{framed_shaded}
 
-Easiest way to get a sytax error is to accidentally leave out a space. Or add
-an extra one. Fortunately, the error message tells you where the mistake is:
+The easiest way to get a syntax error is to accidentally leave out a space or add
+an extra one. Fortunately, the error message tells you where the mistake is; for example, the output
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{} \PYZlt{}syntax error at [1 4]\PYZgt{}
 \end{Verbatim}
 \end{framed_shaded}
-
 means that there's an error at \kode{line 1}, \kode{column 4}.  Once you know where an
-error is, it's much easieer to fix.
+error is, it's much easier to fix.
 
 But even if your Nock expression is formatted correctly, you might get
 something that looks like this:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [5 0 1]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [5 0 1])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
@@ -88,32 +89,31 @@ This means that the expression you typed in is correct Nock, but it just
 doesn't produce anything. Unfortunately, we can't give you line and column
 numbers on this one, so the only surefire way to debug an exit message is to
 understand what your code is doing. Literally speaking, an exit message means
-you tried to do something that just doesn't make sense. Such trying to
+you tried to do something that just doesn't make sense, such as trying to
 reference data that doesn't exist, or trying to increment something that's not
-a number, or asking if \kode{42} is equal, without asking what it's equal to.
+a number, or asking if \kode{42} is equal without asking what it's equal to.
 
 Enough about errors, let's practice some expressions that work:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(41 [0 1]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(41 [0 1])
 41
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(40 [0 1]) 
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(40 [0 1])
 40
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [0 1]) 
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [0 1])
 374
 \end{Verbatim}
 \end{framed_shaded}
 
-The perceptive reader will notice the pattern here: If a is a number, \kode{.*(a [0
-1])} always produces \kode{a}. To test it, run the following, but
-replace \kode{a} with any number you like.
+The perceptive reader will notice the pattern here: If a is a number, \kode{.*(a [0 1])} always produces \kode{a}. To test it, run the following, but
+replace \kode{a} with any number you like. 
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [0 1]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+.*(a [0 1])
 a
 \end{Verbatim}
 \end{framed_shaded}
@@ -122,14 +122,14 @@ Once you're satisfied that this is true, let's do something slightly
 different:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 0]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 0])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(40 [1 0]) 
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(40 [1 0])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(41 [1 0]) /
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(41 [1 0])
 0
 \end{Verbatim}
 \end{framed_shaded}
@@ -137,11 +137,11 @@ different:
 This pattern is pretty easy: \kode{*(a [1 0])} always produces \kode{0}, no matter what a
 is.
 
-Again, play around with the above yourself by choosing your own values for a:
+Again, play around with the above yourself by choosing your own values for a: 
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [1 0]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+.*(a [1 0])
 0
 \end{Verbatim}
 \end{framed_shaded}
@@ -149,35 +149,35 @@ Again, play around with the above yourself by choosing your own values for a:
 One more pattern, and then we'll actually explain what these numbers and brackets represent:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 374]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 374])
 374
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(40 [1 374]) 
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(40 [1 374])
 374
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 40]) 
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 40])
 40
 \end{Verbatim}
 \end{framed_shaded}
 
 As an exercise, run the last three lines again but replace \kode{374} and \kode{40} with
-number of your own.
+numbers of your own.
 
 You've probably already guessed the pattern here: \kode{.*(a [1 b])} always produces
-\kode{b}, regardless of \kode{a}. But feel free to test it, replacing \kode{a} and \kode{b} with any number.
+\kode{b}, regardless of \kode{a}. But feel free to test it, replacing \kode{a} and \kode{b} with any number. 
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [1 b]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+.*(a [1 b])
 b
 \end{Verbatim}
 \end{framed_shaded}
 
-Let's run the following piece code again:
+Let's run the following piece of code again:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [0 1])
 \end{Verbatim}
 \end{framed_shaded}
@@ -190,72 +190,68 @@ can nest inside other cells.)
 
 Collectively, both atoms and cells are called nouns. And Nock is just a list of
 rules (or a set of patterns) for transforming nouns.  You put one noun in, you
-get another noun out. It's like algebra, \kode{f(x) = y}. \kode{nock(noun\_a) = noun\_b}
+get another noun out. It's like algebra: \( f(x) = y \), \kode{nock(noun\_a) = noun\_b}
 
-The atom \kode{42} is a noun, the cell \kode{[0 1]} is a noun, In fact, \kode{.*(42 [0 1])}
-is a noun too, except that its wrapped in syntax that tells Arvo ``run
-this noun through Nock''. \kode{.*(42 [0 1])} is actually the way to tell Arvo
-(Urbit's operating system) to evaluate \kode{Nock([42 [0 1]])}. The cellular noun
+The atom \kode{42} is a noun, the cell \kode{[0 1]} is a noun and in fact \kode{.*(42 [0 1])}
+is a noun too, except that it's wrapped in syntax that tells Arvo ``run
+this noun through Nock''. (The notation \kode{.*(42 [0 1])} is actually the way to tell Arvo
+(Urbit's operating system) to evaluate \kode{Nock([42 [0 1]])}.) The cellular noun
 \kode{[42 [0 1]]} goes into Nock, the atomic noun \kode{42} comes out.
 
-We could simply write our very first example again as 
+We could simply write our very first example again as
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 nock([42 [0 1]]) = 42
 \end{Verbatim}
 \end{framed_shaded}
 except that we wouldn't be able to evaluate it in Arvo.
 
 Actually, we almost never use the above mathematical notation. For the sake of
-brevity we almost always write nock(a) using the notation \kode{*a}. Thus, nock([42
-[0 1]])  \kode{*[42 [0 1]]} mean the same thing. If we want to tell Arvo to evaluate
+brevity we almost always write \kode{nock(a)} using the notation \kode{*a}. Thus, \kode{nock([42 [0 1]])} and \kode{*[42 [0 1]]} mean the same thing. If we want to tell Arvo to evaluate
 the noun, we use \kode{.*(42 [0 1])}. You will notice that the outermost brackets
-somewhat confusingly disappear when we use the .*() function in Arvo, we will
-explain why in [replaceme: Chapter 2. Section 1] 
+somewhat confusingly disappear when we use the \kode{.*()} function in Arvo; we will
+explain why in \hyperref[cha:dont_know]{Chapter~\ref{cha:dont_know}}.
 
-But in documenting Nock, we most frequenly use the \kode{*[42 [0 1]]} style of
-notation:
-
-Instead of, for example, writing
+In documenting Nock, we most frequently use the \kode{*[42 [0 1]]} style of
+notation. Instead of, for example, writing
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [1 b]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [1 b])
 b
 \end{Verbatim}
 \end{framed_shaded}
 
-the standard way of writing out the rules of Nock is 
+the standard way of writing out the rules of Nock is
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [1 b]]                  b
 \end{Verbatim}
 \end{framed_shaded}
-
 with the left hand side being the noun that matches our input and the right
-side being the product of that input. 
+side being the product of that input.
 
-We've been using \kode{a} and \kode{b} as variables that represent numbers (i.e. atoms),
+We've been using \kode{a} and \kode{b} as variables that represent numbers (i.e., atoms),
 but we can and do use them more broadly to represent nouns in general.
 
 Let's apply the rule
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [1 b]]                  b
 \end{Verbatim}
 \end{framed_shaded}
 
-which, to reiterate, means that when we run any noun of the form [a [1 b]]
+which, to reiterate, means that when we run any noun of the form \kode{[a [1 b]]}
 through Nock (using the expression \kode{.*(a [1 b])} in Arvo) always produces \kode{b},
 regardless of \kode{a}.
 
 Let's run a few examples:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(301 [1 374])
 374
 
@@ -268,26 +264,24 @@ Let's run a few examples:
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([46 49] [1 [456 539]])
 [456 539]
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 [[[32 34] 33]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(374 [1 [[[32 34] 33]]])
 [[[31 32] 33]
 \end{Verbatim}
 \end{framed_shaded}
 
+\subsection{Summary}
+
+\label{sec:getting_started_summary}
+
 To conclude this section, let's review what we've learned:
-
-\begin{center}
-\rule{3in}{0.4pt}
-\end{center}
-
-\subsection{Summary:}
 
 \textbf{Notation:}
 
 Arvo syntax:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [0 1]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [0 1])
 42
 \end{Verbatim}
 \end{framed_shaded}
@@ -295,7 +289,7 @@ Arvo syntax:
 Math notation:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 nock([42 [0 1]]) = 42
 \end{Verbatim}
 \end{framed_shaded}
@@ -303,7 +297,7 @@ nock([42 [0 1]]) = 42
 Nock notation:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[42 [0 1]]                  42
 \end{Verbatim}
 \end{framed_shaded}
@@ -313,8 +307,8 @@ Nock notation:
 A syntax error occurs when an expression in Arvo is not typed in correctly.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*( 42 [0 1]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*( 42 [0 1])
 \PYZti{} \PYZlt{}syntax error at [1 4]\PYZgt{}
 \end{Verbatim}
 \end{framed_shaded}
@@ -322,8 +316,8 @@ A syntax error occurs when an expression in Arvo is not typed in correctly.
 The cell in the syntax error gives the line and column number of the location of the error.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [5 0 2]) 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [5 0 2])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
@@ -331,75 +325,74 @@ The cell in the syntax error gives the line and column number of the location of
 \textbf{Structures:}
 
 A noun is an atom or a cell.  An atom is a natural number.  A cell is an
-ordered pair of two nouns. I.e. two atoms, two cells, or a cell and an atom.
+ordered pair of two nouns, i.e., two atoms, two cells, or a cell and an atom.
 
 \textbf{Nock Rules}
 
-Lower-case letters such as \kode{a} or \kode{b} are variables that represent nouns. 
+Lower-case letters such as \kode{a} or \kode{b} are variables that represent nouns.
 
 Nock rules are notated with two columns, where the left hand side indicates
 what pattern the noun matches, and the right hand side indicates what the noun
 produces.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [0 1]]                  a
 *[a [1 b]]                  b
 \end{Verbatim}
 \end{framed_shaded}
-\_\_\_
 
-\subsection{Exercises:}
+\subsection{Exercises}
 
 \begin{enumerate}
-\item Take the noun [[a b] c] and replace each of \kode{a} \kode{b} and \kode{c} with a cell. Test your cell by applying, in Arvo using the correct syntax, the rule:
-\begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [0 1]]                  a
-\end{Verbatim}
-\end{framed_shaded}
-\item Write a cell that contains 12 atoms. Test your cell by applying, in Arvo using the correct syntax, the rule:
-\begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [1 b]]                  b
-\end{Verbatim}
-\end{framed_shaded}
-setting \kode{a} eqaul to \kode{1}.
+\item Using the rule:
+
+\kode{text
+ *[a [0 1]]                  a
+}
+
+replace \kode{a} with an atom, a cell, and multiple cells, and return them all respectively in Arvo (using, of course, the proper Arvo syntax).  
+\item Using the rule:
+
+\kode{text
+ *[a [1 b]]                  b
+}
+ Write a cell, substituting a noun of more then 4 cells for \kode{b}, and any atom for \kode{a}, and then return it in Arvo (again, in the correct syntax, of course). Then play around with what you substitute for a: change it to a different atom, make it a cell, and then a set of nested cells. Does it make a difference? If yes, why? If not, why not?
 \item Produce a syntax error that reads:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{} \PYZlt{}syntax error at [1 14]\PYZgt{}
 \end{Verbatim}
 \end{framed_shaded}
-\item With pen and paper, write out all three possible forms of notation for each
+\item With pen and paper, write out all three possible forms of notation (Arvo syntax, Math notation, and Nock notation) for each
 of the expressions you evaluated in exercises 1. and 2.
 \end{enumerate}
 
-\begin{center}
-\rule{3in}{0.4pt}
-\end{center}
+\section{Noun Structure}
 
-\section{Section II: Noun Structure}
+\label{sec:noun_structure}
 
-Last section we played around with this:
+In \hyperref[sec:getting_started]{Section~\ref{sec:getting_started}} we played around with this:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [0 1])
 42
 \end{Verbatim}
 \end{framed_shaded}
 which corresponds to the pattern
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [0 1]]                  a
 \end{Verbatim}
 \end{framed_shaded}
 
 Now we're going to experiment with what happens when we replace \kode{1} with
-different values. Remember, as you follow along, type out the examples at your
-own Arvo prompt.
-\begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+different values, as seen in \hyperref[code:several_nock_formulas]{Listing~\ref{code:several_nock_formulas}}. (Remember, as you follow along, type out the examples at your own Arvo prompt.)
+
+\begin{codelisting}
+\label{code:several_nock_formulas}
+\codecaption{Applying different formulas to the same argument.}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [0 1])
 [42 43]
 
@@ -412,14 +405,14 @@ own Arvo prompt.
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [0 4])
 ! exit
 \end{Verbatim}
-\end{framed_shaded}
+\end{codelisting}
 
-We don't really have enough examples to figure out the pattern yet. Let's
+We don't really have enough examples in \hyperref[code:several_nock_formulas]{Listing~\ref{code:several_nock_formulas}} to figure out the pattern yet. Let's
 change \kode{[42 43]} to \kode{[[44 45] 43]} and try some more.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 43] [0 1])
-[[44 45] 43] 
+[[44 45] 43]
 
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 43] [0 2])
 [44 45]
@@ -438,17 +431,15 @@ change \kode{[42 43]} to \kode{[[44 45] 43]} and try some more.
 \end{Verbatim}
 \end{framed_shaded}
 
-It looks like anything of the form \kode{*[a [0 b]]} produces the sub-nouns that are
-inside of a. Remember that notationally, \kode{*[a [0 b]]} is the same as \kode{.*(a [0
-b])} e.g. a is \kode{[[44 45] 43]} and b is one of the atoms \kode{1} through \kode{6}. 
+It looks like anything of the form \kode{*[a [0 b]]} produces the sub-nouns that are inside of \kode{a}. Remember that \kode{*[a [0 b]]} is the same as \kode{.*(a [0 b])}, e.g., \kode{a} is \kode{[[44 45] 43]} and \kode{b} is one of the atoms \kode{1} through \kode{6}.
 
-But how does  \kode{*[a [0 b]]} know which pieces of a to choose? 
+But how does  \kode{*[a [0 b]]} know which pieces of \kode{a} to choose?
 
 Let's do one more example and then we'll explain it.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 [46 47]] [0 1])
-[42 [46 47]] 
+[42 [46 47]]
 
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 [46 47]] [0 2])
 42
@@ -471,33 +462,33 @@ Let's do one more example and then we'll explain it.
 \end{framed_shaded}
 Try to solve this puzzle on your own by playing with the following:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [0 b])
 \end{Verbatim}
 \end{framed_shaded}
 where \kode{a} is a cell and \kode{b} is an atom. Try to pick atoms for \kode{b} that are
-small and try to pick cells for \kode{a} that have lots of nesting. 
+small and try to pick cells for \kode{a} that have lots of nesting.
 
 When you're ready to have things explained to you, read on.
 
-Think of a noun as a tree structure: 
+Think of a noun as a tree structure:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
   [42 [46 47]]
   /       \PYZbs{}
 42      [46 47]]
-          / \PYZbs{} 
+          / \PYZbs{}
         46   47
 \end{Verbatim}
 \end{framed_shaded}
 
 Every cell has two branches (the head of the cell and the tail) leading down
 from it. Atoms have no branches, because they can't be broken down any further
-(and this is exactly why they're called atoms).
+(which is why they're called atoms---from the Greek \emph{\textgreek{ἄτομος}}, ``indivisible'').
 
 Let's look at the tree of the other noun we played with, \kode{[[44 45] 43]}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
  [[44 45] 43]
     /      \PYZbs{}
 [44 45]    43
@@ -509,7 +500,7 @@ It should be pretty obvious that we could change the values of any of the atoms
 in the tree without changing the structure of the tree. That is to say, \kode{[[44
 45] 43]} and \kode{[[24 25] 23]} have the same tree structure:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
  [[22 25] 23]
     /      \PYZbs{}
 [22 25]    23
@@ -519,7 +510,7 @@ in the tree without changing the structure of the tree. That is to say, \kode{[[
 \end{framed_shaded}
 And now, for a more complicated tree, here's the noun \kode{[[[48 49] 45] [46 47]]}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
   [[[48 49] 45] [46 47]]
        /            \PYZbs{}
  [[48 49] 45]      [46 47]
@@ -529,23 +520,23 @@ And now, for a more complicated tree, here's the noun \kode{[[[48 49] 45] [46 47
 48   49
 \end{Verbatim}
 \end{framed_shaded}
-So how do the above trees relate to running \kode{.*(a [0 b])}? Simple, every part
-of the tree gets mapped to an atomic address (we call it an axis). The mapping
+So how do the above trees relate to running \kode{.*(a [0 b])}? Every part
+of the tree gets mapped to an atomic address, called an \emph{axis}. The mapping
 looks something like this:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-           1 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+           1
        /       \PYZbs{}
-     2           3          
+     2           3
    /   \PYZbs{}       /   \PYZbs{}
-  4     5     6     7     
+  4     5     6     7
  / \PYZbs{}   / \PYZbs{}   / \PYZbs{}   / \PYZbs{}
 8   9 10 11 12 13 14 15
 \end{Verbatim}
 \end{framed_shaded}
 Or, because the lines are kind of ugly:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
          1
     2          3
  4    5     6     7
@@ -554,12 +545,14 @@ Or, because the lines are kind of ugly:
 \end{framed_shaded}
 Of course, this only a very small part of the entire tree. We extend the tree
 by applying the rule: Every axis \kode{/n} has a head with the axis\kode{/2n} and a tail
-with the axis\kode{/2n+1}''
+with the axis \kode{/2n+1}. +++recast \& expand [MDH]+++
+
++++Is \kode{/n} read ``slash n''?+++
 
 We map from noun to axis by comparing the tree of the noun with the axis tree
 and seeing what matches. Like so, marking axes with a \kode{/} character:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
   /1 : [[44 45] 43]
          /        \PYZbs{}
  /2 : [44 45]     43 : /3
@@ -579,7 +572,7 @@ and axis /3 is \kode{43}.
 
 Another way to think about it is that the tree map has layers:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 layer 0             1
 layer 1        2          3
 layer 2     4    5     6     7
@@ -591,34 +584,30 @@ cells, like \kode{46} inside \kode{[[[48 49] 45] [46 47]]} then its axis is at l
 the tree. If its inside three cells like \kode{48}, then its axis is at layer
 three.
 
-Recall the pattern we learned in section 1:
+Recall the pattern we learned in \hyperref[sec:getting_started_summary]{Section~\ref{sec:getting_started_summary}}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [0 1]]                  a
 \end{Verbatim}
 \end{framed_shaded}
-This, we now see, is a special case of 
+This, we now see, is a special case of
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [0 b]]              axis /b of a
 \end{Verbatim}
 \end{framed_shaded}
-The 0 in \kode{*[a [0 b]]} is just an operator that means axis. Nock maps simple
+The 0 in \kode{*[a [0 b]]} is just an operator that means ``axis''. Nock maps simple
 operators and functions to atoms, instead of a character like \kode{/} for example,
-because atoms (and cells) are all Nock knows. This would Fortunately for us,
+because atoms (and cells) are all Nock knows. Fortunately for us,
 there are only eleven atoms that are operators, atoms \kode{0} through \kode{10.}
 
-\begin{center}
-\rule{3in}{0.4pt}
-\end{center}
-
-\subsection{Summary:}
+\subsection{Summary}
 
 \textbf{Noun structure:}
 
 Nouns are trees that look like this:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
  [[44 45] 43]
     /      \PYZbs{}
 [44 45]    43
@@ -632,39 +621,38 @@ The left-hand of a cell is called the head. The right hand is the tail.
 
 An axis is the address of a node of the noun tree.
 
-The notation for axis n is /n.
+The notation for axis \(n\) is \kode{/n}.
 
 The first part of the axis tree looks like this:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
          1
     2          3
  4    5     6     7
 8 9 10 11 12 13 14 15
 \end{Verbatim}
 \end{framed_shaded}
-The head of axis /n is /(2n) and the tail of axis /n is /(2n+1). 
+The head of axis \kode{/n} is \kode{/2n} and the tail of axis \kode{/n} is \kode{/(2n+1)}.
 
 \textbf{Nock Operators:}
 
-The operators in Nock are functions mapped onto the eleven atoms \kode{0} through \kode{10}. 
+The operators in Nock are functions mapped onto the eleven atoms \kode{0} through \kode{10}.
 
 \textbf{Nock 0:}
 
 The Nock operator that produces a given axis of a noun:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [0 b]]               /b of a
 \end{Verbatim}
 \end{framed_shaded}
-\_\_\_
 
-\subsection{Exercises:}
+\subsection{Exercises}
 
 \begin{enumerate}
-\item Take pen and paper and map out the axes of           \newline
+\item Take pen and paper and map out the axes of
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
    [[[48 49] 45] [46 47]]
        /             \PYZbs{}
  [[48 49] 45]      [46 47]
@@ -676,120 +664,121 @@ The Nock operator that produces a given axis of a noun:
 \end{framed_shaded}
 then to test yourself, run:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [0 b])
 \end{Verbatim}
 \end{framed_shaded}
- for each axis \kode{/b} of \kode{[[[48 49] 45] [46 47]]}
+for each axis \kode{/b} of \kode{[[[48 49] 45] [46 47]]}
 \item Write a noun \kode{a} such that the following produces something:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [0 100])
 \end{Verbatim}
 \end{framed_shaded}
- In other words, find a noun that has an axis \kode{/100}.
-\item Prune your noun from the last exercis so that its as short as possible,
+In other words, find a noun that has an axis \kode{/100}.
+\item Prune your noun from the last exercise so that it's as short as possible,
 while still having an axis \kode{/100}.
 \item If you still feel confused, replicate the previous two exercises with the
-axes \kode{/7}, `/17', `/27', `/47' and \kode{/87}.
+axes \kode{/7}, \kode{/17}, \kode{/27}, \kode{/47} and \kode{/87}.
 \item Build a noun that has every atom set to its own axis. The bigger the noun
 the better. I'll get you started:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 1
 [2 3]
 [[4 5] 3]
 [[4 5] [6 7]
 \end{Verbatim}
 \end{framed_shaded}
-To test different atoms in your noun, run 
+To test different atoms in your noun, run
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [0 b])
 \end{Verbatim}
 \end{framed_shaded}
-\_\_\_
 \end{enumerate}
 
-\section{Section III: Nock 3}
+\section{Nock 3}
+
+\label{sec:nock_3}
 
 In the last section we learned how to access data inside nouns. Now we're going
 to learn what you can do with data. After all, Nock is a computer, so you
 should be able to, you know, compute things.
 
 We mentioned in the last section that Nock has eleven operators, \kode{0} through
-\kode{10}. We saw \kode{Nock 1} in Section I:
+\kode{10}. We saw \kode{Nock 1} in \hyperref[sec:getting_started]{Section~\ref{sec:getting_started}}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [1 b]]                  b
 \end{Verbatim}
 \end{framed_shaded}
-We could describe \kode{Nock }1 the constant operator, since it always produces \kode{b}
-no matter what you put in as a.
+We could describe \kode{Nock 1} the constant operator, since it always produces \kode{b}
+no matter what you put in as \kode{a}.
 
 We also have \kode{Nock 0}, which lets you refer to the sub-noun at the \kode{axis b} of
-your subject \kode{a}. 
+your subject \kode{a}.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [0 b]]               /b of a
 \end{Verbatim}
 \end{framed_shaded}
-We're going to skip \kode{Nock 2} and cover it in Section V and for now just jump
+We're going to skip \kode{Nock 2} and cover it in \hyperref[sec:nock_5_nock_2]{Section~\ref{sec:nock_5_nock_2}} and for now just jump
 straight to \kode{Nock 3}.
 
 Before we do, let's quickly go over three new terms that'll help us talk about
 operators:
 
-Let's say you have the Nock expression 
+Let's say you have the Nock expression
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [1 b]] 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [1 b]]
 \end{Verbatim}
 \end{framed_shaded}
 We know that \kode{1} is the operator, but shouldn't we have names for what \kode{a} and
 \kode{b} are?
 
-Let's call \kode{a} the subject, because it's being subjected to our computation.
-Poor \kode{a}.
+Let's call \kode{a} the \emph{subject}, because it's being subjected to our computation.
+(Poor \kode{a}.)
 
-We'll call \kode{b} an argument, And we'll call the cell \kode{[1 b]} a formula.
+We'll call \kode{b} an \emph{argument}, and we'll call the cell \kode{[1 b]} a \emph{formula}.
 Diagramming it out:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [1 b]] 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [1 b]]
 *[subject [operator argument]]
 *[subject formula]
 \end{Verbatim}
 \end{framed_shaded}
 Good, now that we've got vocab out of the way, let's get cooking.
 
-Let's use the big noun \kode{[[[48 49] 45] [46 47]]} from the last section as our subject. 
+Let's use the big noun \kode{[[[48 49] 45] [46 47]]} from \hyperref[sec:noun_structure]{Section~\ref{sec:noun_structure}} as our subject.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 0])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 0])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
-Uh-oh, Arvo is telling us we just tried to do something indecent and unnatural. 
+Uh-oh, Arvo is telling us we just tried to do something indecent and unnatural.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 1])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 1])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 2])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 2])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 3])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 3])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 4])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 4])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
 Looks like \kode{Nock 3} doesn't like an atomic argument. Let's go cellular.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 [0 1]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 [0 1]])
 0
 \end{Verbatim}
 \end{framed_shaded}
@@ -797,17 +786,17 @@ Okay, so at least that does something.
 
 Let's try some more:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 [0 2]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 [0 2]])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 [0 3]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 [0 3]])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 [0 4]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 [0 4]])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [3 [0 5]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [3 [0 5]])
 1
 \end{Verbatim}
 \end{framed_shaded}
@@ -819,20 +808,20 @@ does on its own.
 
 Let's try that sequence again without \kode{Nock 3}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [0 1])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [0 1])
 [[[48 49] 45] [46 47]]
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [0 2])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [0 2])
 [[48 49] 45]
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [0 3])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [0 3])
 [46 47]
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [0 4])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [0 4])
 [48 49]
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[[48 49] 45] [46 47]] [0 5])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[[48 49] 45] [46 47]] [0 5])
 45
 \end{Verbatim}
 \end{framed_shaded}
@@ -842,145 +831,140 @@ whether the formula \kode{[0 n]} refers to an atom or a cell in our subject.
 Let's see what happens if we run Nock 3 with \kode{[0 1]} as its argument and try
 some different subjects:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([42 42] [3 [0 1]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 42] [3 [0 1]])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(42 [3 [0 1]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [3 [0 1]])
 1
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([1 1] [3 [0 1]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([1 1] [3 [0 1]])
 0
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(1 [3 [0 1]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(1 [3 [0 1]])
 1
 \end{Verbatim}
 \end{framed_shaded}
 Looks like that's \kode{0} for cells and \kode{1} for atoms. Which means that \kode{Nock 3} is
-cell/atom tester. 
+cell/atom tester.
 
 How's that work?
 
 \kode{Nock 3}'s argument is itself a formula. Let's call it \kode{b}.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[subject\PYZhy{}a [3 formula\PYZhy{}b]]
 \end{Verbatim}
 \end{framed_shaded}
 \kode{Nock 3} produces either a \kode{0} or a \kode{1}, depending on what formula-b does when
 applied to subject-a:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[subject\PYZhy{}a formula\PYZhy{}b]
 \end{Verbatim}
 \end{framed_shaded}
 Or more simply:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a b]
 \end{Verbatim}
 \end{framed_shaded}
 If \kode{*[a b]} produces a cell, then \kode{*[a [3 b]]} produces 0. If \kode{*[a b]} produces
 an atom, \kode{*[a [3 b]]} produces 1. So our pattern for Nock 3 is:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [3 b]]         ?(*[a b])
 ?(cell)            0
 ?(atom)            1
 \end{Verbatim}
 \end{framed_shaded}
-\kode{?(x)} is just a litte functional notation so that we can write out both possible branches.
+\kode{?(x)} is just a little functional notation so that we can write out both possible branches.
 
 We should also note that Urbit uses the atom \kode{0} to mean ``yes'' and the atom \kode{1}
-to mean ``no.'' (this may seem different and annoying. it is, but it's
-the same thing that Unix does).
+to mean ``no.'' (This may seem different and annoying, but it's
+the same thing that Unix does.)
 
-In that context, \kode{Nock }3 is just asking the question ``Is the product of these two nouns a cell?
+In that context, \kode{Nock 3} is just asking the question ``When the argument is applied to the subject, is the result a cell?''
 
-Let's review what we've learned:
+\subsection{Summary}
 
-\begin{center}
-\rule{3in}{0.4pt}
-\end{center}
+\textbf{Vocabulary}
 
-\subsection{Summary:}
+\begin{itemize}
+\item The \textbf{subject} is the noun that gets computed.
+\item The \textbf{operator} is an atom that tells us how to Nock the subject and arguments.
+\item The \textbf{arguments} modify the behavior of the operator.
+\item A \textbf{formula} is a cell of \kode{[operator arguments]}
+\end{itemize}
 
-\textbf{Vocabulary:}
+These can be summarized as follows:
 
-The subject is the noun that gets computed.
-
-The operator is an atom that tells us how to Nock the subject and arguments.
-
-The arguments modify the behaviour of the operator.
-
-A formula is a cell of \kode{[operator arguments]}
-
-As a chart:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [1 b]] 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [1 b]]
 *[subject [operator arguments]]
 *[subject formula]
 \end{Verbatim}
 \end{framed_shaded}
+
 \textbf{Yes and No}
 
-Atom 0 means ``yes'' 
-Atom 1 means ``no.'' 
+Atom \kode{0} means ``yes''
+Atom \kode{1} means ``no.''
 
 \textbf{Nock 3}
 
-Nock 3 is a cell tester.
+\kode{Nock 3} is a cell tester.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [3 b]]         ?(*[a b])
 ?(cell)            0
 ?(atom)            1
 \end{Verbatim}
 \end{framed_shaded}
-\_\_\_
 
-\subsection{Exercises:}
+\subsection{Exercises}
 
 \begin{enumerate}
 \item Run and compare
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(a b)
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a b)
 \end{Verbatim}
 \end{framed_shaded}
- and 
+and +++add a listing and a listing reference [MDH]+++
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(a [3 b])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(a [3 b])
 \end{Verbatim}
 \end{framed_shaded}
- with different values for a and b.
+with different values for \kode{a} and \kode{b}. +++add a listing and a listing reference [MDH]+++
 \item Try finding a value for \kode{b} that will return \kode{1} if \kode{a} is the atom \kode{42}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(42 [3 b])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [3 b])
 \end{Verbatim}
 \end{framed_shaded}
- Not only is this possible, but you already know the formula to do it.
-\_\_\_
+Not only is this possible, but you already know the formula to do it.
 \end{enumerate}
 
-\section{Section IV: Nock 4}
+\section{Nock 4}
+
+\label{sec:nock_4}
 
 Last section we learned how to test whether a noun is an atom or a cell with
 \kode{Nock 3}. Now we're going to figure out what \kode{Nock 4} does.
 
 Let's start playing with \kode{Nock 4}, using \kode{[[44 45] 46]} as our subject:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 0])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 0])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 1])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 1])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 2])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 2])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
@@ -988,20 +972,20 @@ Okay, this is starting to feel a lot like \kode{Nock 3}. Looks like \kode{Nock 4
 like atoms either. Remember that \kode{Nock 3} took a cell that was a formula as its
 argument:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[subject [3 formula]]
 \end{Verbatim}
 \end{framed_shaded}
 And then depending on what the expression
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[subject formula]
 \end{Verbatim}
 \end{framed_shaded}
 produced, \kode{Nock 3} would return a \kode{0} or \kode{1}, according to the function \kode{?(x)}
 that we defined:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [3 b]]         ?(*[a b])
 ?(cell)            0
 ?(atom)            1
@@ -1011,61 +995,63 @@ Let's assume that Nock 4 operates in a similar way. Let's use the formula \kode{
 n]} to try to apply Nock 4 to different axes in our subject:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 1]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 1]])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 2]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 2]])
 ! exit
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 3]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 3]])
 47
 \end{Verbatim}
 \end{framed_shaded}
 Well! That's blessedly simple then. Watch:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [0 3])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [0 3])
 46
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 3]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 3]])
 47
 \end{Verbatim}
 \end{framed_shaded}
-Can you guess what 
+Can you guess what
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 4]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 4]])
 \end{Verbatim}
 \end{framed_shaded}
 would produce?
 
-If you said 
+If you said
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 4]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 4]])
 45
 \end{Verbatim}
 \end{framed_shaded}
-then you're starting to get the hang of this. Yes, ladies and gentlemen, \kode{Nock
+then you're starting to get the hang of this. +++recall from section \ldots{} that \ldots{} represents \kode{/4}, which in the case of \kode{[[44 45] 46]} is just \kode{44}. Applying \kode{Nock 4} to this yields \kode{45}.+++
+
+Yes, ladies and gentlemen, \kode{Nock
 4} is increment. Nock together your subject and the formula in your argument,
 and whatever that produces, add 1 to it.
 
 But what if \kode{*[subject formula]} produces a cell instead of an atom? How do we
-add \kode{1} to a cell? Simple, we don't. The sun continues to rise in the east,
+add \kode{1} to a cell? Simple---we don't. The Sun continues to rise in the east,
 pigs remain regretfully earthbound, Hell is still rather toasty, and
-incrementing a cell in Nock produces an ! exit:
+incrementing a cell in Nock produces an !\ exit:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([[44 45] 46] [4 [0 2]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[44 45] 46] [4 [0 2]])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
-Assuming we understood how \kode{Nock 3} worked, writing dow our pattern for \kode{Nock 4} is easy:
+Assuming we understood how \kode{Nock 3} worked, writing down our pattern for \kode{Nock 4} is easy:
 
 Nock 3:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [3 b]]         ?(*[a b])
 ?(cell)            0
 ?(atom)            1
@@ -1073,7 +1059,7 @@ Nock 3:
 \end{framed_shaded}
 Nock 4:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [4 b]]         +(*[a b])
 +(cell)            ! exit
 +(atom)            1 + atom
@@ -1085,20 +1071,20 @@ Nock 4:
 An interesting property of Nock 4 is that  we can chain it together to
 increment successive times.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [0 1]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [0 1]])
 45
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [0 4]]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [0 4]]])
 46
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 [0 4]]]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 [0 4]]]])
 47
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 [4 [0 4]]]]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 [4 [0 4]]]]])
 48
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
 49
 \end{Verbatim}
 \end{framed_shaded}
@@ -1108,28 +1094,28 @@ process a lot less legible than we would like.
 Fortunatley Nock has a notational rule that'll let us not have to write so many
 of those brackets.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
 49
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 4 4 4 4 0 4])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 4 4 4 4 0 4])
 49
 \end{Verbatim}
 \end{framed_shaded}
-Woah. That's a lot cleaner. 
+Woah. That's a lot cleaner.
 
-Concisely, Nock considers brackets to group to the right. If you'll recall from back in section 1:
+Concisely, Nock considers brackets to group to the right. If you'll recall from back in \hyperref[sec:getting_started_summary]{Section~\ref{sec:getting_started_summary}}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 A noun is an atom or a cell.
 An atom is a natural number.
-A cell is an ordered pair of two nouns. I.e. two atoms, two cells, or a cell and an atom.
+A cell is an ordered pair of two nouns.
 \end{Verbatim}
 \end{framed_shaded}
 Which means that formally, all nouns in Nock are either singletons (atoms) or
-cells (pairs). There are no triples, quadruples, or n-tuples:
+cells (pairs). There are no triples, quadruples, or \(n\)-\href{https://en.wikipedia.org/wiki/Tuple}{tuples}:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [a b c]
 [a b c d]
 [a b c d e]
@@ -1137,75 +1123,72 @@ cells (pairs). There are no triples, quadruples, or n-tuples:
 \end{framed_shaded}
 etc.
 
-But because a triple like [a b c] doesn't exist in Nock, but is easier on the
-eyes, we can map a nested pair onto it.
+Although a triple like \kode{[a b c]} doesn't exist in Nock, it is easier on the
+eyes, so we can map a nested pair onto it:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [a b c]         [a [b c]]
 \end{Verbatim}
 \end{framed_shaded}
 Which means that the Nock interpreter, whenever it sees a triple (or any
-n-tuple, for n\textgreater{}2), just inserts the needed brackets.
+\(n\)-tuple, for \(n>2\)), just inserts the needed brackets.
 
 Let's do some more examples to help you get the hang of it:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 [4 [4 0 1]]]]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 [4 [4 0 1]]]]])
 49
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 [4 4 0 1]]]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 [4 4 0 1]]]])
 49
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 [4 4 4 0 1]]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 [4 4 4 0 1]]])
 49
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 [4 4 4 4 0 1]])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 [4 4 4 4 0 1]])
 49
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 [4 4 4 4 4 0 1])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 [4 4 4 4 4 0 1])
 49
 \end{Verbatim}
 \end{framed_shaded}
 
-We can't get rid of the last pair though:
+We can't get rid of the last pair, though:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 4 4 4 4 4 0 1)
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 4 4 4 4 4 0 1)
 \PYZti{} \PYZlt{}syntax error at [1 18]\PYZgt{}
 \end{Verbatim}
 \end{framed_shaded}
 
 This is just an artifact of Arvo's Nock interpreter, which we directly access
-with the \kode{.*} function, pronounced \kode{dottar} (dot-star, get it?). \kode{.*} takes two
+with the \kode{.*} function (pronounced \kode{dottar}, a contraction of ``dot-star''). \kode{.*} takes two
 arguments, a subject and a formula:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 .*(subject [formula])
 \end{Verbatim}
 \end{framed_shaded}
-And for inscrutable reasons, the formula has to be in brackets. As does the
+And for inscrutable reasons  +++recast this; what are the actual reasons, if any?+++, the formula has to be in brackets. As does the
 subject, if it's a cell:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*(44 45 [4 4 4 4 4 0 2])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(44 45 [4 4 4 4 4 0 2])
 \PYZti{} \PYZlt{}syntax error at [1 9]\PYZgt{}
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}.*([44 45] [4 4 4 4 4 0 2])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([44 45] [4 4 4 4 4 0 2])
 49
 \end{Verbatim}
 \end{framed_shaded}
+
+\subsection{Summary}
+
 Let's review:
-
-\begin{center}
-\rule{3in}{0.4pt}
-\end{center}
-
-\subsection{Summary:}
 
 \textbf{Nock 4:}
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a [4 b]]         +(*[a b])
 +(cell)            ! exit
 +(atom)            1 + atom
@@ -1215,7 +1198,7 @@ Let's review:
 
 Brackets group to the right.
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [a b c]         [a [b c]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -1226,73 +1209,104 @@ Brackets group to the right.
 
 Takes two arguments, subject and formula:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 .*(subject [formula])
 \end{Verbatim}
 \end{framed_shaded}
 formula must be bracketed.
 
-\begin{center}
-\rule{3in}{0.4pt}
-\end{center}
-
-\subsection{Exercises:}
+\subsection{Exercises}
 
 \begin{enumerate}
 \item Chain together Nock 4 and Nock 3, so that cells produce 2 and atoms produce 3.
 \item Write a formula that always returns the cell [4 0 1].
 \end{enumerate}
 
-\section{Section V: Nock 5, Nock 2 and Formula Distribution}
+\section{Nock 5, Nock 2 and Formula Distribution}
+
+\label{sec:nock_5_nock_2}
 
 So we've learned how to do some simple operations with Nock. Now we're going to get a little fancier.
 
-To jog your memory, we've seen the following operators so far:
+To jog your memory, we've seen the following operators so far: +++start adding massive repetition of what each \kode{Nock n} is.+++
 
-\begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [0 1])
-[42 43]
+\begin{codelisting}
+\label{code:nock_review}
+\codecaption{A review of Nock 0, 1, 3, and 4.}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: Nock 0: Tree address
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: *[a [0 b]]               /b of a
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}   .*([42 43] [0 1])}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{[42 43]}
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [1 0])
-[42 43]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: Nock 1: The constant operator
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: *[a [1 b]]               b for every a
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}   .*([42 43] [1 0])}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{[42 43]}
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [3 0 1])
-0
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: Nock 3: The cell tester
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: ?(cell)            0 (\PYZdq{}yes\PYZdq{})
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: ?(atom)            1 (\PYZdq{}no\PYZdq{})
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: *[a [3 b]]         ?(*[a b])
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}   .*([42 43] [3 0 1])}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{0}
 
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [4 0 2])
-43
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: Nock 4: Increment
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: +(cell)            ! exit
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: +(atom)            1 + atom
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} :: *[a [4 b]]         +(*[a b])
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{}   .*([42 43] [4 0 2])}
+\setlength{\fboxsep}{0pt}\colorbox{hilightyellow}{43}
 \end{Verbatim}
-\end{framed_shaded}
-These have all had the following pattern in common:
+\end{codelisting}
 
-\begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+These all have the pattern shown in \hyperref[code:formula_pattern]{Listing~\ref{code:formula_pattern}}, where the operator is one of four atoms (0, 1, 3 or 4).
+
+\begin{codelisting}
+\label{code:formula_pattern}
+\codecaption{}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[subject [operator arguments]]
 \end{Verbatim}
-\end{framed_shaded}
-with the atomic operator (0, 1, 3 or 4).
+\end{codelisting}
 
-What if we replaced that atom with a cell? With a formula, even? Let's try it:
+What if we replaced that atom with a cell? For example, in
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(42 [[0 1] 0 1])
-[42 42]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+.*([42 43] [3 0 1])
 \end{Verbatim}
 \end{framed_shaded}
-Well that's different. Let's try another subject:
+
+let's see what happens if we replace the atom \kode{3} with the cell \kode{[0 1]}:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [[0 1] 0 1])
 [[42 43] 42 43]
 \end{Verbatim}
 \end{framed_shaded}
-And if we change the formulas?
+
+If we recall the \kode{Nock 0} example from \hyperref[code:nock_review]{Listing~\ref{code:nock_review}},
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [0 1])
+[42 43]
+\end{Verbatim}
+\end{framed_shaded}
+
+we see that \kode{.*([[42 43] 42 43])} is just a nested combination of the result of the formula \kode{.*([42 43] [0 1])}. In other words, it appears that Arvo is applying each operator in \kode{[[0 1] 0 1]} to the argument \kode{[42 43]} and combining the results.
+
+Let's try some other formulas to see if this pattern holds (\hyperref[code:other_nested_formulas]{Listing~\ref{code:other_nested_formulas}}).
+
+\begin{codelisting}
+\label{code:other_nested_formulas}
+\codecaption{Applying a series of nested formulas to the same argument.}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [[0 2] 0 1])
 [42 42 43]
 
@@ -1302,11 +1316,23 @@ And if we change the formulas?
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [[0 1] 0 2])
 [[42 43] 42]
 \end{Verbatim}
-\end{framed_shaded}
-It looks like its running both formulas and then just combining the results in a cell.
+\end{codelisting}
+
+Recalling from \hyperref[code:several_nock_formulas]{Listing~\ref{code:several_nock_formulas}} that
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [0 2])
+42
+\end{Verbatim}
+\end{framed_shaded}
+
+we see that the pattern we guessed continues to hold: Arvo is running both formulas and then just combining the results in a cell.
+
++++For the example below, we should establish the values of \kode{.*([42 43] [3 0 2])} and \kode{.*([42 43] [4 0 3])}+++
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [[3 0 1] 3 0 2])
 [0 1]
 
@@ -1320,18 +1346,20 @@ It looks like its running both formulas and then just combining the results in a
 [44 [0 1]]
 \end{Verbatim}
 \end{framed_shaded}
+
 Yup, the subject is definitely running through both formulas in parallel. The
-last example seems to do something like this:
+last example seems to do something like this +++it doesn't match the example+++:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[42 43] [4 0 3] 1 [55 73]]         [*[[42 43] [4 0 3]] *[[42 43] 1 [55 73]]]
 \end{Verbatim}
 \end{framed_shaded}
+
 which we can evaluate using Arvo:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [4 0 3])
 44
 
@@ -1339,11 +1367,12 @@ which we can evaluate using Arvo:
 [0 1]
 \end{Verbatim}
 \end{framed_shaded}
+
 Or by hand, which is good practice. Open up a blank text file or grab a pen and
 copy along:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[42 43] [4 0 3] 1 [0 1]]  [*[[42 43] [4 0 3]] *[[42 43] 1 [0 1]]]
 
 \PYZlt{}\PYZlt{}  Nock 4:       *[a [4 b]]          +(*[a b]) \PYZgt{}\PYZgt{}
@@ -1351,7 +1380,7 @@ copy along:
 [+(*[[42 43] 0 3]]) *[[42 43] 1 [0 1]]]
 
 \PYZlt{}\PYZlt{}  Nock 0:       *[a [0 b]]          /b of a  \PYZgt{}\PYZgt{}
-       
+
 [+(43) *[[42 43] 1 [0 1]]]
 
 \PYZlt{}\PYZlt{}     +():       +(atom)             1 + atom  \PYZgt{}\PYZgt{}
@@ -1360,47 +1389,57 @@ copy along:
 
 \PYZlt{}\PYZlt{}  Nock 1:       *[a [1 b]]          b  \PYZgt{}\PYZgt{}
 
-[44 [0 1]] 
+[44 [0 1]]
 \end{Verbatim}
 \end{framed_shaded}
 Thus,
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [[4 0 3] 1 [0 1]])
 [44 [0 1]]
 \end{Verbatim}
 \end{framed_shaded}
-We could write the first line of the reduction more generally as  
+We could write the first line of the reduction more generally as
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[subject [formula1] formula2]     [*[subject formula1] *[subject formula2]]   
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[subject [formula1] formula2]     [*[subject formula1] *[subject formula2]]
 \end{Verbatim}
 \end{framed_shaded}
-Which is a little long for my taste, since a formula is a cell we can rewrite it as:
+This is a little long for my taste, but since a formula is a cell we can
+rewrite it as in \hyperref[code:further_reduction]{Listing~\ref{code:further_reduction}}, where \kode{a} is the subject, \kode{[b c]} is \kode{formula1} and \kode{[d e]} is \kode{formula2}.
+
+\begin{codelisting}
+\label{code:further_reduction}
+\codecaption{}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [b c] d e]     [*[a b c] *[a d e]]
+\end{Verbatim}
+\end{codelisting}
+
+Recalling the common pattern
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [b c] d e]     [*[a b c] *[a d e]]   
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[subject [operator arguments]]
 \end{Verbatim}
 \end{framed_shaded}
-where a is the subject, [b c] is formula1 and [d e] is formula2.
 
-But actually we can simplify this further and just say:
+from \hyperref[code:formula_pattern]{Listing~\ref{code:formula_pattern}}, we see that in \kode{*[a d]} the value of \kode{d} must be a cell of the form \kode{[operator arguments]}. This means that in \hyperref[code:further_reduction]{Listing~\ref{code:further_reduction}} we can relabel the cell \kode{d e} (where \kode{d} might be an atom) to just \kode{d} (where now \kode{d} has to be a cell), which yields \hyperref[code:final_reduction]{Listing~\ref{code:final_reduction}}.
 
-\begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [b c] d]     [*[a b c] *[a d]]   
+\begin{codelisting}
+\label{code:final_reduction}
+\codecaption{}
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [b c] d]     [*[a b c] *[a d]]
 \end{Verbatim}
-\end{framed_shaded}
-since d has to be a cell for \kode{*[a d]} to evaluate. We really just want to
-specify what happens when you replace an atomic operator with a cell.
+\end{codelisting}
 
-What's really cool about this rule is that, like the operators, it also chains:
+What's really cool about the rule in \hyperref[code:final_reduction]{Listing~\ref{code:final_reduction}} that, like the operators, it also chains +++This does not appear to be of the form \kode{*[a [b c] d]}+++:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 [46 47]] [[0 1] [3 0 1] [0 2]])
 [[42 46 47] 0 42]
 \end{Verbatim}
@@ -1409,7 +1448,7 @@ So if we wanted to produce our subject with all the atoms incremented, we could
 do that:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 [46 47]] [[4 0 1] [4 0 2] [4 0 3]])
 [43 47 48]
 \end{Verbatim}
@@ -1417,8 +1456,8 @@ do that:
 We can make our chains as long as we like
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 [46 47]] [[0 1] [3 0 1] [0 2] [3 0 2] [0 3] [3 0 3]])
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 [46 47]] [[0 1] [3 0 1] [0 2] [3 0 2] [0 3]])
 [[42 46 47] 0 42 1 [46 47] 0]
 \end{Verbatim}
 \end{framed_shaded}
@@ -1426,40 +1465,40 @@ We can make our chains as long as we like
 That is, we can evaluate arbitrary numbers of formulas on the same subject in
 parallel.
 
-But what if we want to run them in series? 
+But what if we want to run them in series?
 
-The expression \kode{*[[42 43] [[4 0 3] 1 [0 1]]]} is a good example of how this might work:
+The expression \kode{*[[42 43] [[4 0 3] 1 [0 1]]]} is a good example of how this might work +++Make explicit in what sense this is evaluation in ``series''+++:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [[4 0 3] 1 [3 0 1]])
 [44 [3 0 1]]
 \end{Verbatim}
 \end{framed_shaded}
 
-Wouldn't it be interesting if we could run [44 [3 0 1]] through Nock again and end up with \kode{*[44 [3 0 1]]} or just \kode{1}?
+Wouldn't it be interesting if we could run \kode{[44 [3 0 1]]} through Nock again and end up with \kode{*[44 [3 0 1]]} or just \kode{1}? +++Why would this be interesting?+++
 
-We'd need a recursive operator to do that. Fortunately, we've got one, Nock 2:
+We'd need a recursive operator to do that +++why?+++. Fortunately, we've got one, Nock 2 +++this is the first explicit mention of Nock 2,and the example is rather complicated+++:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [2 [4 0 3] 1 [3 0 1]])
 1
 \end{Verbatim}
 \end{framed_shaded}
-Obviously this is a toy example because we could just do the same thing
-functionally with:
+Obviously, this is a toy example because we could just do the same thing
+functionally with +++this is not obvious—so far as I can tell, this is the first time that the second cell in a formula has been of length 4+++:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 43] [3 4 0 3])
 1
 \end{Verbatim}
 \end{framed_shaded}
-But Nock 2 also lets us call a formula inside our subject.
+But Nock 2 also lets us call a formula inside our subject. +++I'm completely confused at this point+++
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[40 43] [4 0 1]] [2 [0 4] [0 3]])
 41
 
@@ -1467,10 +1506,10 @@ But Nock 2 also lets us call a formula inside our subject.
 44
 \end{Verbatim}
 \end{framed_shaded}
-Or we could completely separate the operator and arguments:
+Or we could completely separate the operator and arguments: +++Whaa?+++
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]])
 44
 \end{Verbatim}
@@ -1480,42 +1519,42 @@ Nock 2 lets us run those reassembled nouns as expressions. We could think of
 Nock 2 as being exactly like the distribution rule:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [b c] d]          [*[a b c] *[a d]]  
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [b c] d]          [*[a b c] *[a d]]
 \end{Verbatim}
 \end{framed_shaded}
-except that Nock 2 has an extra \kode{*} meaning we run everything through Nock a
-second time. So if we have two formulas 
+except that Nock 2 has an extra \kode{*}, meaning we run everything through Nock a
+second time. So if we have two formulas
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[subject 2 formula1 formula2]               *[*[subject formula1] *[subject formula2]]  
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[subject 2 formula1 formula2]      *[*[subject formula1] *[subject formula2]]
 \end{Verbatim}
 \end{framed_shaded}
 which we can rewrite as:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a 2 b c]            *[*[a b] *[a c]] 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a 2 b c]            *[*[a b] *[a c]]
 \end{Verbatim}
 \end{framed_shaded}
 
 Let's work through that last example again:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]])
 44
 \end{Verbatim}
 \end{framed_shaded}
 
-So we've got our subject [[40 43] [0 1 3 4]] and a four different formulas: 
-[0 2] [0 31] [0 6] [0 30]
+So we've got our subject \kode{[[40 43] [0 1 3 4]]} and four different formulas:
+\kode{[0 2] [0 31] [0 6] [0 30]}
 
 Let's apply each of these to our subject separately:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[40 43] [0 1 3 4]] [0 2])
 [40 43]
 
@@ -1533,7 +1572,7 @@ Let's apply each of these to our subject separately:
 If instead of Nock 2, we had just used the formula distribution rule:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[40 43] [0 1 3 4]] [[0 2] [0 31] [0 6] [0 30]])
 [[40 43] 4 0 3]
 \end{Verbatim}
@@ -1542,27 +1581,27 @@ If instead of Nock 2, we had just used the formula distribution rule:
 But since Nock 2 is recursive:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]]]
 \end{Verbatim}
 \end{framed_shaded}
 reduces to:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[40 43] 4 0 3]
 \end{Verbatim}
 \end{framed_shaded}
-which is, of course, 43 + 1, or 44.
+which is, of course, \(43 + 1\), or \(44\).
 
-Now that we understand how to slice up nouns in our subject, let's introduce Nock 5. 
+Now that we understand how to slice up nouns in our subject, let's introduce Nock 5.
 
 Nock 5 is exactly like Nock 3 and Nock 4 in structure, but we've saved it for
-last because it's easier to understand how to use it, once you know how to
+last because it's easier to understand how to use it after you know how to
 distribute formulas. See if you can figure it out from the following:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 \PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([42 42] [5 [0 2] [0 3]])
 0
 
@@ -1585,20 +1624,21 @@ distribute formulas. See if you can figure it out from the following:
 0
 \end{Verbatim}
 \end{framed_shaded}
-Yes, Nock 5 is an equality test:
+
+Yes, Nock 5 is an equality test +++Instead of saying `Yes', work through it in more detail+++:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a 5 b] 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a 5 b]
 \end{Verbatim}
 \end{framed_shaded}
-if the head and the tail of the cell produced by \kode{*[a b]} are the same, then
+If the head and the tail of the cell produced by \kode{*[a b]} are the same, then
 Nock 5 produces 0, if they are different, Nock 5 produces 1:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a 5 b]              =(*[a b])
-=([a a])              0 
+=([a a])              0
 =([a !a])              1
 \end{Verbatim}
 \end{framed_shaded}
@@ -1607,31 +1647,31 @@ Where \kode{!a} just means ``not a.''
 But what if \kode{*[a b]} inside \kode{=(*[a b])} produces an atom?
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[42 42] [42 42]] [5 [1 1]])    
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*([[42 42] [42 42]] [5 [1 1]])
 ! exit
 \end{Verbatim}
 \end{framed_shaded}
 So we need to add
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 =(atom)              ! exit
 \end{Verbatim}
 \end{framed_shaded}
-to our rule. 
+to our rule.
 
 Let's reduce the last example from above by hand:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[[[42 42] [42 42]] [5 [0 2] [0 3]]]
 
     *[a 5 b]                =(*[a b])
 
 =(*[[[42 42] [42 42]] [0 2] [0 3]])
 
-    *[a [b c] d]            [*[a b c] *[a d]] 
+    *[a [b c] d]            [*[a b c] *[a d]]
 
 =([*[[[42 42] [42 42]] [0 2]] *[[[42 42] [42 42]] [0 3]]])
 
@@ -1643,21 +1683,20 @@ Let's reduce the last example from above by hand:
 
 =([[42 42] [42 42]])
 
-    =([a a])                 0 
+    =([a a])                 0
 
 1
 \end{Verbatim}
 \end{framed_shaded}
-\_\_\_
 
-\subsection{Summary:}
+\subsection{Summary}
 
 \textbf{Formula Distribution:}
 
 A formula with a second formula at its head instead of an operator distributes the subject over both formulas:
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[a [b c] d]          [*[a b c] *[a d]]  
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[a [b c] d]          [*[a b c] *[a d]]
 \end{Verbatim}
 \end{framed_shaded}
 \kode{[b c]} is the first formula, d is the second formula.
@@ -1665,32 +1704,31 @@ A formula with a second formula at its head instead of an operator distributes t
 \textbf{Nock 2}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-*[subject 2 formula\PYZhy{}a formula]               *[*[subject formula1] *[subject formula2]]  
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+*[subject 2 formula\PYZhy{}a formula]               *[*[subject formula1] *[subject formula2]]
 \end{Verbatim}
 \end{framed_shaded}
-which translates to 
+which translates to
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a 2 b c]            *[*[a b] *[a c]]
 \end{Verbatim}
 \end{framed_shaded}
 \textbf{Nock 5}
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[a 5 b]              =(*[a b])
-=([a a])              0 
+=([a a])              0
 =([a !a])              1
 =(atom)               ! exit
 \end{Verbatim}
 \end{framed_shaded}
-\_\_\_
 
-\subsection{Exercises:}
+\subsection{Exercises}
 
 \begin{enumerate}
-\item Using the above rule, write a formula that reverses the order of the atoms in \kode{[42 46 [68 69] 55]} i.e. produces \kode{[55 [68 69] 46 42]}.
+\item Using the above rule, write a formula that reverses the order of the atoms in \kode{[42 46 [68 69] 55]} (i.e., \kode{[55 [68 69] 46 42]}).
 \item Put the subject \kode{[4 3 7 2 5 1 6]} in order from least to greatest.
 \item Does \kode{*[[42 42] 5 [0 1] [0 3]]} produce a \kode{yes} or a \kode{no}?
 \item Write a noun that contains some data (nouns you find interesting) and some code (formulas you find interesting), write an expression with that noun as the subject that produces a single data-noun and a single code cell. Then use Nock 2 to apply the formula to the data.
@@ -1698,9 +1736,9 @@ which translates to
 \end{enumerate}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-`\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(subject [2 [0 5] [0 4] [0 3]])`
-`43`
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+\PYZti{}tomsyt\PYZhy{}balsen/try=\PYZgt{} .*(subject [2 [0 5] [0 4] [0 3]])
+43
 \end{Verbatim}
 \end{framed_shaded}
 
@@ -1709,11 +1747,11 @@ which translates to
 Let's list out all the rules we've learned so far, with the explanations collapsed:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
-A noun is an atom or a cell.  
-An atom is a natural number.  
-A cell is an ordered pair of nouns. 
- 
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
+A noun is an atom or a cell.
+An atom is a natural number.
+A cell is an ordered pair of nouns.
+
 
 [a b c]              [a [b c]]
 
@@ -1721,25 +1759,25 @@ A cell is an ordered pair of nouns.
 ?(atom)               1
 +(cell)               ! exit
 +(atom)               1 + atom
-=([a a])              0 
+=([a a])              0
 =([a !a])              1
 =(atom)               ! exit
 
 
 *[a 0 b]              /b of a
-*[a 1 b]              b 
+*[a 1 b]              b
 *[a 2 b c]            *[*[a b] *[a c]]
 *[a 3 b]              ?(*[a b])
 *[a 4 b]              +(*[a b])
 *[a 5 b]              =(*[a b])
 
-*[a [b c] d]          [*[a b c] *[a d]] 
+*[a [b c] d]          [*[a b c] *[a d]]
 \end{Verbatim}
 \end{framed_shaded}
 That looks cleaner. Now let's look at an abridged version of the real Nock spec, which you should now be able to mostly read
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 1  ::    A noun is an atom or a cell.
 2  ::    An atom is a natural number.
 3  ::    A cell is an ordered pair of nouns.
@@ -1777,12 +1815,12 @@ That looks cleaner. Now let's look at an abridged version of the real Nock spec,
 \end{Verbatim}
 \end{framed_shaded}
 
-Since the Nock spec has been designed to be as concise as possible, a couple things are notationally different from the rules we've learned. 
+Since the Nock spec has been designed to be as concise as possible, a couple things are notationally different from the rules we've learned.
 
 The largest difference is the block that defines what the \kode{/} or axis operator does:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 16 ::    /[1 a]           a
 17 ::    /[2 a b]         a
 18 ::    /[3 a b]         b
@@ -1792,14 +1830,14 @@ The largest difference is the block that defines what the \kode{/} or axis opera
 \end{framed_shaded}
 This block of pseudocode is functionally equivalent to saying:
 
-The head of axis /n is /(2n) and the tail of axis /n is /(2n+1). 
+The head of axis /n is /(2n) and the tail of axis /n is /(2n+1).
 
-If you read and understood Chapter 1, Section II, you understand what this is doing, even if you can't parse its recursive structure.
+If you read and understood \hyperref[sec:noun_structure]{Section~\ref{sec:noun_structure}}, you understand what this is doing, even if you can't parse its recursive structure.
 
 The next most obvious difference is that between
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 8  ::    ?[a b]           0
 9  ::    ?a               1
 10 ::    +[a b]           +[a b]
@@ -1809,15 +1847,15 @@ The next most obvious difference is that between
 14 ::    =a               =a
 \end{Verbatim}
 \end{framed_shaded}
-and 
+and
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 ?(cell)               0
 ?(atom)               1
 +(cell)               ! exit
 +(atom)               1 + atom
-=([a a])              0 
+=([a a])              0
 =([a !a])             1
 =(atom)               ! exit
 \end{Verbatim}
@@ -1827,12 +1865,12 @@ We'll work through the evolution of this block:
 First thing is that since we're trying to make the Nock specification small, we can get rid of the parentheses:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 ?cell               0
 ?atom               1
 +cell               ! exit
 +atom               1 + atom
-=[a a]              0 
+=[a a]              0
 =[a !a]             1
 =atom               ! exit
 \end{Verbatim}
@@ -1841,12 +1879,12 @@ Then we can remove the words `cell' and `atom.' Since the rules in the nock spec
 only atoms will match a below [a b].
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 ?[a b]             0
 ?a                 1
 +[a b]             ! exit
 +a                 1 + atom
-=[a a]             0 
+=[a a]             0
 =[a !a]            1
 =a                 ! exit
 \end{Verbatim}
@@ -1855,12 +1893,12 @@ only atoms will match a below [a b].
 Next little thing we can do, along the same principle, is change !a to b, because [a b] below [a a] will only match to a pair of unequal nouns.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 ?[a b]             0
 ?a                 1
 +[a b]             ! exit
 +a                 1 + atom
-=[a a]             0 
+=[a a]             0
 =[a !a]            1
 =a                 ! exit
 \end{Verbatim}
@@ -1868,7 +1906,7 @@ Next little thing we can do, along the same principle, is change !a to b, becaus
 Then there's these lines, which we call our crash defaults:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 10 ::    +[a b]           +[a b]
 14 ::    =a               =a
 21 ::    /a               /a
@@ -1878,28 +1916,28 @@ Then there's these lines, which we call our crash defaults:
 Basically the crash defaults determine when Nock needs to return an ! exit, because something is nonsensical. In theory these lines imply that Nock spins forever in an infinite loop, in practice, Nock will just crash.
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 10 ::    +[a b]           +[a b]
 \end{Verbatim}
 \end{framed_shaded}
-means that Nock crashes if you try to increment a cell 
+means that Nock crashes if you try to increment a cell
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 14 ::    =a               =a
 \end{Verbatim}
 \end{framed_shaded}
 means that Nock crashes if you try run an equality test on an atom
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
    21 ::    /a               /a
 \end{Verbatim}
 \end{framed_shaded}
 means that Nock crashes if you try to reference a noun axis that doesn't exist
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 39 ::    *a               *a
 \end{Verbatim}
 \end{framed_shaded}
@@ -1908,7 +1946,7 @@ means that if you try to run something that's not a valid formula (i.e. doesn't 
 Replacing ! exit in our rules with the appropriate crash default, we get the canoncial Nock specification:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 1  ::    A noun is an atom or a cell.
 2  ::    An atom is a natural number.
 3  ::    A cell is an ordered pair of nouns.
@@ -1946,4 +1984,4 @@ Replacing ! exit in our rules with the appropriate crash default, we get the can
 \end{Verbatim}
 \end{framed_shaded}
 
-And that's it! That's really all there is to Nock. Everything else in Urbit, including the elided lines 32 through 38, is just a structure built on top of Nock. All your playing around in Urbit reduces to some combination of what you now already know. 
+And that's it! That's really all there is to Nock. Everything else in Urbit, including the elided lines 32 through 38, is just a structure built on top of Nock. All your playing around in Urbit reduces to some combination of what you now already know.

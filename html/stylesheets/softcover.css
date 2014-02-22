@@ -133,7 +133,7 @@ body #book {
 }
 
 #book .codelisting .heading .number {
-  margin-right: 0.1em;
+  margin-right: 0.3em;
   margin-left: 0.3em;
 }
 
@@ -142,6 +142,8 @@ body #book {
   margin-left: 0.4em;
   margin-top: 0.2em;
   margin-bottom: 0.1em;
+  padding-top: 10px;
+  font-style: italic;
 }
 
 #book .codelisting span.break {
@@ -364,7 +366,7 @@ body #book {
 }
 
 #book .highlight pre {
-  margin: 1em 0 1em 0.3em;
+  margin: 1em;
   font-size: 85%;
   font-weight: bold;
 }

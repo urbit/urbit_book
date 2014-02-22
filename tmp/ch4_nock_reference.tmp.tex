@@ -25,7 +25,7 @@ top down.  To compute Nock, repeatedly reduce with the first line that matches.
 \section{Nock Specification:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 1  ::    A noun is an atom or a cell.
 2  ::    An atom is a natural number.
 3  ::    A cell is an ordered pair of nouns.
@@ -71,7 +71,7 @@ top down.  To compute Nock, repeatedly reduce with the first line that matches.
 \section{1. Structures}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 A noun is an atom or a cell.  An atom is any natural number.
 A cell is any ordered pair of nouns.
 \end{Verbatim}
@@ -105,7 +105,7 @@ you like.
 \section{Line 5: Nock Function}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 5  ::    nock(a)           *a
 \end{Verbatim}
 \end{framed_shaded}
@@ -115,7 +115,7 @@ only in our pseudocode) we express this with the prefix operator \kode{*}.
 Normally \kode{a} in \kode{nock(a)} is a cell \kode{[s f]}, or as we say
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [subject formula]
 \end{Verbatim}
 \end{framed_shaded}
@@ -127,7 +127,7 @@ map directly to \kode{*[subject formula]}.
 \section{Line 6: Bracket grouping}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 6  ::    [a b c]           [a [b c]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -137,21 +137,21 @@ with Lisp experience, it's important to note that Nock and Hoon use tuples or
 is never automatic.  So the Lisp list 
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 (a b c)
 \end{Verbatim}
 \end{framed_shaded}
 becomes the Nock noun
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [a b c 0]
 \end{Verbatim}
 \end{framed_shaded}
 which is equivalent to
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [a [b [c 0]]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -161,7 +161,7 @@ emphasis.
 \section{Lines 8-13: Pseudocode notation}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 8  ::    ?[a b]           0
 9  ::    ?a               1
 10 ::    +[a b]           +[a b]
@@ -183,7 +183,7 @@ right.
 \section{Lines 16-20: Noun Axes and Trees}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 16 ::    /[1 a]           a
 17 ::    /[2 a b]         a
 18 ::    /[3 a b]         b
@@ -199,7 +199,7 @@ mapping every nonzero atom to a tree position.
 simple tree:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
      1
   2      3
 4   5  6   7
@@ -209,7 +209,7 @@ simple tree:
 If the value of every leaf is its tree address, this tree is
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
   [[4 5] [6 14 15]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -217,7 +217,7 @@ If the value of every leaf is its tree address, this tree is
 \section{Line 23:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 23 ::    *[a [b c] d]      [*[a b c] *[a d]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -232,7 +232,7 @@ Basically, the subject is your data and the formula is your code.
 We could write line 23 less formally:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 *[subject [formula\PYZhy{}x formula\PYZhy{}y]]
 =\PYZgt{}  [*[subject formula\PYZhy{}x] *[subject formula\PYZhy{}y]]
 \end{Verbatim}
@@ -248,7 +248,7 @@ Where in Lisp you would write \kode{(cons x y)}, in Nock you write \kode{[x y]}.
 \section{Line 26: Constant}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 26 ::    *[a 1 b]          b
 \end{Verbatim}
 \end{framed_shaded}
@@ -258,7 +258,7 @@ reference to the subject.
 \section{Line 27: Recursion}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 27 ::    *[a 2 b c]        *[*[a b] *[a c]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -270,7 +270,7 @@ But Nock has no \kode{apply} - so all our work gets done with \kode{2}.
 \section{Lines 28-30: Cell Test, Increment, Equality}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 28 ::    *[a 3 b]         ?*[a b]
 29 ::    *[a 4 b]         +*[a b]
 30 ::    *[a 5 b]         =*[a b]
@@ -284,7 +284,7 @@ calculates that product plus one.
 \section{Lines 10, 14, 21, 39: Crash defaults}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
     10 ::    +[a b]           +[a b]
     14 ::    =a               =a
     21 ::    /a               /a
@@ -309,7 +309,7 @@ catch the obvious ones - like \kode{*42}.)
 \textbf{\kode{6} Reduction:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32 ::    *[a 6 b c d]      *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
 
 *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
@@ -360,7 +360,7 @@ catch the obvious ones - like \kode{*42}.)
 
 \textbf{\kode{6} Reduced:}
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 	32r ::   *[a 6 b c d]               *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -370,7 +370,7 @@ crash. We could have defined ``if'' as a built-in function, like increment
 by arbitrarily inventing another operator:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 ::    \PYZdl{}[0 b c]         b
 ::    \PYZdl{}[1 b c]         c
 \end{Verbatim}
@@ -378,7 +378,7 @@ by arbitrarily inventing another operator:
 Then we could restate \kode{6} quite compactly:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 32c::    *[a 6 b c d]     *[a \PYZdl{}[*[a b] c d]]
 \end{Verbatim}
 \end{framed_shaded}
@@ -398,7 +398,7 @@ code is code and data is data.
 \textbf{\kode{7} Reduction:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 33 ::    *[a 7 b c]        *[a 2 b 1 c]
 
 *[a 2 b 1 c]
@@ -427,7 +427,7 @@ is simply \kode{b}, and the formula is \kode{c} quoted.
 \textbf{\kode{8} Reduction:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 34 ::    *[a 8 b c]        *[a 7 [[7 [0 1] b] 0 1] c]
 
 *[a 7 [[7 [0 1] b] 0 1] c]   
@@ -456,7 +456,7 @@ is simply \kode{b}, and the formula is \kode{c} quoted.
 \textbf{\kode{8} Reduced:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 34r ::     *[a 8 b c]        *[[*[a b] a] c]
 \end{Verbatim}
 \end{framed_shaded}
@@ -474,7 +474,7 @@ calculation which depends both on the original subject and the new variable.
 \textbf{\kode{9} Reduction:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 31 :: *[a 9 b c]        *[a 7 c [2 [0 1] [0 b]]]
 
 *[a 7 c [2 [0 1] [0 b]]]
@@ -493,7 +493,7 @@ calculation which depends both on the original subject and the new variable.
 \textbf{\kode{9} Reduced:}    
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 31r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
 \end{Verbatim}
 \end{framed_shaded}
@@ -515,7 +515,7 @@ and whose head is code (containing one or more formulas).  The tail is the
 \emph{payload} and the head is the \emph{battery}.  Hence your core is
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 [battery payload]
 \end{Verbatim}
 \end{framed_shaded}
@@ -531,7 +531,7 @@ argument.  The arm is just a function of the core, ie, a computed attribute.)
 **\kode{10} Reduction:
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
  36 :: *[a 10 [b c] d]   *[a 8 c 7 [0 3] d]
 
 34r ::     *[a 8 b c]        [[*[a b] a] c]
@@ -546,7 +546,7 @@ argument.  The arm is just a function of the core, ie, a computed attribute.)
 \textbf{\kode{10} reduced:}
 
 \begin{framed_shaded}
-\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\relsize{-2.5},commandchars=\\\{\}]
 36r ::    *[a 10 [b c] d]   *[*[[*[a c] a] 0 3] d]
 
 33 ::    *[a 10 b c]       *[a c]

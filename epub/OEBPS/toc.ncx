@@ -18,25 +18,5 @@
     <navLabel><text>Chapter 1</text></navLabel>
     <content src="preface_fragment.html"/>
 </navPoint>
-<navPoint id="introduction" playOrder="3">
-    <navLabel><text>Chapter 2</text></navLabel>
-    <content src="introduction_fragment.html"/>
-</navPoint>
-<navPoint id="ch1_intro_to_nock" playOrder="4">
-    <navLabel><text>Chapter 3</text></navLabel>
-    <content src="ch1_intro_to_nock_fragment.html"/>
-</navPoint>
-<navPoint id="ch2_nock_macros" playOrder="5">
-    <navLabel><text>Chapter 4</text></navLabel>
-    <content src="ch2_nock_macros_fragment.html"/>
-</navPoint>
-<navPoint id="ch3_cores" playOrder="6">
-    <navLabel><text>Chapter 5</text></navLabel>
-    <content src="ch3_cores_fragment.html"/>
-</navPoint>
-<navPoint id="ch4_nock_reference" playOrder="7">
-    <navLabel><text>Chapter 6</text></navLabel>
-    <content src="ch4_nock_reference_fragment.html"/>
-</navPoint>
     </navMap>
 </ncx>
