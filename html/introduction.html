@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="stylesheets/pygments.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/softcover.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <title>urbit_tutorial</title>
+    
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+        },
+        TeX: {
+          extensions: ["AMSmath.js", "AMSsymbols.js"],
+          equationNumbers: {
+            autoNumber: "AMS",
+            formatNumber: function (n) { return "2" + '.' + n }
+          },
+          Macros: {
+            PolyTeX:    "Poly{\\TeX}",
+            PolyTeXnic: "Poly{\\TeX}nic",
+            sig: "\\textasciitilde",
+ket: "\\verb+^+",
+phep: "\\kode{-{}-}"
+          }
+        },
+        showProcessingMessages: false,
+        messageStyle: "none",
+        imageFont: null
+      });
+
+      </script>
+      <script type="text/javascript" src="MathJax/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+    
+  </head>
+  <body>
+    
+    <div id="book">
+      <div id="cid2" data-tralics-id="cid2" class="chapter" data-number="2" data-chapter="introduction"><h1><a href="introduction_fragment.html#cid2" class="heading hyperref"><span class="number">Chapter 2 </span>Introduction: What is a Personal Cloud Computer?</a></h1>
+<blockquote class="quotation"><p class="noindent">Tlon’s three rules of platform warfare:</p>
+<p style="margin-top: 6.0pt" class="noindent"><span class="break"></span>
+1.<span class="intersentencespace"></span> General-purpose computers beat special-purpose computers.</p>
+<p class="noindent">2.<span class="intersentencespace"></span> Personal computers beat industrial computers.</p>
+<p class="noindent">3.<span class="intersentencespace"></span> Cloud computers beat ground computers.<span class="intersentencespace"></span></p>
+</blockquote><p>Urbit is an open-source software stack that runs a Personal Cloud Computer, or
+PC2.</p>
+<p>A PC2 is any general-purpose machine, physical or virtual, that operates
+natively on the Internet (cloud), and whose operation is sufficiently simple
+that it can be understood and controlled by the user (personal).</p>
+<p>The PC2 is general-purpose, in that it can run programs and applications that
+perform a wide range of functions.<span class="intersentencespace"></span> This is contrasted with special-purpose
+platforms, such as a pocket calculator or consumer web application, that can
+only perform a single function, or limited range of related functions.</p>
+<p>The PC2 is personal, in that the ordinary user can understand its operation
+without requiring a high degree of specialized technical skill.<span class="intersentencespace"></span> This is
+contrasted with industrial services, such a Linux server, whose computational
+semantics are rendered largely opaque by their complexity, even to the
+technically skilled.</p>
+<p>The PC2 is a cloud computer, in that it intrinsically operates on a network and
+blurs the distinction between network and local resources.<span class="intersentencespace"></span> This is contrasted
+with non-network, or ground, computers, such as the early personal computer,
+which maintains a sharp distinction between data on its own disk and data on
+the network.</p>
+<p>The individual user can easily setup and administer a PC2 on their own, run and
+write a endless variety of applications, and can not only can access their
+programs and data seamlessly from any client, but can serve any kind of content
+to all other clients on the network.<span class="intersentencespace"></span> Meaning that all programs running on a
+PC2 can communicate with programs running on different PC2’s as easily as they
+can communicate with programs on the same PC2.<span class="intersentencespace"></span> The PC2 is not just a
+general-purpose client, it is also a general-purpose server.<span class="intersentencespace"></span> In other words, a
+network of PC2’s is, by definition, a general-purpose social network.</p>
+<p>By no means is this concept an idea original to Urbit.<span class="intersentencespace"></span> Many, many systems
+desinged to implement the PC2 have been tried and, without exception, have
+failed to do so.<span class="intersentencespace"></span> These previous attempts have been crippled by their inadequate
+solution two fundamental problems: software portability and network identity.</p>
+<p>Portable software can be trivially executed with the same semantics on any
+general-purpose computer.<span class="intersentencespace"></span> One can transfer portable from one machine to any
+other machine, and expect it to produce the same output.<span class="intersentencespace"></span> If the two machines
+differ in their output, it is easy to see which one is correct and which has an
+an implementation error.</p>
+<p>In contrast, unportable sofware must be modified for each platform
+it is run on without any expectation of identical semantics on different
+platforms and with complex chains of dependency on other software tools and
+libraries, also ususally different per platform.</p>
+<p>Unportable software drastically increases complexity, making it difficult for
+ordinary users to understand and administer their own general-purpose computer
+and incentivizing them to use special-purpose applications and services
+administered by others.<span class="intersentencespace"></span> A lack of portability also makes the goal of
+indifference to resource locality significantly harder to acheive.</p>
+<p>[Section on Network Identity needs reworking]</p>
+<p>Network identity can best be thought of in the context of the classic computer
+science problem of Zooko’s Triangle, which states:</p>
+<p>The address space of any network can be at most two of secure, human-meaningful
+and decentralized.</p>
+<p>Secure means that it is impractical for any node on the network to impersonate
+another, i.e.<span class="intersentencespace"></span> when any talks to any other node can authenticate that the node
+is who they say they are.</p>
+<p>Human-meaningful means that addresses on the network present a good user
+interface, e.g.<span class="intersentencespace"></span> a domain name, such as pets.com, is human-meaningful, an IP
+address is not.</p>
+<p>Decentralized means that addresses and identities on the network are not stored
+with and verified by a central party.</p>
+<p>Choosing only secure and human-meaningful but not decentralized effectively
+turns your network a large distributed server.<span class="intersentencespace"></span> Consumer web applications that
+claim to be social “networks” are, in fact, simply social servers.</p>
+<p>Networks that are secure and decentralized, but not human-meaningful present a
+poor interface to the user and fail to gain adoption, because long numbers are
+difficult to distiguish from one another.</p>
+<p>And sacrificing secure for human-meaningful and decentralized means that the
+network is impossible to defend against malicious activity such as spam.</p>
+<p>Succinctly, the problem of network identity is: How does one authenticate
+another node in the network?<span class="intersentencespace"></span> And how does one distinguish between a new user
+and a returning spammer?</p>
+<p>It would not be too broad a mischaracterization to describe Urbit as a system
+that implements portable software on a network with strong identity.</p>
+<p>Urbit solves the problem of software portability with a stateless virtual
+machine called Nock, which can be thought of as a “Maxwell’s equations” of
+software.<span class="intersentencespace"></span> The Nock machine is defined in 340 bytes of pseudocode and executes a
+pure Turing-complete function.<span class="intersentencespace"></span> Nock is not the smallest Turing-complete
+computational automaton, but is easily one of the smallest practical ones.<span class="intersentencespace"></span> Everything implemented in Urbit is built on top of Nock.</p>
+<p>Nock is portable to any platform that can run a Nock interpreter, which is all
+general-purpose platforms.<span class="intersentencespace"></span> Since the Nock specification is conunambigs If two
+Nock interpreters disagree with one another, it is trivial to determine which
+is wrong and which is right.</p>
+<p>Urbit solves the problem of network identity by embedding</p>
+<p>[Section on Network Identity needs reworking]</p>
+<p>This book is designed for the novice programmer…</p>
+</div>
+    </div>
+  </body>
+</html>

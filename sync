@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+# De-Curtisify text
+def de_curtisify(text)
+  # Make and (poor-man's) test some regexes.
+  ie_regex = /(^|\(|\s+)(i)e([^\w]|$)/i
+  raise unless ie_regex =~ 'ie'
+  raise unless ie_regex =~ "\nie,"
+  raise unless ie_regex =~ "(ie,"
+  raise unless ie_regex =~ "Ie,"
+  raise if     ie_regex =~ "Mmm, pie."
+
+  eg_regex = /(^|\(|\s+)(e)g([^\w]|$)/i
+  raise unless eg_regex =~ 'eg'
+  raise unless eg_regex =~ "\neg,"
+  raise unless eg_regex =~ "(eg,"
+  raise unless eg_regex =~ "Eg,"
+  raise if     eg_regex =~ "Shut up, Peg."
+
+  emdash_regex = /([^\s])(\s)-(\s)/
+  raise unless emdash_regex =~ 'hey - dude!'
+  raise unless emdash_regex =~ "but -\n"
+  raise if     emdash_regex =~ '3-4'
+
+  # Gsub that sucker.
+  text.gsub! ie_regex, '\1\2.e.\3'
+  text.gsub! eg_regex, '\1\2.g.\3'
+  text.gsub! emdash_regex, '\1---'
+  text.gsub! ' etc,', ' etc.,'
+
+  text
+end
+
+def process(text)
+  text.gsub('~', '\sig ').
+       gsub('^', '\ket ').
+       gsub('`--` ', '\phep\ ')
+end
+
+# Sync with the remote Urbit tutorial
+Dir.chdir '../urbit.github.io'
+system 'git fetch upstream'
+system 'git merge upstream/master'
+Dir.glob('_posts/doc/*.markdown').each do |filename|
+  basename = File.basename(filename, '.markdown')
+  FileUtils.cp filename, "../urbit_tutorial/chapters/#{basename}.md"
+end
+
+# Write a sensible local version
+Dir.chdir '../urbit_tutorial'
+filenames = Dir.glob('chapters/*.md')
+filenames.each do |filename|
+  lines = File.readlines(filename)
+  output = []
+  in_code_block = false
+  while (line = lines.shift) do
+    next if line =~ /^---/
+    next if line =~ /^\[\*\*Next/
+    next if line =~ /^\[\*\*Prev/
+    next if line =~ /^layout:/
+    next if line =~ /^category:/
+    if line =~ /^title: (?:.*?\((.*?)\).*)$/
+      output << "# #{$1}"
+    elsif line =~ /^```/
+      output << "```text\n"
+      output << line until (line = lines.shift) =~ /^```/
+      output << line << "\n"
+    elsif line =~ /^    (.*)$/
+      output << "```text\n" unless in_code_block
+      in_code_block = true
+      output << $1 << "\n"
+    elsif line.strip.empty?
+      output << line
+    elsif line =~ /(#+)([^#]+)\1/
+      output << "```\n\n" if in_code_block
+      in_code_block = false
+      output << $1 << " #{$2}\n"
+    else
+      output << "```\n" if in_code_block
+      in_code_block = false
+      output << process(line)
+    end
+  end
+  File.write(filename, de_curtisify(output.join))
+end

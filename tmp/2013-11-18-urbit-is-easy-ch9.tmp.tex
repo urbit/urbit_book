@@ -1,0 +1,518 @@
+\chapter{Tiles}
+
+\emph{``Not to get knowledge, but to save yourself from having
+ignorance foisted upon you.''}
+
+\textbf{(Carlyle)}
+
+\section{Tiles}
+
+We actually told a little white lie when we said that a Hoon file
+turns into a twig.  Well, sort of.  It does turn into a twig.
+But parts of it often start out as something else---a \kode{tile}.
+
+What is a tile?  First, concretely, a tile is an AST subtree
+that's reduced statically into a twig.  It can be reduced in four
+ways---cryptically called \kode{bunt}, \kode{clam}, \kode{fish}, and \kode{whip}.  A
+tile is always some leg of a twig, and that twig defines how the
+tile is reduced.  (Don't worry, we'll see plenty of examples.)
+
+Abstractly, though, when we see tiles in Hoon peer at them
+through our rapidly fading 20th-century programming spectacles,
+what we see looks a heck of a lot like a \emph{type declaration}.  
+
+But no.  Just as a gate is not a lambda, a tile is not a type.
+And worse---we've already used the word \kode{type} for something
+else.  And worst of all---each tile corresponds to a well-defined
+type, called its \emph{icon}.  But tile and icon are not in any way
+the same noun.  You can see the potential confusion\ldots{}
+
+A tile is actually two steps away from being a type, in the
+strict sense of \kode{++type}.  The tile is converted statically
+into a twig, which in turn may (depending on the conversion)
+produce the icon, test for it, etc.  And always, the icon is 
+some function of the tile and its subject.
+
+Nonetheless, even the most experienced Hoon programmers can be
+heard saying ``type'' when they mean ``tile.''  Apparently you can
+take the boy out of the '90s but not the '90s out of the boy.
+In fact, it's tempting to suggest that if there's one problem
+with 20th-century programming in general, it's that it doesn't
+know the difference between a tile and its icon.
+
+Imagine, for instance, a C++ in which the class definition and
+the constructor are the same thing.  And the latter can also
+validate untrusted data off the Internets, acting much as for
+instance an XML DTD.  Yo, why would you have a type system and
+not be able to do this?
+
+\section{Reductions}
+
+Broadly speaking, a tile is a \emph{convenient way of making a
+well-typed noun}.  
+
+It's important to note that tiles are really pure sugar.  It is
+possible to build a language like Hoon, but with only twigs and
+no tiles.  However, certain common tasks in this language will
+always be unnecessarily cumbersome.  
+
+A tile is not a type declaration, but it has roughly the same job
+to do---and this is by no means a trivial job.  So tiles aren't
+trivial.  Sorry, we wish they were.  (Actually we wish they
+didn't exist at all, but couldn't figure out how to swing it.)
+
+We use tiles by converting them to twigs, which produce or
+identify nouns of a type easily predictable from the tile.
+Again, there are four such reductions: \kode{bunt}, \kode{clam}, \kode{fish}, 
+and \kode{whip}.
+
+\subsection{Bunting}
+
+Bunting a tile---if \kode{sec} is a tile, \kode{\sig (bunt al sec)} produces
+its bunt---makes a twig that \emph{creates a blank default example}
+of the tile's icon. 
+
+Bunting is actually the most common use of a tile.  Consider the
+gates we've just been defining---how do we build a gate?   With
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  deq
+  =+  x=0
+  |.  
+  =+  y=0
+  |\PYZhy{}  
+  ?:  =(x +(y))
+    y
+  \PYZdl{}(y +(y))
+\end{Verbatim}
+\end{framed_shaded}
+The value \kode{x=0} is a useless default.  It's in our gate only
+because the gate is built first, then modified with the real
+sample.  Accordingly, in practice to build a gate we use the
+synthetic hoon \kode{\textbar{}=} (\kode{bartis}, \kode{\%brts}), which is defined as
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  twig  \PYZdl{}\PYZpc{}  [\PYZpc{}brts p=tile q=hoon]
+          ==
+\end{Verbatim}
+\end{framed_shaded}
+and 
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  open
+  \PYZca{}\PYZhy{}  twig
+  ?\PYZhy{}    gen
+    [\PYZpc{}bctr *]  [\PYZpc{}ktsg \PYZti{}(bunt al p.gen)]
+    [\PYZpc{}brcb *]  [\PYZpc{}tsls [\PYZpc{}bctr p.gen] [\PYZpc{}brcn q.gen]]
+    [\PYZpc{}brts *]  [\PYZpc{}brcb p.gen (\PYZti{}(put by *(map term foot)) \PYZpc{}\PYZdl{} [\PYZpc{}ash q.gen])]
+  ==
+\end{Verbatim}
+\end{framed_shaded}
+(The only hoon we haven't met here is \kode{\ket \sig } (\kode{ketsig}, \kode{\%ktsg}),
+which tells the compiler to compute a constant expression at
+compile time.  Obviously, the default sample in a gate should
+under almost every circumstance be a constant.)
+
+With \kode{\textbar{}=} we have:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  deq
+  |=  x=@
+  =+  y=0
+  |\PYZhy{}  
+  ?:  =(x +(y))
+    y
+  \PYZdl{}(y +(y))
+\end{Verbatim}
+\end{framed_shaded}
+or if we prefer
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  deq  |=(x=@ =+(y=0 |\PYZhy{}(?:(=(x +(y)) y \PYZdl{}(y +(y))))))
+\end{Verbatim}
+\end{framed_shaded}
+What is \kode{x=@}?  A tile.  And the tile in \kode{\textbar{}=} is always bunted to
+create the default sample.  
+
+Furthermore, it's wrong to say that the default sample is
+useless.  It generates a corresponding \emph{default product}.  It is
+perfectly legitimate to simply apply a gate, even a previously
+unviolated gate, without changing the sample at all.
+
+For example, one type of tile is simply a gate.  When we bunt
+such a gate, we have no choice but to produce the default
+product.  Thus any gate arm that wants to be used as a tile
+has the responsibility to produce a useful default product.
+
+\subsection{Clamming}
+
+The \kode{clam} reduction generates a gate which accepts an arbitrary
+noun and produces a member of the tile's icon.  I.e., \kode{clam}
+generates a validator function for the icon.  Perhaps you
+can see how this might be useful, at least, on the Internets.
+
+Moreover, a clam for any tile, if passed a member of the type, is
+guaranteed to produce its sample.  If passed a noun outside
+the type, it will normalize and/or default.  It won't crash---except for the custom cases of \kode{\%herb} and \kode{\%weed}.
+
+\subsection{Fishing}
+
+The \kode{fish} reduction lets us test if a noun matches the tile,
+with the \kode{?=} (\kode{wuttis}, \kode{\%wtts}) natural hoon:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  twig  \PYZdl{}\PYZpc{}  [\PYZpc{}wtts p=tile q=wing]
+          ==
+\end{Verbatim}
+\end{framed_shaded}
+Note that \kode{?=} only works on a wing and more specifically leg---that is, it has to be testing a fragment of the subject.
+
+Moreover---we'll discuss this in more detail when we get to type
+inference---when we use \kode{?=} in a \kode{?:} test, the compiler sees
+the test and uses it to refine the subject type on either side
+of the branch.  Hence:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+?:  ?=(@ a)             ::  test if a is an atom
+  XX                    ::  code assuming a is an atom
+XX                      ::  code assuming a is a cell
+\end{Verbatim}
+\end{framed_shaded}
+Some languages call fishing ``pattern matching.'' 
+
+\subsection{Whipping}
+
+Besides fishing on a leg, we can normalize any leg to any tile
+using the \kode{\$@} (\kode{bucpat}, \kode{\%bcpt}) hoon---aka, \kode{whip}.  Not only
+is \kode{whip} the same thing as \kode{clam}, it's what \kode{clam} uses
+internally. All \kode{clam} does is make a gate whose sample, an 
+arbitrary noun \kode{+\textless{}} (\kode{glus}, \kode{.6}), it whips into its tile.
+
+\section{Tile syntax and abuse}
+
+A wide variety of twigs contain tiles, but the basic tiling twigs
+are worth listing in one place, along with their regular and
+irregular syntax:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  twig  \PYZdl{}\PYZpc{}  [\PYZpc{}bccb p=tile]
+              [\PYZpc{}bccm p=tile]
+              [\PYZpc{}bcpt p=wing q=tile]
+              [\PYZpc{}bctr p=tile]
+              [\PYZpc{}wtts p=tile q=wing]
+          ==
+\end{Verbatim}
+\end{framed_shaded}
+\kode{\$\_} (\kode{buccab}, \kode{\%bccb}) bunts tile \kode{p}.
+
+\kode{\$*} (\kode{buctar}, \kode{\%bctr}) bunts tile \kode{p} and folds it statically
+to a constant with \kode{\%ktsg}.
+
+\kode{\$,} (\kode{buccom}, \kode{\%bccm}) makes a clam for tile \kode{p}.
+
+\kode{\$@} (\kode{bucpat}, \kode{\%bcpt}) whips the leg at wing \kode{p}, filtering it
+with tile \kode{q}.
+
+\kode{?=} (\kode{wuttis}, \kode{\%wtts}) fishes the leg at wing \kode{q} for tile \kode{p},
+producing \& (yes) if and only if leg \kode{q} is in tile \kode{p}.
+
+(\kode{\%wtts} looks different because it produces a boolean, not a
+noun in the tile.)
+
+One thing we'll see quite frequently is the irregular wide forms
+of these hoons (in fact, the regular forms of many are rare).
+Consider the base tiles \kode{*} and \kode{@}---i.e., noun and atom.  (And
+note that tiles, too, have tall, wide, and irregular wide forms.)
+
+The \kode{\_} prefix before a wide tile is \kode{\%bccb}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}zod/try=\PYZgt{} \PYZus{}*
+0
+
+\PYZti{}zod/try=\PYZgt{} :type; \PYZus{}*
+0
+*
+\end{Verbatim}
+\end{framed_shaded}
+The \kode{*} prefix on a tile is \kode{\%bctr}, the same thing folded to a
+constant (obviously a no-op here)
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}zod/try=\PYZgt{} **
+0
+\PYZti{}zod/try=\PYZgt{} :type; **
+0
+*
+\end{Verbatim}
+\end{framed_shaded}
+The \kode{,} prefix on a tile is \kode{\%bccm}, i.e., generate a function
+producing the tile.  Let's save one of our nouns and make it an
+atom, using a clam.  Let's try the clam on different things:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}zod/try=\PYZgt{} =foo \PYZus{}*
+\PYZti{}zod/try=\PYZgt{} (,@ foo)
+0
+\PYZti{}zod/try=\PYZgt{} :type; (,@ foo)
+0
+@
+\PYZti{}zod/try=\PYZgt{} :type; (,@ [5 5])
+0
+@
+\PYZti{}zod/try=\PYZgt{} :type; (,@ \PYZpc{}foo)
+7.303.014
+@
+\end{Verbatim}
+\end{framed_shaded}
+Alternately, we could check if our \kode{*} is a \kode{@} with \kode{?=}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}zod/try=\PYZgt{} ?=(@ foo)
+\PYZpc{}.y
+\end{Verbatim}
+\end{framed_shaded}
+Why is all this true?  Because the bunt of \kode{*} is the atom \kode{0}
+with the type \kode{\%noun}.
+
+Finally, if a tile appears where we expect a twig, the normal
+tile-to-twig conversion is always \kode{\%bccm}.  I.e., using a tile as a
+twig generates a gate producing the icon.
+
+\section{The tiles}
+
+With a good general understanding of what a tile is for---we'll
+go back into the tiles we actually have:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  tile  
+  \PYZdl{}\PYZam{}  [p=tile q=tile]                     ::  ordered pair
+  \PYZdl{}\PYZpc{}  [\PYZpc{}axil p=base]                      ::  base type
+      [\PYZpc{}bark p=term q=tile]               ::  name
+      [\PYZpc{}bush p=tile q=tile]               ::  pair/tag
+      [\PYZpc{}fern p=[i=tile t=(list tile)]]    ::  plain selection
+      [\PYZpc{}herb p=twig]                      ::  function
+      [\PYZpc{}kelp p=[i=line t=(list line)]]    ::  tag selection
+      [\PYZpc{}leaf p=term q=@]                  ::  constant atom
+      [\PYZpc{}reed p=tile q=tile]               ::  atom/cell
+      [\PYZpc{}weed p=twig]                      ::  example
+  ==                                      ::
+++  line  ,[p=[\PYZpc{}leaf p=odor q=@] q=tile]
+++  base  ?([\PYZpc{}atom p=odor] \PYZpc{}noun \PYZpc{}cell \PYZpc{}bean \PYZpc{}null)
+\end{Verbatim}
+\end{framed_shaded}
+Observe that the tile stems are no longer rune digraphs.  Rather,
+a gardening metaphor appears to pertain.  Let's work through
+these one by one, showing both (regular) syntax and semantics.
+
+\subsection{\kode{[\%axil p=base]}}
+
+An \kode{\%axil} is a simple built-in mechanism for a few basic
+icons: an atom of any odor (\kode{@odor}, or just \kode{@} for the
+odorless base atom); a noun (\kode{*}); a cell of nouns (\kode{\ket }); a
+loobean \kode{?}; and null \kode{\sig }. 
+
+\subsection{\kode{[\%leaf p=term q=@]}}
+
+A \kode{\%leaf} is an atomic constant of value \kode{q} and odor \kode{p}.
+Obviously its icon is a \kode{\%cube}.
+
+The syntax for a leaf is the same as the twig syntax, except that
+\kode{\%} is never required to generate a cube.  For instance, as a
+twig, \kode{7} has a type of [\%atom \%ud]; \kode{\%7} has a type of 
+\kode{[\%cube 7 [\%atom \%ud]]}.  But the icon of the leaf \kode{7} is,
+again, \kode{[\%cube 7 [\%atom \%ud]]}.
+
+\subsection{\kode{[p=tile q=tile]}}
+
+Tiles autocons, just like twigs---a cell of tiles is a tile of
+a cell.  But we shouldn't skip the differences too lightly.
+
+A cell of twigs is also a twig of a cell.  But in the cell of
+twigs, the subject of either leg is the original subject.
+Whereas when applying a tile in a whip or clam, the subject is
+split in half for equally obvious reasons.  
+
+(Otherwise, how would \kode{(,[@ @] [4 5])} be \kode{[4 5]}?  Clearly, this
+should be the same as \kode{[(,@ 4) (,@ 5)]}.  Clearly, it should not
+be the same as \kode{[(,@ [4 5]) (,@ [4 5])]}---which would produce
+merely \kode{[0 0]}.)
+
+The irregular wide syntax for tile autocons is the same as the
+syntax for twig autocons---e.g., \kode{[@ @]}, a cell of atoms.  But
+there is also a regular tall/wide tuple syntax, with \kode{\$:}
+(\kode{buccol}, \kode{\%bccl}).  Thus instead of \kode{[@ @]} we could write:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZdl{}:  @
+    @
+==
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{\kode{[\%bark p=term q=tile]}}
+
+Wrap a name round a tile.  \kode{a=*} parses as \kode{[\%bark \%a \%noun]}.
+
+This is another case where the tile syntax matches the twig
+syntax, but only in the irregular form.  The twig equivalent of
+\kode{\%bark} is of course \kode{\ket =} (\kode{kettis}, \kode{\%ktts}).  But the tile is
+\kode{\$=} (\kode{buctis}):
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZdl{}=  a
+*
+\end{Verbatim}
+\end{framed_shaded}
+Obviously a silly syntactic arrangement.  But you can need it if
+\kode{q} is really big.
+
+\subsection{\kode{[\%reed p=tile q=tile]}}
+
+A \kode{\%reed} is a tile whose icon contains two kinds of nouns: atoms
+of tile \kode{p} and cells of tile \kode{q}.
+
+There is no irregular form of \kode{\%reed}.  The regular form is:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZdl{}|  \PYZti{}
+    [@ @]
+==
+\end{Verbatim}
+\end{framed_shaded}
+or in wide mode, of course, \kode{\$\textbar{}(\sig  [@ @])}.
+
+\subsection{\kode{[\%kelp p=[i=line t=(list line)]]}}
+
+A \kode{kelp} is the workhorse of tiles---it provides the most common
+data structure in any language, the discriminated union.  
+
+In Hoon, the head (which must be a \kode{leaf}) is called the \kode{stem}.
+The tail (which can be anything) is the \kode{bulb}.  Cases of a kelp
+are known inevitably as \kode{fronds}.  
+
+(Yes.  We're aware that ``kelp'' is not properly a singular noun.
+In Hoon---it is properly a singular noun.  And that's that.  And 
+oddly, it's not that hard to run out of four-letter plants.)
+
+\subsection{\kode{[\%bush p=tile q=tile]}}
+
+A \kode{\%bush} is a tile in which there are two kinds of nouns: cells
+whose head is a cell (tile \kode{p}) and cells whose head is an atom
+(tile \kode{q}).  Its default value is the value of \kode{q}.
+
+We don't have to look very far to find a bush---\kode{++tile} is one,
+as is \kode{++twig} and \kode{++nock}.  The rune is \kode{\$\&} (\kode{bucpam}).  See
+\kode{++tile} above---\kode{p} is \kode{[p=tile q=tile]}, \kode{q} is the \kode{\$\%}.
+There is no irregular form.
+
+What's the use of a bush?  Often in a variety of data structures
+we have something like autocons, in which forming a cell of two
+instances has an obvious default semantics.  
+
+Sure, we could attach these semantics to an atom, and just use a
+\kode{\%kelp}.  In twigs, tiles, or nock formulas, we could have an
+explicit \emph{cons} stem of some sort.  But it would be a bulky and
+annoying pain in the butt as compared to autocons.
+
+\subsection{\kode{[\%fern p=[i=tile t=(list tile)]]}}
+
+A \kode{fern} is a non-empty list of cases; its icon is naturally
+a \kode{\%fork}.  The programmer is responsible for ensuring that the
+cases are actually orthogonal (unlike with the structured forks,
+\kode{\%bush}, \kode{\%kelp} and \kode{\%reed}).  A good general practice is to use
+ferns only with leaves (see below).
+
+For example, a fern that could be \kode{\%foo} or \kode{\%bar} has the
+irregular form \kode{?(\%foo \%bar)}, or the regular form
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZdl{}?  \PYZpc{}foo
+    \PYZpc{}bar
+==
+\end{Verbatim}
+\end{framed_shaded}
+The default value is the first---in this case, \kode{\%foo}.
+
+But wait. Why do we need these other selection tiles, \kode{\%bush} and
+\kode{\%reed} and \kode{\%kelp}, if we have \kode{\%fern}?
+
+The answer is that tiles aren't magic.  They are really just ways
+of generating specific twigs that do useful things with nouns.
+Suppose, for instance, you use a \kode{\%fern} as a \kode{\%kelp}.  You can
+do this---but we may well generate more effective validation code
+for a \kode{\%kelp}, whose structure we understand how to search for.
+
+And even if were this not the case, anyone creating complex tiles
+and icons should use one of these standard structures---simply
+because it is never really worth varying from this set of
+patterns, even if small structural efficiencies can be extracted.
+Therefore, it's worth telling both the compiler and the reader
+exactly what the programmer is trying to do in each case.
+
+\subsection{\kode{[\%herb p=twig]}}
+
+You can write your own tile which is just a gate, accepting a
+sample of \kode{*} and normalizing it as you choose.  If you use a
+twig as a tile, it's treated as an herb.
+
+For example, when we define a gate like \kode{++base}, as defined
+above (remember that when we use a tile as a twig, we get the
+clam, i.e., the normalizing gate) \kode{base} is just an arm which
+produces a gate.  Nothing has any idea that this gate is built
+from a tile of its own.
+
+So when we parse \kode{[p=base q=base]} as a tile, the parser builds
+the noun:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+[[\PYZpc{}bark \PYZpc{}p \PYZpc{}herb \PYZpc{}cnzy \PYZpc{}base] [\PYZpc{}bark \PYZpc{}q \PYZpc{}herb \PYZpc{}cnzy \PYZpc{}base]]
+\end{Verbatim}
+\end{framed_shaded}
+In other words, \kode{base} in \kode{p=base} is actually a \emph{twig}, but this
+twig happens to produce a normalizing gate generated by clamming
+a tile.  In time this will come to seem totally straightforward,
+but don't be surprised if it confuses you now.
+
+The important thing to remember about \kode{\%herb} is that the actual
+twig we provide will be applied when we whip or clam.  Hence,
+arbitrary normalization and/or verification procedures may be
+part of the herbaceous custom tile.
+
+\subsection{\kode{[\%weed p=twig]}}
+
+\kode{\%weed} is the lamest kind of tile---tile by example.  A \kode{\%weed}
+is defined by its example twig \kode{p}, which produces the icon.
+
+One limitation is obvious---it is essentially useless to whip or
+clam for a \kode{\%weed}.  Whipping or clamming on a \kode{\%weed} simply
+ignores the sample and reproduces the example---as does bunting,
+of course.  However, \kode{\%weed} remains quite useful.
+
+The irregular syntax for a \kode{\%weed} is a \kode{\_} prefix---for example,
+to use a twig \kode{foo} as a \kode{\%weed}, we write \kode{\_foo}.  The regular
+form is \kode{\$\_} (\kode{buccab}):
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZdl{}\PYZus{}  foo
+\end{Verbatim}
+\end{framed_shaded}

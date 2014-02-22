@@ -1,0 +1,32 @@
+\documentclass[14pt]{extbook} % Edit this line to change the documentclass.
+% Add custom preamble content below.
+% Example commands for using the Polyglossia package with French are
+% included for reference.
+\usepackage{polyglossia}
+% \newfontfamily\greekfont[Script=Greek]{Linux Libertine O}
+\newfontfamily\greekfont{Helvetica Neue}
+
+\setotherlanguage{greek}
+\DeclareTextCommandDefault{\nobreakspace}{\leavevmode\nobreak\ }
+
+\usepackage{latex_styles/softcover}
+\VerbatimFootnotes % Allows verbatim text in footnotes
+\title{Urbit}
+\subtitle{The Personal Cloud Computer}
+\author{C.G. Yarvin, J.C. Burnham, M.D. Hartl}
+\date{}
+
+\begin{document}
+
+\includepdf{images/cover.pdf}
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+\include{generated_polytex/preface}
+\include{generated_polytex/introduction}
+\include{generated_polytex/ch1_intro_to_nock}
+\include{generated_polytex/ch2_nock_macros}
+\include{generated_polytex/ch3_cores}
+\include{generated_polytex/ch4_nock_reference}
+\end{document}

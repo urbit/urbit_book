@@ -1,0 +1,285 @@
+Tis runes (compositions, stack manipulation)
+=+ push i.e. operator 8
+~nibweg-sivnex/try=> =+(47 =+(55 (add - +<)))
+102
+~nibweg-sivnex/try=> =+(47 =+(55 (add +2 +6)))
+102
+~nibweg-sivnex/try=> =+(x=47 =+(y=55 (add x y)))
+102
+~nibweg-sivnex/try=> =+([x=47 y=55] (add x y))
+102
+
+Axis
+. and +1 are the same
+- and +2 are the same
++ and +3 are the same
+~nibweg-sivnex/try=> =food [burger='b' apple=[[p='macintosh' q='braeburn']]]
+Dot notation
+~nibweg-sivnex/try=> p.apple.food
+'macintosh'
+=> =< evaluate
+~nibweg-sivnex/try=> =>(apple.food p)
+'macintosh'
+~nibweg-sivnex/try=> =<(p apple.food)
+'macintosh'
+
+Cen runes (invocation)
+
+%: %. invoke with one arg
+~nibweg-sivnex/try=> %:(|=(a=@ a) 42)
+42
+~nibweg-sivnex/try=> %.(42 |=(a=@ a))
+42
+
+%+ invoke with 2 args
+~nibweg-sivnex/try=> %+(|=([a=@ b=@] [a b]) 42 52)
+[42 52]
+
+%^ invoke with 3 args
+~nibweg-sivnex/try=> %^(|=([a=@ b=@ c=@] [c b a]) 42 52 62)
+[62 52 42]
+
+%- invoke with a list of args
+~nibweg-sivnex/try=> %-(|=([a=@ b=@ c=@ d=@] [c b a]) ~[10 20 30])
+[30 20 10]
+~nibweg-sivnex/try=> %-(|=([a=(list ,@)] a) ~[10 20 30])
+~[10 20 30]
+
+%= invoke with changes… most everything boils down to this
+sadly… no example
+
+Col runes (tuples)
+
+:- :_ 2 tuple
+~nibbus-sivnex/try=> :-(50 40)
+[50 40]
+~nibbus-sivnex/try=> :_(50 40)
+[40 50]
+
+:+ 3 tuple
+~nibbus-sivnex/try=> :+(10 20 30)
+[10 20 30]
+
+:^ 4-tuple
+~nibbus-sivnex/try=> :^(10 20 30 40)
+[10 20 30 40]
+
+:* n-tuple
+~nibbus-sivnex/try=> :*(10 20 30)
+[10 20 30]
+~nibbus-sivnex/try=> :*(10 20 30 40)
+[10 20 30 40]
+
+:~ list
+~nibbus-sivnex/try=> :~(10)
+[10 ~]
+~nibbus-sivnex/try=> :~(10 20)
+[10 20 ~]
+~nibbus-sivnex/try=> :~(10 20 30 40)
+[10 20 30 40 ~]
+
+:/ rare funny shaped thingy
+~nibbus-sivnex/try=> :/(50)
+[[%~. [%~. 50] ~] ~]
+
+%[] not a col but should be, similar to :/
+~nibbus-sivnex/try=> %[3]
+[[3 ~] ~]
+
+/ another non-col funny shaped thingie
+~nibbus-sivnex/try=> /10
+[~.10 ~]
+
+: binary to n-ary operations
+~nibbus-sivnex/try=> :(add 3 4 5)
+12
+
+
+/ special syntax for creating lists, useful for generating paths and html?)
+~nibbus-sivnex/try=> /foo/bar/xxx
+[%foo %bar %xxx ~]
+~nibweg-sivnex/try=> action/"fun"
+[%action "fun"]
+
+
+%[] list within a list
+~nibweg-sivnex/try=> %[10 20 30]
+[[10 20 30 ~] ~]
+
+:/ list within a list with leading %~.
+~nibbus-sivnex/try=> :/(50)
+[[%~. [%~. 50] ~] ~]
+~nibweg-sivnex/try=> :/([%foo %bar %xxx])
+[[%~. [%~. %foo %bar %xxx] ~] ~]
+
+ace  space  gal <      per )
+bar  |      gar >      sel [
+bas  \      hax #      sem ;
+buc  $      hep -      ser ]
+cab  _      kel {      sig ~
+cen  %      ker }      soq '
+col  :      ket ^      tar *
+com  ,      lus +      tec `
+doq  "      pam &      tis =
+dot  .      pat @      wut ?
+fas  /      pel (      zap !
+
+| bar gates (ie, functions) (ie, one-method cores)
+? wut conditionals, booleans, tests
+: col tuples
+. dot nock operators
+$ buc factory macros (ie, type definitions) 
+^ ket type conversions
+= tis compositions
+% cen invocations
+& pam gears (ie, objects) (ie, multi-method cores)
+~ sig hints
+# pretty printer (#< and #>)
+; sem miscellaneous macros
+! zap special operations
+=+  tislus  %tsls  wrap faces 
+?:  wutcol  %wtcl  if/then/else as in C
+?~  wutsig  %wtsg  null list ?:
+bar runes (gates)
+|.  bardot  %brdt  [%brdt p=gene]
+|-  barhep  %brhp  [%brhp p=gene] (a core for looping)
+|?  barwut  %brwt  [%brwt p=gene]
+||  barbar  %brbr  [%brbr p=gene q=gene] (iron core with a contravariant sample and an opaque context)    
+|+  barlus  %brls  [%brls p=gene q=gene]
+|*  bartar  %brtr  [%brtr p=gene q=gene] (genericity core)
+|=  bartis  %brts  [%brts p=gene q=gene] (gold core)
+|%  barcen  %brcn  [%brcn p=(map term foot)] Apply a core (defaulting to %gold, invariant)
+|:  barcol  %brcl  [%brcl p=gene q=(map term foot)] Inheritance. Don't use this.
+wut runes (conditionals)
+?:  wutcol  %wtcl  boolean  ?:(.y 1 2)
+?.  wutdot  %wtdt  opposite of ?: 
+?~  wutsig  %wtsg  if p=null q else r
+?^  wutket  %wtkt  if p!=null q else r
+?=  wuttis  %wtts  2 genes, tile match operator e.g. ?=(@ b)
+?%  wutcen  %wtcn  2 genes, wutcen is never used.  it is the gene version of the commonly used tile match operator,?=(p q)
+?>  wutgar  %wtgr  2 genes
+?<  wutgal  %wtgl  2 genes
+?!  wutzap  %wtzp  1 gene
+?|  wutbar  %wtbr  p=(list gene)
+?&  wutpam  %wtpm  p=(list gene)
+?-  wuthep  %wthp  p=gene q=(list ,[p=gene q=gene])
+?+  wutlus  %wtls  [p=gene q=gene r=(list ,[p=gene q=gene])
+col runes (tuples)
+:/  colfas  %clfs  [[%~. [%~. p] ~] ~]
+:-  colhep  %clhp  [p q]
+:_  colcab  %clcb  [q p]
+:+  collus  %clls  [p q r]
+:^  colket  %clkt  [p q r s]
+:*  coltar  %cltr  [a b c]
+:~  colsig  %clsg  [a b c ~]
+:%  colcen  %clcn  ??? p=(list gene)
+:!  colzap  %clzp  ??? p=(list gene)
+:   transforms binary to n-ary operations :(add 1 2 3 4)
+dot runes (Nock operators)
+.^  dotkep  %dtkp  Nock 11, dereference global namespace
+.+  dotlus  %dtls  Nock +
+.*  dottar  %dttr  Nock *
+.?  dotwut  %dtwt  Nock ?
+.@  dotpat  %dtpt  gene to create constant of atomic type (@)
+.~  dotsig  %dtsg  gene to create constant of constant type (%cube)
+buc runes (type definitions)
+$|  bucbar  %bcbr  a type that can be an atom or a cell.  $|(a b) means "a if atom, b if cell."
+$?  bucwut  %bcwt  list of types (see json for an example)
+$%  buccen  %bccn  [%bccn p=gene q=(list gene)] list of tag/tile pairs
+$*  buctar  %bctr  
+cen runes (invocations)
+%-  cenhep  %cnhp  [%cnhp p=gene q=(list gene)] invoke with 0 or more args     
+%:  cencol  %cncl  [%cnls p=gene q=gene] invoke with 1 arg
+%+  cenlus  %cnls  [%cnls p=gene q=gene r=gene] invoke with 2 args
+%^  cenkep  %cnkp  [%cnkt p=gene q=gene r=gene s=gene] with 3 args
+%.  cendot  %cndt  [%cndt p=gene q=gene] invoke with 1 arg, arg first
+%=  centis  %cnts  [%cnts p=wing q=(list ,[p=gene q=gene])] all % resolve to this! evaluate with changes.  Takes a wing and list of [wing gene] pairs
+ket runes
+^-  kethep  %kthp  [%kthp p=gene q=gene] Takes a tile (e.g. type)  Typecast a tile. e.g. ^- @ means "produces atom"  ^-(@ foo) is the same as `@`foo
+^+  ketlus  %ktls  [%ktls p=gene q=gene] Takes an example.  Typecast a gene.
+^=  kettis  %ktts  [%ktts p=term q=gene] Name a face.  ^=(count num) is the same as count=num in wide form
+^.  ketdot  %ktdt  [%ktdt p=gene q=gene] Obscure face-snapping hackery
+^|  ketbar  %ktbr  [%ktbr p=gene] Change the metal of a core.
+^@  ketpam  %ktpm  [%ktpm p=gene]
+^~  ketsig  %ktsg  [%ktsg p=gene]
+^?  ketwut  %ktwt  [%ktwt p=gene] Change the metal of a core.
+^$  ketbuc  %ktbc  false run… this is really just the core one level higher
+tis runes
+=>  tisgar  %tsgr  Gene composition. =>(bar.moo foo)  Take the product of the first gene and use it as the subject of the second. Ie, nock operator 7.
+=<  tisgal  %tsgl  Gene composition =>(foo bar.moo)
+=+  tislus  %tsls  =+(a b) is the same as =>([a .] b)
+sig runes
+~>  siggar  %sggr  [%sggr p=$|(term [p=term q=gene]) q=gene] all hints resolve to this
+~/  sigfas  %sgfs  [%sgls p=@ q=gene] name a jet for this function
+sem runes (misc)
+;~  semsig  %smsg  p=gene q=(list gene)  chained functions ;~(A B B B). Think of A as glue and B as bricks. B is a ++rule which produces a ++edge. A takes a rule and an edge, and gives you another edge.
+;:  semcol  %smcl  p=gene q=(list gene)  chained function
+zap runes (special)
+!.  zapxxx  %zp..  Zap runes are exclusively for debugging, crazy reflexive shit, meta-whatever, etc. Fear them.
+$  re-invokes the core
+^$ goes one core higher
+<> converts anything to text
+>< structured multi-line text like      ++tank, so [%talk >foo<]
+
+Funtion combinators (monads)  rules and edges
+;~ takes two kinds of functions, A and B. One A and many B, so ;~(A B B B). Think of A as glue and B as bricks. B is a ++rule which produces a ++edge. A takes a rule and an edge, and gives you another edge.
+So the simplest glue is ++plug, which just parses things in order and makes a tuple. Of course it's all typed. Also, not everything is composed with semsig; eg, ++ cook makes one rule out of another by applying a fn to the result…
+++rule, is really just a parser-shaped function
+(list ,@) is a clean model that produces a list of atoms
+e.g. [1 2 3 4 5 ~] or ~[1 2 3 4 5]
+(dec 3)                           invoke function with args
++(c)                              .+c or (inc c) 
+`(list gene)`
+.(sut syp)
+=(~ hey)
+*(map term foot)
+$(gen q.gen)                      re-invoke core
+?(%noun %void)                    create gene as with %=  (cook |=(a=wing [%cnts a ~]) rope)
+~(clam al bore)
+!(lth a b)
+&((gte c 'a') (lte c 'z'))
+|(?=(~ q.b) (vor n.a n.q.b))
+:(add 3 4 5 6)                    turns binary into n-     ary
+,*                                convert the tile * to a function
+,@                                a function that returns an atom
+@                                 an atom
+Important kernel functions
+++reel  left fold list traversal
+++roll  right fold list traversal
+++turn  maps a function onto a list
+
+++rule  takes a ++nail and produces an ++edge (NOTE: rule is not a model... it is an example)     
+++jam   packs up any noun as an atom
+++cue   reverse of jam
+++bunt  (in ++al) turn a tile into a gene that generates a default instance     
+++clam  (in ++al) turn a tile into a model
+++rsh   right shift (rsh bloq count atom)  where bloq is a power of 2… 0=1 bit, 3=8 bits, etc.
+++lsh   left shift
+++met   measure number width (met blow atom) return number of bloq units long the atom is
+++end   (end bloq length atom)  removes the leading bits of a number
+++cut   (cut bloq [chop length] atom)  cut the middle out of a number, chop off the end, then keep length
+++rip   (rip bloq atom) converts atom into array of bloq size
+++lent  number of items in list
+++snag  (snag n list) list[n] zero based
+++slag  (slag n list) list from n to the end
+++scag  (scag n list) list of first n items
+++swag  (swag [n len] list) list starting from n for n item
+++so
+++bisk  parser of powers of %ud %ub %ux %uv %uw  (use ++ag funcs dem bay hex viz wiz)
+Glossary
+gene    an AST… also a model that generates a gene from a noun
+tile    an abstract expression of a type we want to define
+model   a function that converts a noun to a (particular) gene 
+Misc
+++al defines blah home bunt clam whip
+++ap defines bore burl etch hack jone open rake rusk
+Parsing
+++ so
+++ bisk
+++ crub
+++ nuck
+++ perd
+++ royl
+++ tash
+++ twid
+++ zust

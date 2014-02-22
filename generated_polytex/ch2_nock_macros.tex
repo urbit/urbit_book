@@ -1,0 +1,443 @@
+\chapter{Nock Macros}
+
+\begin{quote}
+\noindent \emph{You get used to it. I don't even see the code.
+All I see is blonde, brunette, redhead.}
+\medskip \\
+---\textbf{The Matrix}
+\end{quote}
+
+In the last chapter we showed you the Nock specification with lines 32 through 37 removed.
+This chapter will explain what these lines are and what they do:
+
+%= lang:text
+\begin{code}
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+\end{code}
+
+These lines describe the Nock operators 6 through 10, which are just macros that reduce to operators 0 through 5. As you can see, these operators are defined in terms of Nock operators covered in the last chapter.
+
+They add no new functionality to Nock, but we include them in the specification because they are essential to making Nock a practical basis for computation.
+
+\section{Nock 7}
+
+We'll start with the easiest macro: Nock 7
+
+%= lang:text
+\begin{code}
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+\end{code}
+We actually already used Nock 7 in the last chapter while we were explaining Nock 2.
+
+%= lang:text
+\begin{code}
+~tomsyt-balsen/try=> .*([42 43] [2 [4 0 3] 1 [3 0 1]])
+1
+\end{code}
+Which sequentially applies the formulas \kode{[4 0 3]} and \kode{[3 0 1]} to our subject \kode{[42 43]}. We use Nock 7 whenever we evaluate two formulas on our subject in series. The Nock 1 operator in \kode{*[a 2 b 1 c]} is, as we know, the constant operator, which means that when Nock 2 applies, as in the above example, `[1 [3 0 1]]` to the subject, [3 0 1] is produced.
+
+Let's work through a full reduction of the above example, refer to the specification at the end of the last chapter to get a better sense of where these rules are coming from. And as always, please copy along on pen and paper or in a text file.
+
+%= lang:text
+\begin{code}
+*[[42 43] [2 [4 0 3] 1 [3 0 1]]]
+
+      27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+
+
+*[*[[42 43] [4 0 3]] *[[42 43] 1 [3 0 1]]]
+
+      26 ::    *[a 1 b]         b
+
+
+*[*[[42 43] [4 0 3]] [3 0 1]]
+
+      29 ::    *[a 4 b]         +*[a b]
+
+*[+*[[42 43] 0 3] [3 0 1]]
+
+      25 ::    *[a 0 b]         /[b a]
+
+*[+/[3 [42 43]] [3 0 1]]
+
+      18 ::    /[3 a b]         b
+
+*[+43 [3 0 1]]
+
+      11 ::    +a               1 + a
+
+*[44 [3 0 1]]
+
+      28 ::    *[a 3 b]         ?*[a b]
+
+?*[44 0 1]
+
+      25 ::    *[a 0 b]         /[b a]
+
+?/[1 44]
+
+      16 ::    /[1 a]           a
+
+?44
+
+      9  ::    ?a               1
+1
+\end{code}
+
+This reduction is overly long because we've included the full reduction sequences for the Nock 0, 3 and 4 operators, which can usually be omitted without loss of clarity. The notation is often helpful, but must be balanced against the needs of conciseness. 
+
+Like so:
+
+%= lang:text
+\begin{code}
+*[[42 43] [2 [4 0 3] 1 [3 0 1]]]
+
+    27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+
+
+*[*[[42 43] [4 0 3]] *[[42 43] 1 [3 0 1]]]
+
+    26 ::    *[a 1 b]         b
+
+*[*[[42 43] [4 0 3]] [3 0 1]]
+
+    29 ::    *[a 4 b]         +*[a b]
+
+*[44 [3 0 1]]
+
+    28 ::    *[a 3 b]         ?*[a b]
+1
+\end{code}
+The student of Nock should be able to fill in the missing steps in their minds.
+
+Informally, the formula \kode{[7 b c]} composes the formulas \kode{b} and
+\kode{c}.  To use a bit of math notation, if \kode{d} is \kode{[7 b c]},
+
+%= lang:text
+\begin{code}
+d(a) == c(b(a))
+\end{code}
+Let's see how this works by applying some reductions to the
+definition of \kode{7}, and producing a simpler definition that
+doesn't look like a macro:
+
+\textbf{\kode{7} Reduction:}
+
+%= lang:text
+\begin{code}
+29 ::    *[a 7 b c]        *[a 2 b 1 c]
+
+*[a 2 b 1 c]
+
+23 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+
+*[*[a b] *[a 1 c]]
+
+22:    *[a 1 b]          b
+ 
+*[*[a b] c]
+\end{code}
+\textbf{\kode{7} Reduced:}
+
+%= lang:text
+\begin{code}
+7r ::     *[a 7 b c]         *[*[a b] c]
+\end{code}
+We'll skip the full reduction process for the rest of these macros and simply use the reduced forms to explain their function. Skip to the Nock reference guidechapter 4 if you want to see the full reduction sequence.
+
+\section{Nock 8}
+
+%= lang:text
+\begin{code}
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+
+34r ::    *[a 8 b c]       *[[*[a b] a] c]
+\end{code}
+
+Nock 8 evaluates the formula \kode{c} with the cell of \kode{*[a b]} and the original
+subject \kode{a}.  In other words, in math notation, if \kode{d} is \kode{[8 b c]},
+
+%= lang:text
+\begin{code}
+d(a) == c([b(a) a])
+\end{code}
+But why?  Suppose, for the purposes of \kode{c}, we need not just \kode{a},
+but some intermediate noun computed from \kode{a} that will be useful
+in \kode{c}'s calculation.  We apply \kode{c} with a new subject that's a
+cell of the intermediate value and the old subject - not at all
+unlike pushing a new variable on the stack.
+
+Let's work through some examples:
+
+%= lang:text
+\begin{code}
+~tomsyt-balsen/try=> .*(42 [8 [4 0 1] [0 1]])
+[43 42]
+
+~tomsyt-balsen/try=> .*([42 45] [8 [[4 0 2] [4 0 3]] [0 1]])
+[[43 46] 42 45]
+\end{code}
+For extra credit, a good question to ask yourself: In line 34,
+
+%= lang:text
+\begin{code}
+    34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+\end{code}
+why do we need to write \kode{[7 [0 1] b]} and not just \kode{b}?
+
+\section{Nock 6}
+
+%= lang:text
+\begin{code}
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+
+32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+\end{code}
+
+Actually, \kode{6} is a primitive known to every programmer - good old
+``if.''  If \kode{b} evaluates to \kode{0}, we produce \kode{c}; if \kode{b} evaluates
+to \kode{1}, we produce \kode{d}; otherwise, we crash.
+
+For instance:
+
+%= lang:text
+\begin{code}
+~tomsyt-balsen/try=> .*(42 [6 [1 0] [4 0 1] [1 233]])
+43
+\end{code}
+and
+
+%= lang:text
+\begin{code}
+~tomsyt-balsen/try=> .*(42 [6 [1 1] [4 0 1] [1 233]])
+233
+\end{code}
+
+We can actually simplify the semantics of \kode{6}, at the expense of
+breaking the system a little, by creating a macro that works as
+``if'' only if \kode{b} is a proper boolean and produces \kode{0} or \kode{1}.
+
+This simpler ``if'' would be:
+
+%= lang:text
+\begin{code}
+32s::    *[a 6 b c d]    *[a 2 [0 1] 2 [1 c d] [1 0] [4 4 b]]
+\end{code}
+This reduces to
+
+%= lang:text
+\begin{code}
+32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
+\end{code}
+Let's describe what each of \kode{a}, \kode{b}, \kode{c} and \kode{d} are.
+
+\kode{a} is our subject, some data that we want to run our \kode{if} on
+
+\kode{b} is our test formula, which returns a \kode{yes} or a \kode{no} when we apply it to our subject. 
+
+\kode{c} is our \kode{then} formula, which we want to apply to our subject if our test formula produces a \kode{yes}, i.e. a 0.
+
+\kode{d} is our \kode{else} formula, which we want to apply to our subject if our test formula produces a \kode{no}, i.e. a 1.
+
+Let's say we have the following Nock expression:
+
+%= lang:text
+\begin{code}
+~tomsyt-balsen/try=> .*(42 [6 [3 0 1] [4 0 2] [4 0 1]])
+43
+\end{code}
+Our \kode{test} is the formula [3 0 1], which tests if the subject is a cell.
+
+Our \kode{then} is the formula [4 0 2], which increments the head of a cell.
+
+Our \kode{else} is the formula [4 0 1], which increments an atom.
+
+If we changed our subject to a cell:
+
+%= lang:text
+\begin{code}
+~tomsyt-balsen/try=> .*([40 43] [6 [3 0 1] [4 0 2] [4 0 1]])
+41
+\end{code}
+With our simpler reduced if rule:
+
+%= lang:text
+\begin{code}
+32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
+\end{code}
+we could rewrite 
+
+%= lang:text
+\begin{code}
+*[42 [6 [3 0 1] [4 0 2] [4 0 1]]]
+\end{code}
+as 
+
+%= lang:text
+\begin{code}
+*[42  *[[[4 0 2] [4 0 1]] [0 ++*[42 [3 0 1]]]]]
+\end{code}
+Since \kode{*[42 [3 0 1]]} produces a \kode{no}, i.e a \kode{1}:
+
+%= lang:text
+\begin{code}
+*[42  *[[[4 0 2] [4 0 1]] [0 ++1]]]]
+\end{code}
+which gets incremented twice
+%= lang:text
+\begin{code}
+*[42  *[[[4 0 2] [4 0 1]] [0 3]]]
+\end{code}
+and goes into a Nock 0 to select the tail of \kode{[[4 0 2] [4 0 1]]}
+
+%= lang:text
+\begin{code}
+*[42 [4 0 1]]
+\end{code}
+which increments 42 to produce 43. You should be able to see how changing the subject to the cell \kode{[40 43]} would cause a \kode{0} to be produced by the test, and how that would cascade into the \kode{then} formula \kode{[4 0 2]} being selected and applied instead.
+
+Our real \kode{if} is only slightly more complicated:
+
+%= lang:text
+\begin{code}
+32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+\end{code}
+There appears to be an extra step here, using Nock 0 twice, first to select from the cell [2 3], and then to select from the cell [c d]. 
+
+The reason is fairly simple, if we just used the simpler version of \kode{if}, tests that returned values other than 0 or 1 would have unexpected behaviour. If our our test produced a \kode{3} we would then try to reference the axis /5 in our cell [c d]. Since the tail of \kode{d} could very well be a valid formula, strange things could result.
+
+We add the step of selecting from [2 3] because trying to reference anything other than /2 or /3 within [2 3] will crash, which is exactly what we want. (/1 of [2 3] won't crash, but this is fine since our test can never produce a -1)
+
+\section{Nock 9}
+
+%= lang:text
+\begin{code}
+9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+\end{code}
+We'll discuss what Nock 9 does in the next chapter, when we introduce how to
+use \emph{cores}, which are subjects containing both code and data.  If you have a
+really fine instinctive sense of Nock, you might understand what \kode{9} is for.
+
+Succinctly, we use Nock 9 to call a formulas held inside of the subject itself,
+and apply them to the subject. If you've been wondering how one writes Nock
+expressions that loop, this is how.
+
+\section{Nock 10}
+
+%= lang:text
+\begin{code}
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+\end{code}
+The second case of 10 is so easy it's puzzling:
+
+%= lang:text
+\begin{code}
+37 ::    *[a 10 b c]      *[a c]
+\end{code}
+For any \kode{b}, the formula \kode{[10 b c]} seems to be perfectly
+equivalent to the formula \kode{c}.  But why?  Why would we say
+\kode{[10 b c]} when we could just say \kode{c}?
+
+The answer is that \kode{10} is a hint to the interpreter.  It's true
+that \kode{[10 b c]} has to be \emph{semantically} equivalent to \kode{c}, but
+it doesn't have to be \emph{practically} equivalent.  Since whatever
+information is in \kode{b} is discarded, a practical interpreter is
+free to ignore it, or to use it in any way that does not affect
+the results of the computation.
+
+And the other reduction of \kode{10}:
+
+%= lang:text
+\begin{code}
+    36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+\end{code}
+Reducing:
+
+%= lang:text
+\begin{code}
+*[a 8 c 7 [0 3] d]
+
+  <<34r::    *[a 8 b c]       *[[*[a b] a] c]>>
+
+*[[*[a c] a] [7 [0 3] d]]
+
+  <<33r::    *[a 7 b c]       *[*[a b] c]>>
+
+*[*[[*[a c] a] 0 3] d]
+\end{code}
+If you've assimilated a bit of Nock already, you may feel the
+temptation to reduce this to
+
+%= lang:text
+\begin{code}
+*[a d]
+\end{code}
+since it would be very reasonable to think that
+
+%= lang:text
+\begin{code}
+*[[*[a c] a] 0 3]
+\end{code}
+
+is just \kode{a}.  And it seems to be - given the semantics of 8 as
+we've explained them.
+
+But there's a problem, which is that \kode{c} might not terminate.
+If \kode{c} terminates, this reduction is correct.  Otherwise it's not. 
+So the best we can do is:
+
+%= lang:text
+\begin{code}
+36r::    *[a 10 [b c] d]  *[*[[*[a c] a] 0 3] d]
+\end{code}
+
+And that's it! That's the entirety of the Nock specification! 
+
+%= lang:text
+\begin{code}
+1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+38 ::
+39 ::    *a               *a
+\end{code}

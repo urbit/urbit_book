@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="stylesheets/pygments.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/softcover.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <title>urbit_tutorial</title>
+    
+  </head>
+  <body>
+    
+    <div id="book">
+      <div id="frontmatter" data-number="0"><div id="title_page"><h1 class="title">Urbit</h1><h1 class="subtitle">The Personal Cloud Computer</h1><h2 class="author">C.G. Yarvin, J.C. Burnham, M.D. Hartl</h2></div>
+<h1 class="contents">Contents</h1><div id="table_of_contents"><ul><li class="chapter"><a href="#cid1" class="heading hyperref"><span class="number">Chapter 1 </span>Preface: Urbit</a></li><li class="chapter"><a href="#cid2" class="heading hyperref"><span class="number">Chapter 2 </span>Introduction: What is a Personal Cloud Computer?</a></li><li class="chapter"><a href="#cid3" class="heading hyperref"><span class="number">Chapter 3 </span>Introductory Nock</a></li><li><ul><li class="section"><a href="#cid4" class="heading hyperref"><span class="number">3.1 </span>Section I: Getting Started</a></li><li><ul><li class="subsection"><a href="#uid1" class="heading hyperref"><span class="number">3.1.1 </span>Summary:</a></li><li class="subsection"><a href="#uid2" class="heading hyperref"><span class="number">3.1.2 </span>Exercises:</a></li></ul></li><li class="section"><a href="#cid5" class="heading hyperref"><span class="number">3.2 </span>Section II: Noun Structure</a></li><li><ul><li class="subsection"><a href="#uid7" class="heading hyperref"><span class="number">3.2.1 </span>Summary:</a></li><li class="subsection"><a href="#uid8" class="heading hyperref"><span class="number">3.2.2 </span>Exercises:</a></li></ul></li><li class="section"><a href="#cid6" class="heading hyperref"><span class="number">3.3 </span>Section III: Nock 3</a></li><li><ul><li class="subsection"><a href="#uid14" class="heading hyperref"><span class="number">3.3.1 </span>Summary:</a></li><li class="subsection"><a href="#uid15" class="heading hyperref"><span class="number">3.3.2 </span>Exercises:</a></li></ul></li><li class="section"><a href="#cid7" class="heading hyperref"><span class="number">3.4 </span>Section IV: Nock 4</a></li><li><ul><li class="subsection"><a href="#uid18" class="heading hyperref"><span class="number">3.4.1 </span>Summary:</a></li><li class="subsection"><a href="#uid19" class="heading hyperref"><span class="number">3.4.2 </span>Exercises:</a></li></ul></li><li class="section"><a href="#cid8" class="heading hyperref"><span class="number">3.5 </span>Section V: Nock 5, Nock 2 and Formula Distribution</a></li><li><ul><li class="subsection"><a href="#uid22" class="heading hyperref"><span class="number">3.5.1 </span>Summary:</a></li><li class="subsection"><a href="#uid23" class="heading hyperref"><span class="number">3.5.2 </span>Exercises:</a></li></ul></li><li class="section"><a href="#cid9" class="heading hyperref"><span class="number">3.6 </span>Section VI: Conclusion</a></li></ul></li><li class="chapter"><a href="#cid10" class="heading hyperref"><span class="number">Chapter 4 </span>Nock Macros</a></li><li><ul><li class="section"><a href="#cid11" class="heading hyperref"><span class="number">4.1 </span>Nock 7</a></li><li class="section"><a href="#cid12" class="heading hyperref"><span class="number">4.2 </span>Nock 8</a></li><li class="section"><a href="#cid13" class="heading hyperref"><span class="number">4.3 </span>Nock 6</a></li><li class="section"><a href="#cid14" class="heading hyperref"><span class="number">4.4 </span>Nock 9</a></li><li class="section"><a href="#cid15" class="heading hyperref"><span class="number">4.5 </span>Nock 10</a></li></ul></li><li class="chapter"><a href="#cid16" class="heading hyperref"><span class="number">Chapter 5 </span>Cores and Gates</a></li><li><ul><li class="section"><a href="#cid17" class="heading hyperref"><span class="number">5.1 </span>Playing with Nock</a></li><li><ul><li class="subsection"><a href="#uid29" class="heading hyperref"><span class="number">5.1.1 </span>Command line</a></li><li class="subsection"><a href="#uid30" class="heading hyperref"><span class="number">5.1.2 </span>Application file</a></li></ul></li><li class="section"><a href="#cid18" class="heading hyperref"><span class="number">5.2 </span>Decrement</a></li><li><ul><li class="subsection"><a href="#uid31" class="heading hyperref"><span class="number">5.2.1 </span>A function</a></li></ul></li><li class="section"><a href="#cid19" class="heading hyperref"><span class="number">5.3 </span>A library</a></li></ul></li><li class="chapter"><a href="#cid20" class="heading hyperref"><span class="number">Chapter 6 </span>Nock Reference</a></li><li><ul><li class="section"><a href="#cid21" class="heading hyperref"><span class="number">6.1 </span>Nock Specification:</a></li><li class="section"><a href="#cid22" class="heading hyperref"><span class="number">6.2 </span>1.<span class="intersentencespace"></span> Structures</a></li><li class="section"><a href="#cid23" class="heading hyperref"><span class="number">6.3 </span>Line 5: Nock Function</a></li><li class="section"><a href="#cid24" class="heading hyperref"><span class="number">6.4 </span>Line 6: Bracket grouping</a></li><li class="section"><a href="#cid25" class="heading hyperref"><span class="number">6.5 </span>Lines 8-13: Pseudocode notation</a></li><li class="section"><a href="#cid26" class="heading hyperref"><span class="number">6.6 </span>Lines 16-20: Noun Axes and Trees</a></li><li class="section"><a href="#cid27" class="heading hyperref"><span class="number">6.7 </span>Line 23:</a></li><li class="section"><a href="#cid28" class="heading hyperref"><span class="number">6.8 </span>Line 26: Constant</a></li><li class="section"><a href="#cid29" class="heading hyperref"><span class="number">6.9 </span>Line 27: Recursion</a></li><li class="section"><a href="#cid30" class="heading hyperref"><span class="number">6.10 </span>Lines 28-30: Cell Test, Increment, Equality</a></li><li class="section"><a href="#cid31" class="heading hyperref"><span class="number">6.11 </span>Lines 10, 14, 21, 39: Crash defaults</a></li><li class="section"><a href="#cid32" class="heading hyperref"><span class="number">6.12 </span>Line 32: Nock 6</a></li><li class="section"><a href="#cid33" class="heading hyperref"><span class="number">6.13 </span>Line 29: Nock 7</a></li><li class="section"><a href="#cid34" class="heading hyperref"><span class="number">6.14 </span>Line 30: Nock 8</a></li><li class="section"><a href="#cid35" class="heading hyperref"><span class="number">6.15 </span>Line 31: Nock 9</a></li><li class="section"><a href="#cid36" class="heading hyperref"><span class="number">6.16 </span>Line 36 and 37: Nock 10</a></li></ul></li></ul></div></div>
+<blockquote class="quotation"><p class="noindent"><em>“Man is a Tool-using Animal.<span class="intersentencespace"></span> Weak in himself, and of small stature, he stands
+on a basis, at most for the flattest-soled, of some half-square foot,
+insecurely enough; has to straddle out his legs, lest the very wind supplant
+him.<span class="intersentencespace"></span> Feeblest of bipeds!<span class="intersentencespace"></span> Three quintals are a crushing load for him; the
+steer of the meadow tosses him aloft, like a waste rag.<span class="intersentencespace"></span> Nevertheless he can use
+Tools; can devise Tools: with these the granite mountain melts into light dust
+before him; he kneads glowing iron, as if it were soft paste; seas are his
+smooth highway, winds and fire his unwearying steeds.<span class="intersentencespace"></span> Nowhere do you find him
+without Tools; without Tools he is nothing, with Tools he is all.”</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span></p>
+<p class="noindent">-Carlyle</p>
+</blockquote>
+<div id="cid1" data-tralics-id="cid1" class="chapter" data-number="1"><h1><a href="#cid1" class="heading hyperref"><span class="number">Chapter 1 </span>Preface: Urbit</a></h1>
+<blockquote class="quotation"><p class="noindent">A complex system that works is invariably found to have evolved from a
+simple system that worked.<span class="intersentencespace"></span> The inverse proposition also appears to be true:
+A complex system designed from scratch never works and cannot be made to
+work.<span class="intersentencespace"></span> You have to start over, beginning with a working simple system.<span class="intersentencespace"></span></p>
+<p style="margin-top: 6.0pt"><span class="break"></span>
+Gall’s Law</p>
+</blockquote><p>Urbit is a general-purpose programming environment designed to execute a purely
+functional network operating system and a referentially transparent network
+address space.</p>
+<p>Urbit consists of four conceptual levels:</p>
+<p>At the lowest-level, Urbit reduces to Nock, a stateless virtual machine based
+on combinatory logic and defined in 340 bytes.<span class="intersentencespace"></span> The Nock machine is sealed -
+all execution is “pure.”<span class="intersentencespace"></span> Nock’s goal is extreme commoditization of computing
+semantics.</p>
+<p>Nock acts as our functional equivalent of assembly language.<span class="intersentencespace"></span> Nock is differs
+from assembly language in that it<span class="unicode">’</span>s interpreted, rather than directly executed
+by the hardware.<span class="intersentencespace"></span> It is like assembly language in that everything in Urbit
+executes as Nock and most programming in Urbit will be done using higher-level
+tools that reduce to Nock.</p>
+<p>Hoon is a high-level language which defines itself in Nock.<span class="intersentencespace"></span> Its self-compiling
+kernel, 7000 lines of code, specifies Hoon unambiguously; there is no Hoon
+spec.<span class="intersentencespace"></span> Hoon can be classified as a pure, strict higher-order static
+type-inferred functional language, with co/contra/bivariance and genericity.<span class="intersentencespace"></span> However, Hoon does not use lambda calculus, unification, or other constructs
+from “PL theory.”</p>
+<p>Hoon also excels at handling and validating untyped data, a common task on the
+Internet.<span class="intersentencespace"></span> Its syntax is entirely novel and initially quite frightening a
+consequence of Hoon having been designed to optimize for actual usability
+rather than cosmetic friendliness.<span class="intersentencespace"></span> A frequent experience amongst Hoon
+programmers is writing code that works the first time it successfully compiles.</p>
+<p>Arvo is a deterministic functional operating system and network protocol,
+written in 5000 lines of Hoon.<span class="intersentencespace"></span> Arvo features a revision control filesystem and
+the network is a blocking global immutable namespace.<span class="intersentencespace"></span> Meaning that all data on
+the network or off it can be treated as a constant.<span class="intersentencespace"></span> Additionally, Arvo
+preserves a log of all the events it sees, meaning that all computation on an
+Arvo instance is recorded and can be played back and examined.</p>
+<p>The network blah blah blah</p>
+</div>
+<div id="cid2" data-tralics-id="cid2" class="chapter" data-number="2"><h1><a href="#cid2" class="heading hyperref"><span class="number">Chapter 2 </span>Introduction: What is a Personal Cloud Computer?</a></h1>
+<blockquote class="quotation"><p class="noindent">Tlon’s three rules of platform warfare:</p>
+<p style="margin-top: 6.0pt" class="noindent"><span class="break"></span>
+1.<span class="intersentencespace"></span> General-purpose computers beat special-purpose computers.</p>
+<p class="noindent">2.<span class="intersentencespace"></span> Personal computers beat industrial computers.</p>
+<p class="noindent">3.<span class="intersentencespace"></span> Cloud computers beat ground computers.<span class="intersentencespace"></span></p>
+</blockquote><p>Urbit is an open-source software stack that runs a Personal Cloud Computer, or
+PC2.</p>
+<p>A PC2 is any general-purpose machine, physical or virtual, that operates
+natively on the Internet (cloud), and whose operation is sufficiently simple
+that it can be understood and controlled by the user (personal).</p>
+<p>The PC2 is general-purpose, in that it can run programs and applications that
+perform a wide range of functions.<span class="intersentencespace"></span> This is contrasted with special-purpose
+platforms, such as a pocket calculator or consumer web application, that can
+only perform a single function, or limited range of related functions.</p>
+<p>The PC2 is personal, in that the ordinary user can understand its operation
+without requiring a high degree of specialized technical skill.<span class="intersentencespace"></span> This is
+contrasted with industrial services, such a Linux server, whose computational
+semantics are rendered largely opaque by their complexity, even to the
+technically skilled.</p>
+<p>The PC2 is a cloud computer, in that it intrinsically operates on a network and
+blurs the distinction between network and local resources.<span class="intersentencespace"></span> This is contrasted
+with non-network, or ground, computers, such as the early personal computer,
+which maintains a sharp distinction between data on its own disk and data on
+the network.</p>
+<p>The individual user can easily setup and administer a PC2 on their own, run and
+write a endless variety of applications, and can not only can access their
+programs and data seamlessly from any client, but can serve any kind of content
+to all other clients on the network.<span class="intersentencespace"></span> Meaning that all programs running on a
+PC2 can communicate with programs running on different PC2’s as easily as they
+can communicate with programs on the same PC2.<span class="intersentencespace"></span> The PC2 is not just a
+general-purpose client, it is also a general-purpose server.<span class="intersentencespace"></span> In other words, a
+network of PC2’s is, by definition, a general-purpose social network.</p>
+<p>By no means is this concept an idea original to Urbit.<span class="intersentencespace"></span> Many, many systems
+desinged to implement the PC2 have been tried and, without exception, have
+failed to do so.<span class="intersentencespace"></span> These previous attempts have been crippled by their inadequate
+solution two fundamental problems: software portability and network identity.</p>
+<p>Portable software can be trivially executed with the same semantics on any
+general-purpose computer.<span class="intersentencespace"></span> One can transfer portable from one machine to any
+other machine, and expect it to produce the same output.<span class="intersentencespace"></span> If the two machines
+differ in their output, it is easy to see which one is correct and which has an
+an implementation error.</p>
+<p>In contrast, unportable sofware must be modified for each platform
+it is run on without any expectation of identical semantics on different
+platforms and with complex chains of dependency on other software tools and
+libraries, also ususally different per platform.</p>
+<p>Unportable software drastically increases complexity, making it difficult for
+ordinary users to understand and administer their own general-purpose computer
+and incentivizing them to use special-purpose applications and services
+administered by others.<span class="intersentencespace"></span> A lack of portability also makes the goal of
+indifference to resource locality significantly harder to acheive.</p>
+<p>[Section on Network Identity needs reworking]</p>
+<p>Network identity can best be thought of in the context of the classic computer
+science problem of Zooko’s Triangle, which states:</p>
+<p>The address space of any network can be at most two of secure, human-meaningful
+and decentralized.</p>
+<p>Secure means that it is impractical for any node on the network to impersonate
+another, i.e.<span class="intersentencespace"></span> when any talks to any other node can authenticate that the node
+is who they say they are.</p>
+<p>Human-meaningful means that addresses on the network present a good user
+interface, e.g.<span class="intersentencespace"></span> a domain name, such as pets.com, is human-meaningful, an IP
+address is not.</p>
+<p>Decentralized means that addresses and identities on the network are not stored
+with and verified by a central party.</p>
+<p>Choosing only secure and human-meaningful but not decentralized effectively
+turns your network a large distributed server.<span class="intersentencespace"></span> Consumer web applications that
+claim to be social “networks” are, in fact, simply social servers.</p>
+<p>Networks that are secure and decentralized, but not human-meaningful present a
+poor interface to the user and fail to gain adoption, because long numbers are
+difficult to distiguish from one another.</p>
+<p>And sacrificing secure for human-meaningful and decentralized means that the
+network is impossible to defend against malicious activity such as spam.</p>
+<p>Succinctly, the problem of network identity is: How does one authenticate
+another node in the network?<span class="intersentencespace"></span> And how does one distinguish between a new user
+and a returning spammer?</p>
+<p>It would not be too broad a mischaracterization to describe Urbit as a system
+that implements portable software on a network with strong identity.</p>
+<p>Urbit solves the problem of software portability with a stateless virtual
+machine called Nock, which can be thought of as a “Maxwell’s equations” of
+software.<span class="intersentencespace"></span> The Nock machine is defined in 340 bytes of pseudocode and executes a
+pure Turing-complete function.<span class="intersentencespace"></span> Nock is not the smallest Turing-complete
+computational automaton, but is easily one of the smallest practical ones.<span class="intersentencespace"></span> Everything implemented in Urbit is built on top of Nock.</p>
+<p>Nock is portable to any platform that can run a Nock interpreter, which is all
+general-purpose platforms.<span class="intersentencespace"></span> Since the Nock specification is conunambigs If two
+Nock interpreters disagree with one another, it is trivial to determine which
+is wrong and which is right.</p>
+<p>Urbit solves the problem of network identity by embedding</p>
+<p>[Section on Network Identity needs reworking]</p>
+<p>This book is designed for the novice programmer…</p>
+</div>
+<div id="cid3" data-tralics-id="cid3" class="chapter" data-number="3"><h1><a href="#cid3" class="heading hyperref"><span class="number">Chapter 3 </span>Introductory Nock</a></h1>
+<blockquote class="quotation"><p class="noindent"><em>What one fool can do, another can.</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span></p>
+<p class="noindent">—<strong>Ancient Simian proverb</strong></p>
+</blockquote><p>Think of Nock as a kind of functional assembly language.<span class="intersentencespace"></span> It’s not like
+assembly language in that it’s directly executed by the hardware.<span class="intersentencespace"></span> It is like
+assembly language in that (a) everything in Urbit executes as Nock; (b) you
+wouldn’t want to program directly in Nock; and (c) learning to program directly
+in Nock is a great way to start understanding Urbit from the ground up.</p>
+<p>Just as Unix runs C programs by compiling them to assembler, Urbit runs Hoon
+programs by compiling them to Nock.<span class="intersentencespace"></span> You could try to learn Hoon without
+learning Nock.<span class="intersentencespace"></span> But just as C is a thin wrapper over the physical CPU, Hoon is
+a thin wrapper over the Nock virtual machine.<span class="intersentencespace"></span> It’s a tall stack made of thin
+layers, which is much easier to learn a layer at a time.</p>
+<p>And unlike most fundamental theories of computing, there’s really nothing smart
+or interesting about Nock.<span class="intersentencespace"></span> Of course, in a strictly formal sense, all of
+computing is math.<span class="intersentencespace"></span> But that doesn’t mean it needs to feel like math.<span class="intersentencespace"></span> Nock is
+a simple mechanical device and it’s meant to feel that way.</p>
+<p>Let’s get start by learning how to use Urbit’s operating system, Arvo, to
+evaluate Nock code.</p>
+</div>
+<div id="cid4" data-tralics-id="cid4" class="section" data-number="3.1"><h2><a href="#cid4" class="heading hyperref"><span class="number">3.1 </span>Section I: Getting Started</a></h2>
+<p>We’ll assume that you’ve gone through the Urbit setup process and have an Arvo
+prompt that looks something like this:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; 
+</pre></div></div>
+<p>At your prompt, type the following exactly:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [0 1])
+</pre></div></div>
+<p>This should return <code>42</code>.<span class="intersentencespace"></span> Don’t worry about what this is doing yet.</p>
+<p>It’s very important that you actually go to your prompt and type in our
+examples.<span class="intersentencespace"></span> Copying and pasting is cheating.<span class="intersentencespace"></span> This might seem silly, but to learn
+Nock (or any language) it’s very important that your fingers get
+comfortable writing it.</p>
+<p>If you accidentally make a mistake typing in a Nock expression, you’ll get a
+syntax error:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42[0 1]) 
+~ &lt;syntax error at [1 6]&gt;
+
+~tomsyt-balsen/try=&gt; .*( 42 [0 1]) 
+~ &lt;syntax error at [1 4]&gt;
+</pre></div></div>
+<p>Easiest way to get a sytax error is to accidentally leave out a space.<span class="intersentencespace"></span> Or add
+an extra one.<span class="intersentencespace"></span> Fortunately, the error message tells you where the mistake is:</p>
+<div class="code"><div class="highlight"><pre>~ &lt;syntax error at [1 4]&gt;
+</pre></div></div>
+<p>means that there’s an error at <code>line 1</code>, <code>column 4</code>.<span class="intersentencespace"></span> Once you know where an
+error is, it’s much easieer to fix.</p>
+<p>But even if your Nock expression is formatted correctly, you might get
+something that looks like this:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [5 0 1]) 
+! exit
+</pre></div></div>
+<p>This means that the expression you typed in is correct Nock, but it just
+doesn’t produce anything.<span class="intersentencespace"></span> Unfortunately, we can’t give you line and column
+numbers on this one, so the only surefire way to debug an exit message is to
+understand what your code is doing.<span class="intersentencespace"></span> Literally speaking, an exit message means
+you tried to do something that just doesn’t make sense.<span class="intersentencespace"></span> Such trying to
+reference data that doesn’t exist, or trying to increment something that’s not
+a number, or asking if <code>42</code> is equal, without asking what it’s equal to.</p>
+<p>Enough about errors, let’s practice some expressions that work:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(41 [0 1]) 
+41
+
+~tomsyt-balsen/try=&gt; .*(40 [0 1]) 
+40
+
+~tomsyt-balsen/try=&gt; .*(374 [0 1]) 
+374
+</pre></div></div>
+<p>The perceptive reader will notice the pattern here: If a is a number, <code>.*(a [0
+1])</code> always produces <code>a</code>.<span class="intersentencespace"></span> To test it, run the following, but
+replace <code>a</code> with any number you like.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [0 1]) 
+a
+</pre></div></div>
+<p>Once you’re satisfied that this is true, let’s do something slightly
+different:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(374 [1 0]) 
+0
+
+~tomsyt-balsen/try=&gt; .*(40 [1 0]) 
+0
+
+~tomsyt-balsen/try=&gt; .*(41 [1 0]) /
+0
+</pre></div></div>
+<p>This pattern is pretty easy: <code>*(a [1 0])</code> always produces <code>0</code>, no matter what a
+is.</p>
+<p>Again, play around with the above yourself by choosing your own values for a:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [1 0]) 
+0
+</pre></div></div>
+<p>One more pattern, and then we’ll actually explain what these numbers and brackets represent:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(374 [1 374]) 
+374
+
+~tomsyt-balsen/try=&gt; .*(40 [1 374]) 
+374
+
+~tomsyt-balsen/try=&gt; .*(374 [1 40]) 
+40
+</pre></div></div>
+<p>As an exercise, run the last three lines again but replace <code>374</code> and <code>40</code> with
+number of your own.</p>
+<p>You’ve probably already guessed the pattern here: <code>.*(a [1 b])</code> always produces
+<code>b</code>, regardless of <code>a</code>.<span class="intersentencespace"></span> But feel free to test it, replacing <code>a</code> and <code>b</code> with any number.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [1 b]) 
+b
+</pre></div></div>
+<p>Let’s run the following piece code again:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [0 1])
+</pre></div></div>
+<p>Nock is made up of two basic building blocks: atoms, which can be any
+non-negative whole number, and cells, which are pairs of numbers or cells
+(cells can go inside of other cells.)<span class="intersentencespace"></span> <code>42</code>, for example, is an atom.<span class="intersentencespace"></span> <code>[0 1]</code> is
+a cell.<span class="intersentencespace"></span> Even <code>[42 [0 1]]</code> is a cell.<span class="intersentencespace"></span> (It’s very important to note that cells
+can nest inside other cells.)</p>
+<p>Collectively, both atoms and cells are called nouns.<span class="intersentencespace"></span> And Nock is just a list of
+rules (or a set of patterns) for transforming nouns.<span class="intersentencespace"></span> You put one noun in, you
+get another noun out.<span class="intersentencespace"></span> It’s like algebra, <code>f(x) = y</code>.<span class="intersentencespace"></span> <code>nock(noun_a) = noun_b</code></p>
+<p>The atom <code>42</code> is a noun, the cell <code>[0 1]</code> is a noun, In fact, <code>.*(42 [0 1])</code>
+is a noun too, except that its wrapped in syntax that tells Arvo “run
+this noun through Nock”.<span class="intersentencespace"></span> <code>.*(42 [0 1])</code> is actually the way to tell Arvo
+(Urbit’s operating system) to evaluate <code>Nock([42 [0 1]])</code>.<span class="intersentencespace"></span> The cellular noun
+<code>[42 [0 1]]</code> goes into Nock, the atomic noun <code>42</code> comes out.</p>
+<p>We could simply write our very first example again as</p>
+<div class="code"><div class="highlight"><pre>nock([42 [0 1]]) = 42
+</pre></div></div>
+<p>except that we wouldn’t be able to evaluate it in Arvo.</p>
+<p>Actually, we almost never use the above mathematical notation.<span class="intersentencespace"></span> For the sake of
+brevity we almost always write nock(a) using the notation <code>*a</code>.<span class="intersentencespace"></span> Thus, nock([42
+[0 1]]) <code>*[42 [0 1]]</code> mean the same thing.<span class="intersentencespace"></span> If we want to tell Arvo to evaluate
+the noun, we use <code>.*(42 [0 1])</code>.<span class="intersentencespace"></span> You will notice that the outermost brackets
+somewhat confusingly disappear when we use the .*() function in Arvo, we will
+explain why in [replaceme: Chapter 2.<span class="intersentencespace"></span> Section 1]</p>
+<p>But in documenting Nock, we most frequenly use the <code>*[42 [0 1]]</code> style of
+notation:</p>
+<p>Instead of, for example, writing</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [1 b]) 
+b
+</pre></div></div>
+<p>the standard way of writing out the rules of Nock is</p>
+<div class="code"><div class="highlight"><pre>*[a [1 b]]                  b
+</pre></div></div>
+<p>with the left hand side being the noun that matches our input and the right
+side being the product of that input.</p>
+<p>We’ve been using <code>a</code> and <code>b</code> as variables that represent numbers (i.e.<span class="intersentencespace"></span> atoms),
+but we can and do use them more broadly to represent nouns in general.</p>
+<p>Let’s apply the rule</p>
+<div class="code"><div class="highlight"><pre>*[a [1 b]]                  b
+</pre></div></div>
+<p>which, to reiterate, means that when we run any noun of the form [a [1 b]]
+through Nock (using the expression <code>.*(a [1 b])</code> in Arvo) always produces <code>b</code>,
+regardless of <code>a</code>.</p>
+<p>Let’s run a few examples:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(301 [1 374])
+374
+
+~tomsyt-balsen/try=&gt; .*([42 43] [1 312])
+312
+
+~tomsyt-balsen/try=&gt; .*(374 [1 [44 48]])
+[42 43]
+
+~tomsyt-balsen/try=&gt; .*([46 49] [1 [456 539]])
+[456 539]
+
+~tomsyt-balsen/try=&gt; .*(374 [1 [[[32 34] 33]])
+[[[31 32] 33]
+</pre></div></div>
+<p>To conclude this section, let’s review what we’ve learned:</p>
+<div class="center"><p><rule width="216.81pt" depth="0.0pt" height="0.4pt"></rule></p>
+</div>
+<div id="uid1" data-tralics-id="uid1" class="subsection" data-number="3.1.1"><h3><a href="#uid1" class="heading hyperref"><span class="number">3.1.1 </span>Summary:</a></h3>
+<p><strong>Notation:</strong></p>
+<p>Arvo syntax:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [0 1]) 
+42
+</pre></div></div>
+<p>Math notation:</p>
+<div class="code"><div class="highlight"><pre>nock([42 [0 1]]) = 42
+</pre></div></div>
+<p>Nock notation:</p>
+<div class="code"><div class="highlight"><pre>*[42 [0 1]]                  42
+</pre></div></div>
+<p><strong>Error Messages:</strong></p>
+<p>A syntax error occurs when an expression in Arvo is not typed in correctly.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*( 42 [0 1]) 
+~ &lt;syntax error at [1 4]&gt;
+</pre></div></div>
+<p>The cell in the syntax error gives the line and column number of the location of the error.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [5 0 2]) 
+! exit
+</pre></div></div>
+<p><strong>Structures:</strong></p>
+<p>A noun is an atom or a cell.<span class="intersentencespace"></span> An atom is a natural number.<span class="intersentencespace"></span> A cell is an
+ordered pair of two nouns.<span class="intersentencespace"></span> I.e.<span class="intersentencespace"></span> two atoms, two cells, or a cell and an atom.</p>
+<p><strong>Nock Rules</strong></p>
+<p>Lower-case letters such as <code>a</code> or <code>b</code> are variables that represent nouns.</p>
+<p>Nock rules are notated with two columns, where the left hand side indicates
+what pattern the noun matches, and the right hand side indicates what the noun
+produces.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>*[a [0 1]]                  a
+*[a [1 b]]                  b
+</pre></div></div>
+<p>___</p>
+</div>
+<div id="uid2" data-tralics-id="uid2" class="subsection" data-number="3.1.2"><h3><a href="#uid2" class="heading hyperref"><span class="number">3.1.2 </span>Exercises:</a></h3>
+<ol><li>Take the noun [[a b] c] and replace each of <code>a</code> <code>b</code> and <code>c</code> with a cell.<span class="intersentencespace"></span> Test your cell by applying, in Arvo using the correct syntax, the rule:
+<div class="code"><div class="highlight"><pre>*[a [0 1]]                  a
+</pre></div></div>
+</li>
+<li>Write a cell that contains 12 atoms.<span class="intersentencespace"></span> Test your cell by applying, in Arvo using the correct syntax, the rule:
+<div class="code"><div class="highlight"><pre>*[a [1 b]]                  b
+</pre></div></div>
+<p>setting <code>a</code> eqaul to <code>1</code>.<span class="intersentencespace"></span></p>
+</li>
+<li>Produce a syntax error that reads:
+<div class="code"><div class="highlight"><pre>~ &lt;syntax error at [1 14]&gt;
+</pre></div></div>
+</li>
+<li>With pen and paper, write out all three possible forms of notation for each
+of the expressions you evaluated in exercises 1.<span class="intersentencespace"></span> and 2.<span class="intersentencespace"></span>
+</li></ol><div class="center"><p><rule width="216.81pt" depth="0.0pt" height="0.4pt"></rule></p>
+</div></div></div>
+<div id="cid5" data-tralics-id="cid5" class="section" data-number="3.2"><h2><a href="#cid5" class="heading hyperref"><span class="number">3.2 </span>Section II: Noun Structure</a></h2>
+<p>Last section we played around with this:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [0 1])
+42
+</pre></div></div>
+<p>which corresponds to the pattern
+</p><div class="code"><div class="highlight"><pre>*[a [0 1]]                  a
+</pre></div></div>
+<p>Now we’re going to experiment with what happens when we replace <code>1</code> with
+different values.<span class="intersentencespace"></span> Remember, as you follow along, type out the examples at your
+own Arvo prompt.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [0 1])
+[42 43]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [0 2])
+42
+
+~tomsyt-balsen/try=&gt; .*([42 43] [0 3])
+43
+
+~tomsyt-balsen/try=&gt; .*([42 43] [0 4])
+! exit
+</pre></div></div>
+<p>We don’t really have enough examples to figure out the pattern yet.<span class="intersentencespace"></span> Let’s
+change <code>[42 43]</code> to <code>[[44 45] 43]</code> and try some more.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[44 45] 43] [0 1])
+[[44 45] 43] 
+
+~tomsyt-balsen/try=&gt; .*([[44 45] 43] [0 2])
+[44 45]
+
+~tomsyt-balsen/try=&gt; .*([[44 45] 43] [0 3])
+43
+
+~tomsyt-balsen/try=&gt; .*([[44 45] 43] [0 4])
+44
+
+~tomsyt-balsen/try=&gt; .*([[44 45] 43] [0 5])
+45
+
+~tomsyt-balsen/try=&gt; .*([[44 45] 43] [0 6])
+! exit
+</pre></div></div>
+<p>It looks like anything of the form <code>*[a [0 b]]</code> produces the sub-nouns that are
+inside of a.<span class="intersentencespace"></span> Remember that notationally, <code>*[a [0 b]]</code> is the same as <code>.*(a [0
+b])</code> e.g.<span class="intersentencespace"></span> a is <code>[[44 45] 43]</code> and b is one of the atoms <code>1</code> through <code>6</code>.</p>
+<p>But how does <code>*[a [0 b]]</code> know which pieces of a to choose?</p>
+<p>Let’s do one more example and then we’ll explain it.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 1])
+[42 [46 47]] 
+
+~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 2])
+42
+
+~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 3])
+[46 47]
+
+~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 4])
+! exit
+
+~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 5])
+! exit
+
+~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 6])
+46
+
+~tomsyt-balsen/try=&gt; .*([42 [46 47]] [0 7])
+47
+</pre></div></div>
+<p>Try to solve this puzzle on your own by playing with the following:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [0 b])
+</pre></div></div>
+<p>where <code>a</code> is a cell and <code>b</code> is an atom.<span class="intersentencespace"></span> Try to pick atoms for <code>b</code> that are
+small and try to pick cells for <code>a</code> that have lots of nesting.</p>
+<p>When you’re ready to have things explained to you, read on.</p>
+<p>Think of a noun as a tree structure:
+</p><div class="code"><div class="highlight"><pre>  [42 [46 47]]
+  /       \
+42      [46 47]]
+          / \ 
+        46   47
+</pre></div></div>
+<p>Every cell has two branches (the head of the cell and the tail) leading down
+from it.<span class="intersentencespace"></span> Atoms have no branches, because they can’t be broken down any further
+(and this is exactly why they’re called atoms).</p>
+<p>Let’s look at the tree of the other noun we played with, <code>[[44 45] 43]</code>:
+</p><div class="code"><div class="highlight"><pre> [[44 45] 43]
+    /      \
+[44 45]    43
+ /   \
+44   45
+</pre></div></div>
+<p>It should be pretty obvious that we could change the values of any of the atoms
+in the tree without changing the structure of the tree.<span class="intersentencespace"></span> That is to say, <code>[[44
+45] 43]</code> and <code>[[24 25] 23]</code> have the same tree structure:
+</p><div class="code"><div class="highlight"><pre> [[22 25] 23]
+    /      \
+[22 25]    23
+ /   \
+22   25
+</pre></div></div>
+<p>And now, for a more complicated tree, here’s the noun <code>[[[48 49] 45] [46 47]]</code>:
+</p><div class="code"><div class="highlight"><pre>  [[[48 49] 45] [46 47]]
+       /            \
+ [[48 49] 45]      [46 47]
+   /       \        /   \
+[48 49]    45      46   47
+ /   \
+48   49
+</pre></div></div>
+<p>So how do the above trees relate to running <code>.*(a [0 b])</code>?<span class="intersentencespace"></span> Simple, every part
+of the tree gets mapped to an atomic address (we call it an axis).<span class="intersentencespace"></span> The mapping
+looks something like this:
+</p><div class="code"><div class="highlight"><pre>           1 
+       /       \
+     2           3          
+   /   \       /   \
+  4     5     6     7     
+ / \   / \   / \   / \
+8   9 10 11 12 13 14 15
+</pre></div></div>
+<p>Or, because the lines are kind of ugly:
+</p><div class="code"><div class="highlight"><pre>         1
+    2          3
+ 4    5     6     7
+8 9 10 11 12 13 14 15
+</pre></div></div>
+<p>Of course, this only a very small part of the entire tree.<span class="intersentencespace"></span> We extend the tree
+by applying the rule: Every axis <code>/n</code> has a head with the axis<code>/2n</code> and a tail
+with the axis<code>/2n+1</code>”</p>
+<p>We map from noun to axis by comparing the tree of the noun with the axis tree
+and seeing what matches.<span class="intersentencespace"></span> Like so, marking axes with a <code>/</code> character:
+</p><div class="code"><div class="highlight"><pre>  /1 : [[44 45] 43]
+         /        \
+ /2 : [44 45]     43 : /3
+      /     \
+/4 : 44      45 : /5
+</pre></div></div>
+<p>Again, because it bears repeating: the head of axis <code>/n</code> is <code>/2n</code> and the tail
+of axis <code>/n</code> is <code>/2n+1</code>.<span class="intersentencespace"></span> Remember that the head is the left-hand noun and the
+tail the right-hand noun of a cell-pair.</p>
+<p>Start with 1.<span class="intersentencespace"></span> This is your root axis.<span class="intersentencespace"></span> All nouns have a valid axis <code>/1</code>, even
+atoms.<span class="intersentencespace"></span> and the axis <code>/1</code> just refers to the noun itself.<span class="intersentencespace"></span> In the above example,
+axis /1 of <code>[[44 45] 43]</code> is just <code>[[44 45] 43]</code>.<span class="intersentencespace"></span> The head of <code>[[44 45] 43]</code> is
+<code>[44 45]</code> and the tail is <code>43</code>.<span class="intersentencespace"></span> Thus, axis <code>/2</code> of <code>[[44 45] 43]</code> is <code>[44 45]</code>
+and axis /3 is <code>43</code>.</p>
+<p>Another way to think about it is that the tree map has layers:
+</p><div class="code"><div class="highlight"><pre>layer 0             1
+layer 1        2          3
+layer 2     4    5     6     7
+layer 3    8 9 10 11 12 13 14 15
+</pre></div></div>
+<p>which correspond to the nesting depth of the noun.<span class="intersentencespace"></span> If a noun is inside two
+cells, like <code>46</code> inside <code>[[[48 49] 45] [46 47]]</code> then its axis is at layer 2 of
+the tree.<span class="intersentencespace"></span> If its inside three cells like <code>48</code>, then its axis is at layer
+three.</p>
+<p>Recall the pattern we learned in section 1:
+</p><div class="code"><div class="highlight"><pre>*[a [0 1]]                  a
+</pre></div></div>
+<p>This, we now see, is a special case of
+</p><div class="code"><div class="highlight"><pre>*[a [0 b]]              axis /b of a
+</pre></div></div>
+<p>The 0 in <code>*[a [0 b]]</code> is just an operator that means axis.<span class="intersentencespace"></span> Nock maps simple
+operators and functions to atoms, instead of a character like <code>/</code> for example,
+because atoms (and cells) are all Nock knows.<span class="intersentencespace"></span> This would Fortunately for us,
+there are only eleven atoms that are operators, atoms <code>0</code> through <code>10.</code></p>
+<div class="center"><p><rule width="216.81pt" depth="0.0pt" height="0.4pt"></rule></p>
+</div>
+<div id="uid7" data-tralics-id="uid7" class="subsection" data-number="3.2.1"><h3><a href="#uid7" class="heading hyperref"><span class="number">3.2.1 </span>Summary:</a></h3>
+<p><strong>Noun structure:</strong></p>
+<p>Nouns are trees that look like this:
+</p><div class="code"><div class="highlight"><pre> [[44 45] 43]
+    /      \
+[44 45]    43
+ /   \
+44   45
+</pre></div></div>
+<p>The left-hand of a cell is called the head.<span class="intersentencespace"></span> The right hand is the tail.</p>
+<p><strong>Axes:</strong></p>
+<p>An axis is the address of a node of the noun tree.</p>
+<p>The notation for axis n is /n.</p>
+<p>The first part of the axis tree looks like this:
+</p><div class="code"><div class="highlight"><pre>         1
+    2          3
+ 4    5     6     7
+8 9 10 11 12 13 14 15
+</pre></div></div>
+<p>The head of axis /n is /(2n) and the tail of axis /n is /(2n+1).</p>
+<p><strong>Nock Operators:</strong></p>
+<p>The operators in Nock are functions mapped onto the eleven atoms <code>0</code> through <code>10</code>.</p>
+<p><strong>Nock 0:</strong></p>
+<p>The Nock operator that produces a given axis of a noun:
+</p><div class="code"><div class="highlight"><pre>*[a [0 b]]               /b of a
+</pre></div></div>
+<p>___</p>
+</div>
+<div id="uid8" data-tralics-id="uid8" class="subsection" data-number="3.2.2"><h3><a href="#uid8" class="heading hyperref"><span class="number">3.2.2 </span>Exercises:</a></h3>
+<ol><li>Take pen and paper and map out the axes of
+<div class="code"><div class="highlight"><pre>   [[[48 49] 45] [46 47]]
+       /             \
+ [[48 49] 45]      [46 47]
+   /       \        /   \
+[48 49]    45      46   47
+ /   \
+48   49
+</pre></div></div>
+<p>then to test yourself, run:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[[48 49] 45] [46 47]] [0 b])
+</pre></div></div>
+<p>for each axis <code>/b</code> of <code>[[[48 49] 45] [46 47]]</code></p>
+</li>
+<li>Write a noun <code>a</code> such that the following produces something:
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [0 100])
+</pre></div></div>
+<p>In other words, find a noun that has an axis <code>/100</code>.<span class="intersentencespace"></span></p>
+</li>
+<li>Prune your noun from the last exercis so that its as short as possible,
+while still having an axis <code>/100</code>.<span class="intersentencespace"></span>
+</li>
+<li>If you still feel confused, replicate the previous two exercises with the
+axes <code>/7</code>, ‘/17’, ‘/27’, ‘/47’ and <code>/87</code>.<span class="intersentencespace"></span>
+</li>
+<li>Build a noun that has every atom set to its own axis.<span class="intersentencespace"></span> The bigger the noun
+the better.<span class="intersentencespace"></span> I’ll get you started:
+<div class="code"><div class="highlight"><pre>1
+[2 3]
+[[4 5] 3]
+[[4 5] [6 7]
+</pre></div></div>
+<p>To test different atoms in your noun, run
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(a [0 b])
+</pre></div></div>
+<p>___</p>
+</li></ol></div></div>
+<div id="cid6" data-tralics-id="cid6" class="section" data-number="3.3"><h2><a href="#cid6" class="heading hyperref"><span class="number">3.3 </span>Section III: Nock 3</a></h2>
+<p>In the last section we learned how to access data inside nouns.<span class="intersentencespace"></span> Now we’re going
+to learn what you can do with data.<span class="intersentencespace"></span> After all, Nock is a computer, so you
+should be able to, you know, compute things.</p>
+<p>We mentioned in the last section that Nock has eleven operators, <code>0</code> through
+<code>10</code>.<span class="intersentencespace"></span> We saw <code>Nock 1</code> in Section I:
+</p><div class="code"><div class="highlight"><pre>*[a [1 b]]                  b
+</pre></div></div>
+<p>We could describe <code>Nock </code>1 the constant operator, since it always produces <code>b</code>
+no matter what you put in as a.</p>
+<p>We also have <code>Nock 0</code>, which lets you refer to the sub-noun at the <code>axis b</code> of
+your subject <code>a</code>.
+</p><div class="code"><div class="highlight"><pre>*[a [0 b]]               /b of a
+</pre></div></div>
+<p>We’re going to skip <code>Nock 2</code> and cover it in Section V and for now just jump
+straight to <code>Nock 3</code>.</p>
+<p>Before we do, let’s quickly go over three new terms that’ll help us talk about
+operators:</p>
+<p>Let’s say you have the Nock expression
+</p><div class="code"><div class="highlight"><pre>*[a [1 b]] 
+</pre></div></div>
+<p>We know that <code>1</code> is the operator, but shouldn’t we have names for what <code>a</code> and
+<code>b</code> are?</p>
+<p>Let’s call <code>a</code> the subject, because it’s being subjected to our computation.<span class="intersentencespace"></span> Poor <code>a</code>.</p>
+<p>We’ll call <code>b</code> an argument, And we’ll call the cell <code>[1 b]</code> a formula.<span class="intersentencespace"></span> Diagramming it out:
+</p><div class="code"><div class="highlight"><pre>*[a [1 b]] 
+*[subject [operator argument]]
+*[subject formula]
+</pre></div></div>
+<p>Good, now that we’ve got vocab out of the way, let’s get cooking.</p>
+<p>Let’s use the big noun <code>[[[48 49] 45] [46 47]]</code> from the last section as our subject.
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 0])
+! exit
+</pre></div></div>
+<p>Uh-oh, Arvo is telling us we just tried to do something indecent and unnatural.
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 1])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 2])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 3])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 4])
+! exit
+</pre></div></div>
+<p>Looks like <code>Nock 3</code> doesn’t like an atomic argument.<span class="intersentencespace"></span> Let’s go cellular.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 [0 1]])
+0
+</pre></div></div>
+<p>Okay, so at least that does something.</p>
+<p>Let’s try some more:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 [0 2]])
+0
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 [0 3]])
+0
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 [0 4]])
+0
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [3 [0 5]])
+1
+</pre></div></div>
+<p>Wait, what?</p>
+<p>Hold on, aren’t <code>[0 1]</code> or <code>[0 5]</code> valid Nock formulas on their own?<span class="intersentencespace"></span> If <code>3</code>
+only takes cells, and formulas are cells, maybe it matters what the formula
+does on its own.</p>
+<p>Let’s try that sequence again without <code>Nock 3</code>:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [0 1])
+[[[48 49] 45] [46 47]]
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [0 2])
+[[48 49] 45]
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [0 3])
+[46 47]
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [0 4])
+[48 49]
+
+~tomsyt-balsen/try=&gt;.*([[[48 49] 45] [46 47]] [0 5])
+45
+</pre></div></div>
+<p>One of these things is not like the others.<span class="intersentencespace"></span> Looks like something changes
+whether the formula <code>[0 n]</code> refers to an atom or a cell in our subject.</p>
+<p>Let’s see what happens if we run Nock 3 with <code>[0 1]</code> as its argument and try
+some different subjects:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([42 42] [3 [0 1]])
+0
+
+~tomsyt-balsen/try=&gt;.*(42 [3 [0 1]])
+1
+
+~tomsyt-balsen/try=&gt;.*([1 1] [3 [0 1]])
+0
+
+~tomsyt-balsen/try=&gt;.*(1 [3 [0 1]])
+1
+</pre></div></div>
+<p>Looks like that’s <code>0</code> for cells and <code>1</code> for atoms.<span class="intersentencespace"></span> Which means that <code>Nock 3</code> is
+cell/atom tester.</p>
+<p>How’s that work?</p>
+<p><code>Nock 3</code>’s argument is itself a formula.<span class="intersentencespace"></span> Let’s call it <code>b</code>.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>*[subject-a [3 formula-b]]
+</pre></div></div>
+<p><code>Nock 3</code> produces either a <code>0</code> or a <code>1</code>, depending on what formula-b does when
+applied to subject-a:
+</p><div class="code"><div class="highlight"><pre>*[subject-a formula-b]
+</pre></div></div>
+<p>Or more simply:
+</p><div class="code"><div class="highlight"><pre>*[a b]
+</pre></div></div>
+<p>If <code>*[a b]</code> produces a cell, then <code>*[a [3 b]]</code> produces 0.<span class="intersentencespace"></span> If <code>*[a b]</code> produces
+an atom, <code>*[a [3 b]]</code> produces 1.<span class="intersentencespace"></span> So our pattern for Nock 3 is:
+</p><div class="code"><div class="highlight"><pre>*[a [3 b]]         ?(*[a b])
+?(cell)            0
+?(atom)            1
+</pre></div></div>
+<p><code>?(x)</code> is just a litte functional notation so that we can write out both possible branches.</p>
+<p>We should also note that Urbit uses the atom <code>0</code> to mean “yes” and the atom <code>1</code>
+to mean “no.”<span class="intersentencespace"></span> (this may seem different and annoying.<span class="intersentencespace"></span> it is, but it’s
+the same thing that Unix does).</p>
+<p>In that context, <code>Nock </code>3 is just asking the question “Is the product of these two nouns a cell?</p>
+<p>Let’s review what we’ve learned:</p>
+<div class="center"><p><rule width="216.81pt" depth="0.0pt" height="0.4pt"></rule></p>
+</div>
+<div id="uid14" data-tralics-id="uid14" class="subsection" data-number="3.3.1"><h3><a href="#uid14" class="heading hyperref"><span class="number">3.3.1 </span>Summary:</a></h3>
+<p><strong>Vocabulary:</strong></p>
+<p>The subject is the noun that gets computed.</p>
+<p>The operator is an atom that tells us how to Nock the subject and arguments.</p>
+<p>The arguments modify the behaviour of the operator.</p>
+<p>A formula is a cell of <code>[operator arguments]</code></p>
+<p>As a chart:
+</p><div class="code"><div class="highlight"><pre>*[a [1 b]] 
+*[subject [operator arguments]]
+*[subject formula]
+</pre></div></div>
+<p><strong>Yes and No</strong></p>
+<p>Atom 0 means “yes”
+Atom 1 means “no.”</p>
+<p><strong>Nock 3</strong></p>
+<p>Nock 3 is a cell tester.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>*[a [3 b]]         ?(*[a b])
+?(cell)            0
+?(atom)            1
+</pre></div></div>
+<p>___</p>
+</div>
+<div id="uid15" data-tralics-id="uid15" class="subsection" data-number="3.3.2"><h3><a href="#uid15" class="heading hyperref"><span class="number">3.3.2 </span>Exercises:</a></h3>
+<ol><li>Run and compare
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(a b)
+</pre></div></div>
+<p>and
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(a [3 b])
+</pre></div></div>
+<p>with different values for a and b.<span class="intersentencespace"></span></p>
+</li>
+<li>Try finding a value for <code>b</code> that will return <code>1</code> if <code>a</code> is the atom <code>42</code>:
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(42 [3 b])
+</pre></div></div>
+<p>Not only is this possible, but you already know the formula to do it.<span class="intersentencespace"></span> ___</p>
+</li></ol></div></div>
+<div id="cid7" data-tralics-id="cid7" class="section" data-number="3.4"><h2><a href="#cid7" class="heading hyperref"><span class="number">3.4 </span>Section IV: Nock 4</a></h2>
+<p>Last section we learned how to test whether a noun is an atom or a cell with
+<code>Nock 3</code>.<span class="intersentencespace"></span> Now we’re going to figure out what <code>Nock 4</code> does.</p>
+<p>Let’s start playing with <code>Nock 4</code>, using <code>[[44 45] 46]</code> as our subject:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 0])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 1])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 2])
+! exit
+</pre></div></div>
+<p>Okay, this is starting to feel a lot like <code>Nock 3</code>.<span class="intersentencespace"></span> Looks like <code>Nock 4</code> doesn’t
+like atoms either.<span class="intersentencespace"></span> Remember that <code>Nock 3</code> took a cell that was a formula as its
+argument:
+</p><div class="code"><div class="highlight"><pre>*[subject [3 formula]]
+</pre></div></div>
+<p>And then depending on what the expression
+</p><div class="code"><div class="highlight"><pre>*[subject formula]
+</pre></div></div>
+<p>produced, <code>Nock 3</code> would return a <code>0</code> or <code>1</code>, according to the function <code>?(x)</code>
+that we defined:
+</p><div class="code"><div class="highlight"><pre>*[a [3 b]]         ?(*[a b])
+?(cell)            0
+?(atom)            1
+</pre></div></div>
+<p>Let’s assume that Nock 4 operates in a similar way.<span class="intersentencespace"></span> Let’s use the formula <code>[0
+n]</code> to try to apply Nock 4 to different axes in our subject:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 1]])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 2]])
+! exit
+
+~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 3]])
+47
+</pre></div></div>
+<p>Well!<span class="intersentencespace"></span> That’s blessedly simple then.<span class="intersentencespace"></span> Watch:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[44 45] 46] [0 3])
+46
+
+~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 3]])
+47
+</pre></div></div>
+<p>Can you guess what
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 4]])
+</pre></div></div>
+<p>would produce?</p>
+<p>If you said
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 4]])
+45
+</pre></div></div>
+<p>then you’re starting to get the hang of this.<span class="intersentencespace"></span> Yes, ladies and gentlemen, <code>Nock
+4</code> is increment.<span class="intersentencespace"></span> Nock together your subject and the formula in your argument,
+and whatever that produces, add 1 to it.</p>
+<p>But what if <code>*[subject formula]</code> produces a cell instead of an atom?<span class="intersentencespace"></span> How do we
+add <code>1</code> to a cell?<span class="intersentencespace"></span> Simple, we don’t.<span class="intersentencespace"></span> The sun continues to rise in the east,
+pigs remain regretfully earthbound, Hell is still rather toasty, and
+incrementing a cell in Nock produces an !<span class="intersentencespace"></span> exit:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*([[44 45] 46] [4 [0 2]])
+! exit
+</pre></div></div>
+<p>Assuming we understood how <code>Nock 3</code> worked, writing dow our pattern for <code>Nock 4</code> is easy:</p>
+<p>Nock 3:
+</p><div class="code"><div class="highlight"><pre>*[a [3 b]]         ?(*[a b])
+?(cell)            0
+?(atom)            1
+</pre></div></div>
+<p>Nock 4:
+</p><div class="code"><div class="highlight"><pre>*[a [4 b]]         +(*[a b])
++(cell)            ! exit
++(atom)            1 + atom
+</pre></div></div>
+<p><code>+(x)</code> is, again, just some notation so we can write out both branches of Nock
+4.</p>
+<p>An interesting property of Nock 4 is that we can chain it together to
+increment successive times.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(44 [4 [0 1]])
+45
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 [0 4]]])
+46
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 [0 4]]]])
+47
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 [4 [0 4]]]]])
+48
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
+49
+</pre></div></div>
+<p>Those brackets are starting to really pile up.<span class="intersentencespace"></span> Which is making this whole
+process a lot less legible than we would like.</p>
+<p>Fortunatley Nock has a notational rule that’ll let us not have to write so many
+of those brackets.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
+49
+
+~tomsyt-balsen/try=&gt;.*(44 [4 4 4 4 4 0 4])
+49
+</pre></div></div>
+<p>Woah.<span class="intersentencespace"></span> That’s a lot cleaner.</p>
+<p>Concisely, Nock considers brackets to group to the right.<span class="intersentencespace"></span> If you’ll recall from back in section 1:
+</p><div class="code"><div class="highlight"><pre>A noun is an atom or a cell.
+An atom is a natural number.
+A cell is an ordered pair of two nouns. I.e. two atoms, two cells, or a cell and an atom.
+</pre></div></div>
+<p>Which means that formally, all nouns in Nock are either singletons (atoms) or
+cells (pairs).<span class="intersentencespace"></span> There are no triples, quadruples, or n-tuples:
+</p><div class="code"><div class="highlight"><pre>[a b c]
+[a b c d]
+[a b c d e]
+</pre></div></div>
+<p>etc.</p>
+<p>But because a triple like [a b c] doesn’t exist in Nock, but is easier on the
+eyes, we can map a nested pair onto it.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>[a b c]         [a [b c]]
+</pre></div></div>
+<p>Which means that the Nock interpreter, whenever it sees a triple (or any
+n-tuple, for n&gt;2), just inserts the needed brackets.</p>
+<p>Let’s do some more examples to help you get the hang of it:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 [4 [4 0 1]]]]])
+49
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 [4 4 0 1]]]])
+49
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 [4 4 4 0 1]]])
+49
+
+~tomsyt-balsen/try=&gt;.*(44 [4 [4 4 4 4 0 1]])
+49
+
+~tomsyt-balsen/try=&gt;.*(44 [4 4 4 4 4 0 1])
+49
+</pre></div></div>
+<p>We can’t get rid of the last pair though:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(44 4 4 4 4 4 0 1)
+~ &lt;syntax error at [1 18]&gt;
+</pre></div></div>
+<p>This is just an artifact of Arvo’s Nock interpreter, which we directly access
+with the <code>.*</code> function, pronounced <code>dottar</code> (dot-star, get it?).<span class="intersentencespace"></span> <code>.*</code> takes two
+arguments, a subject and a formula:
+</p><div class="code"><div class="highlight"><pre>.*(subject [formula])
+</pre></div></div>
+<p>And for inscrutable reasons, the formula has to be in brackets.<span class="intersentencespace"></span> As does the
+subject, if it’s a cell:
+</p><div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt;.*(44 45 [4 4 4 4 4 0 2])
+~ &lt;syntax error at [1 9]&gt;
+
+~tomsyt-balsen/try=&gt;.*([44 45] [4 4 4 4 4 0 2])
+49
+</pre></div></div>
+<p>Let’s review:</p>
+<div class="center"><p><rule width="216.81pt" depth="0.0pt" height="0.4pt"></rule></p>
+</div>
+<div id="uid18" data-tralics-id="uid18" class="subsection" data-number="3.4.1"><h3><a href="#uid18" class="heading hyperref"><span class="number">3.4.1 </span>Summary:</a></h3>
+<p><strong>Nock 4:</strong>
+</p><div class="code"><div class="highlight"><pre>*[a [4 b]]         +(*[a b])
++(cell)            ! exit
++(atom)            1 + atom
+</pre></div></div>
+<p><strong>Brackets:</strong></p>
+<p>Brackets group to the right.<span class="intersentencespace"></span> </p><div class="code"><div class="highlight"><pre>[a b c]         [a [b c]]
+</pre></div></div>
+<p><strong>Nock interpreter:</strong></p>
+<p><code>.*</code> is pronounced “dottar”</p>
+<p>Takes two arguments, subject and formula:
+</p><div class="code"><div class="highlight"><pre>.*(subject [formula])
+</pre></div></div>
+<p>formula must be bracketed.</p>
+<div class="center"><p><rule width="216.81pt" depth="0.0pt" height="0.4pt"></rule></p>
+</div></div>
+<div id="uid19" data-tralics-id="uid19" class="subsection" data-number="3.4.2"><h3><a href="#uid19" class="heading hyperref"><span class="number">3.4.2 </span>Exercises:</a></h3>
+<ol><li>Chain together Nock 4 and Nock 3, so that cells produce 2 and atoms produce 3.<span class="intersentencespace"></span>
+</li>
+<li>Write a formula that always returns the cell [4 0 1].<span class="intersentencespace"></span>
+</li></ol></div></div>
+<div id="cid8" data-tralics-id="cid8" class="section" data-number="3.5"><h2><a href="#cid8" class="heading hyperref"><span class="number">3.5 </span>Section V: Nock 5, Nock 2 and Formula Distribution</a></h2>
+<p>So we’ve learned how to do some simple operations with Nock.<span class="intersentencespace"></span> Now we’re going to get a little fancier.</p>
+<p>To jog your memory, we’ve seen the following operators so far:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [0 1])
+[42 43]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [1 0])
+[42 43]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [3 0 1])
+0
+
+~tomsyt-balsen/try=&gt; .*([42 43] [4 0 2])
+43
+</pre></div></div>
+<p>These have all had the following pattern in common:</p>
+<div class="code"><div class="highlight"><pre>*[subject [operator arguments]]
+</pre></div></div>
+<p>with the atomic operator (0, 1, 3 or 4).</p>
+<p>What if we replaced that atom with a cell?<span class="intersentencespace"></span> With a formula, even?<span class="intersentencespace"></span> Let’s try it:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [[0 1] 0 1])
+[42 42]
+</pre></div></div>
+<p>Well that’s different.<span class="intersentencespace"></span> Let’s try another subject:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [[0 1] 0 1])
+[[42 43] 42 43]
+</pre></div></div>
+<p>And if we change the formulas?</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [[0 2] 0 1])
+[42 42 43]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [[0 2] 0 2])
+[42 42]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [[0 1] 0 2])
+[[42 43] 42]
+</pre></div></div>
+<p>It looks like its running both formulas and then just combining the results in a cell.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [[3 0 1] 3 0 2])
+[0 1]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [[3 0 1] 4 0 3])
+[0 44]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [[1 [0 1]] 4 0 3])
+[[0 1] 44]
+
+~tomsyt-balsen/try=&gt; .*([42 43] [[4 0 3] 1 [0 1]])
+[44 [0 1]]
+</pre></div></div>
+<p>Yup, the subject is definitely running through both formulas in parallel.<span class="intersentencespace"></span> The
+last example seems to do something like this:</p>
+<div class="code"><div class="highlight"><pre>*[[42 43] [4 0 3] 1 [55 73]]         [*[[42 43] [4 0 3]] *[[42 43] 1 [55 73]]]
+</pre></div></div>
+<p>which we can evaluate using Arvo:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [4 0 3])
+44
+
+~tomsyt-balsen/try=&gt; .*([42 43] [1 [0 1]])
+[0 1]
+</pre></div></div>
+<p>Or by hand, which is good practice.<span class="intersentencespace"></span> Open up a blank text file or grab a pen and
+copy along:</p>
+<div class="code"><div class="highlight"><pre>*[[42 43] [4 0 3] 1 [0 1]]  [*[[42 43] [4 0 3]] *[[42 43] 1 [0 1]]]
+
+&lt;&lt;  Nock 4:       *[a [4 b]]          +(*[a b]) &gt;&gt;
+
+[+(*[[42 43] 0 3]]) *[[42 43] 1 [0 1]]]
+
+&lt;&lt;  Nock 0:       *[a [0 b]]          /b of a  &gt;&gt;
+       
+[+(43) *[[42 43] 1 [0 1]]]
+
+&lt;&lt;     +():       +(atom)             1 + atom  &gt;&gt;
+
+[44 *[[42 43] 1 [0 1]]]
+
+&lt;&lt;  Nock 1:       *[a [1 b]]          b  &gt;&gt;
+
+[44 [0 1]] 
+</pre></div></div>
+<p>Thus,</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [[4 0 3] 1 [0 1]])
+[44 [0 1]]
+</pre></div></div>
+<p>We could write the first line of the reduction more generally as</p>
+<div class="code"><div class="highlight"><pre>*[subject [formula1] formula2]     [*[subject formula1] *[subject formula2]]   
+</pre></div></div>
+<p>Which is a little long for my taste, since a formula is a cell we can rewrite it as:</p>
+<div class="code"><div class="highlight"><pre>*[a [b c] d e]     [*[a b c] *[a d e]]   
+</pre></div></div>
+<p>where a is the subject, [b c] is formula1 and [d e] is formula2.</p>
+<p>But actually we can simplify this further and just say:</p>
+<div class="code"><div class="highlight"><pre>*[a [b c] d]     [*[a b c] *[a d]]   
+</pre></div></div>
+<p>since d has to be a cell for <code>*[a d]</code> to evaluate.<span class="intersentencespace"></span> We really just want to
+specify what happens when you replace an atomic operator with a cell.</p>
+<p>What’s really cool about this rule is that, like the operators, it also chains:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 [46 47]] [[0 1] [3 0 1] [0 2]])
+[[42 46 47] 0 42]
+</pre></div></div>
+<p>So if we wanted to produce our subject with all the atoms incremented, we could
+do that:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 [46 47]] [[4 0 1] [4 0 2] [4 0 3]])
+[43 47 48]
+</pre></div></div>
+<p>We can make our chains as long as we like</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 [46 47]] [[0 1] [3 0 1] [0 2] [3 0 2] [0 3] [3 0 3]])
+[[42 46 47] 0 42 1 [46 47] 0]
+</pre></div></div>
+<p>That is, we can evaluate arbitrary numbers of formulas on the same subject in
+parallel.</p>
+<p>But what if we want to run them in series?</p>
+<p>The expression <code>*[[42 43] [[4 0 3] 1 [0 1]]]</code> is a good example of how this might work:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [[4 0 3] 1 [3 0 1]])
+[44 [3 0 1]]
+</pre></div></div>
+<p>Wouldn’t it be interesting if we could run [44 [3 0 1]] through Nock again and end up with <code>*[44 [3 0 1]]</code> or just <code>1</code>?</p>
+<p>We’d need a recursive operator to do that.<span class="intersentencespace"></span> Fortunately, we’ve got one, Nock 2:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [2 [4 0 3] 1 [3 0 1]])
+1
+</pre></div></div>
+<p>Obviously this is a toy example because we could just do the same thing
+functionally with:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [3 4 0 3])
+1
+</pre></div></div>
+<p>But Nock 2 also lets us call a formula inside our subject.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[40 43] [4 0 1]] [2 [0 4] [0 3]])
+41
+
+~tomsyt-balsen/try=&gt; .*([[40 43] [4 0 1]] [2 [0 5] [0 3]])
+44
+</pre></div></div>
+<p>Or we could completely separate the operator and arguments:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]])
+44
+</pre></div></div>
+<p>We did a lot of slicing and dicing of nouns with the formula distribution rule.<span class="intersentencespace"></span> Nock 2 lets us run those reassembled nouns as expressions.<span class="intersentencespace"></span> We could think of
+Nock 2 as being exactly like the distribution rule:</p>
+<div class="code"><div class="highlight"><pre>*[a [b c] d]          [*[a b c] *[a d]]  
+</pre></div></div>
+<p>except that Nock 2 has an extra <code>*</code> meaning we run everything through Nock a
+second time.<span class="intersentencespace"></span> So if we have two formulas</p>
+<div class="code"><div class="highlight"><pre>*[subject 2 formula1 formula2]               *[*[subject formula1] *[subject formula2]]  
+</pre></div></div>
+<p>which we can rewrite as:</p>
+<div class="code"><div class="highlight"><pre>*[a 2 b c]            *[*[a b] *[a c]] 
+</pre></div></div>
+<p>Let’s work through that last example again:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]])
+44
+</pre></div></div>
+<p>So we’ve got our subject [[40 43] [0 1 3 4]] and a four different formulas:
+[0 2] [0 31] [0 6] [0 30]</p>
+<p>Let’s apply each of these to our subject separately:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [0 2])
+[40 43]
+
+~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [0 31])
+4
+
+~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [0 6])
+0
+
+~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [0 30])
+3
+</pre></div></div>
+<p>If instead of Nock 2, we had just used the formula distribution rule:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[40 43] [0 1 3 4]] [[0 2] [0 31] [0 6] [0 30]])
+[[40 43] 4 0 3]
+</pre></div></div>
+<p>But since Nock 2 is recursive:</p>
+<div class="code"><div class="highlight"><pre>*[[[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]]]
+</pre></div></div>
+<p>reduces to:</p>
+<div class="code"><div class="highlight"><pre>*[[40 43] 4 0 3]
+</pre></div></div>
+<p>which is, of course, 43 + 1, or 44.</p>
+<p>Now that we understand how to slice up nouns in our subject, let’s introduce Nock 5.</p>
+<p>Nock 5 is exactly like Nock 3 and Nock 4 in structure, but we’ve saved it for
+last because it’s easier to understand how to use it, once you know how to
+distribute formulas.<span class="intersentencespace"></span> See if you can figure it out from the following:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 42] [5 [0 2] [0 3]])
+0
+
+~tomsyt-balsen/try=&gt; .*([42 43] [5 [0 2] [0 3]])
+1
+
+~tomsyt-balsen/try=&gt; .*([42 44] [5 [0 2] [0 3]])
+1
+
+~tomsyt-balsen/try=&gt; .*([[42 42] [42 42]] [5 [0 2] [0 3]])
+0
+
+~tomsyt-balsen/try=&gt; .*([[42 43] [42 43]] [5 [0 2] [0 3]])
+0
+
+~tomsyt-balsen/try=&gt; .*([[42 43] [42 43]] [5 [0 4] [0 3]])
+1
+
+~tomsyt-balsen/try=&gt; .*([[42 42] [42 42]] [5 [0 2] [0 3]])
+0
+</pre></div></div>
+<p>Yes, Nock 5 is an equality test:</p>
+<div class="code"><div class="highlight"><pre>*[a 5 b] 
+</pre></div></div>
+<p>if the head and the tail of the cell produced by <code>*[a b]</code> are the same, then
+Nock 5 produces 0, if they are different, Nock 5 produces 1:</p>
+<div class="code"><div class="highlight"><pre>*[a 5 b]              =(*[a b])
+=([a a])              0 
+=([a !a])              1
+</pre></div></div>
+<p>Where <code>!a</code> just means “not a.”</p>
+<p>But what if <code>*[a b]</code> inside <code>=(*[a b])</code> produces an atom?</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([[42 42] [42 42]] [5 [1 1]])    
+! exit
+</pre></div></div>
+<p>So we need to add</p>
+<div class="code"><div class="highlight"><pre>=(atom)              ! exit
+</pre></div></div>
+<p>to our rule.</p>
+<p>Let’s reduce the last example from above by hand:</p>
+<div class="code"><div class="highlight"><pre>*[[[42 42] [42 42]] [5 [0 2] [0 3]]]
+
+    *[a 5 b]                =(*[a b])
+
+=(*[[[42 42] [42 42]] [0 2] [0 3]])
+
+    *[a [b c] d]            [*[a b c] *[a d]] 
+
+=([*[[[42 42] [42 42]] [0 2]] *[[[42 42] [42 42]] [0 3]]])
+
+    *[a [0 b]]               /b of a
+
+=([[42 42] *[[[42 42] [42 42]] [0 3]]])
+
+    *[a [0 b]]               /b of a
+
+=([[42 42] [42 42]])
+
+    =([a a])                 0 
+
+1
+</pre></div></div>
+<p>___</p>
+<div id="uid22" data-tralics-id="uid22" class="subsection" data-number="3.5.1"><h3><a href="#uid22" class="heading hyperref"><span class="number">3.5.1 </span>Summary:</a></h3>
+<p><strong>Formula Distribution:</strong></p>
+<p>A formula with a second formula at its head instead of an operator distributes the subject over both formulas:
+</p><div class="code"><div class="highlight"><pre>*[a [b c] d]          [*[a b c] *[a d]]  
+</pre></div></div>
+<p><code>[b c]</code> is the first formula, d is the second formula.</p>
+<p><strong>Nock 2</strong></p>
+<div class="code"><div class="highlight"><pre>*[subject 2 formula-a formula]               *[*[subject formula1] *[subject formula2]]  
+</pre></div></div>
+<p>which translates to</p>
+<div class="code"><div class="highlight"><pre>*[a 2 b c]            *[*[a b] *[a c]]
+</pre></div></div>
+<p><strong>Nock 5</strong>
+</p><div class="code"><div class="highlight"><pre>*[a 5 b]              =(*[a b])
+=([a a])              0 
+=([a !a])              1
+=(atom)               ! exit
+</pre></div></div>
+<p>___</p>
+</div>
+<div id="uid23" data-tralics-id="uid23" class="subsection" data-number="3.5.2"><h3><a href="#uid23" class="heading hyperref"><span class="number">3.5.2 </span>Exercises:</a></h3>
+<ol><li>Using the above rule, write a formula that reverses the order of the atoms in <code>[42 46 [68 69] 55]</code> i.e.<span class="intersentencespace"></span> produces <code>[55 [68 69] 46 42]</code>.<span class="intersentencespace"></span>
+</li>
+<li>Put the subject <code>[4 3 7 2 5 1 6]</code> in order from least to greatest.<span class="intersentencespace"></span>
+</li>
+<li>Does <code>*[[42 42] 5 [0 1] [0 3]]</code> produce a <code>yes</code> or a <code>no</code>?<span class="intersentencespace"></span>
+</li>
+<li>Write a noun that contains some data (nouns you find interesting) and some code (formulas you find interesting), write an expression with that noun as the subject that produces a single data-noun and a single code cell.<span class="intersentencespace"></span> Then use Nock 2 to apply the formula to the data.<span class="intersentencespace"></span>
+</li>
+<li>Choose a subject such that the following expression evaluates
+</li></ol><div class="code"><div class="highlight"><pre>`~tomsyt-balsen/try=&gt; .*(subject [2 [0 5] [0 4] [0 3]])`
+`43`
+</pre></div></div>
+</div></div>
+<div id="cid9" data-tralics-id="cid9" class="section" data-number="3.6"><h2><a href="#cid9" class="heading hyperref"><span class="number">3.6 </span>Section VI: Conclusion</a></h2>
+<p>Let’s list out all the rules we’ve learned so far, with the explanations collapsed:</p>
+<div class="code"><div class="highlight"><pre>A noun is an atom or a cell.  
+An atom is a natural number.  
+A cell is an ordered pair of nouns. 
+ 
+
+[a b c]              [a [b c]]
+
+?(cell)               0
+?(atom)               1
++(cell)               ! exit
++(atom)               1 + atom
+=([a a])              0 
+=([a !a])              1
+=(atom)               ! exit
+
+
+*[a 0 b]              /b of a
+*[a 1 b]              b 
+*[a 2 b c]            *[*[a b] *[a c]]
+*[a 3 b]              ?(*[a b])
+*[a 4 b]              +(*[a b])
+*[a 5 b]              =(*[a b])
+
+*[a [b c] d]          [*[a b c] *[a d]] 
+</pre></div></div>
+<p>That looks cleaner.<span class="intersentencespace"></span> Now let’s look at an abridged version of the real Nock spec, which you should now be able to mostly read</p>
+<div class="code"><div class="highlight"><pre>1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+...
+38 ::
+39 ::    *a               *a
+</pre></div></div>
+<p>Since the Nock spec has been designed to be as concise as possible, a couple things are notationally different from the rules we’ve learned.</p>
+<p>The largest difference is the block that defines what the <code>/</code> or axis operator does:</p>
+<div class="code"><div class="highlight"><pre>16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+</pre></div></div>
+<p>This block of pseudocode is functionally equivalent to saying:</p>
+<p>The head of axis /n is /(2n) and the tail of axis /n is /(2n+1).</p>
+<p>If you read and understood Chapter 1, Section II, you understand what this is doing, even if you can’t parse its recursive structure.</p>
+<p>The next most obvious difference is that between</p>
+<div class="code"><div class="highlight"><pre>8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+</pre></div></div>
+<p>and</p>
+<div class="code"><div class="highlight"><pre>?(cell)               0
+?(atom)               1
++(cell)               ! exit
++(atom)               1 + atom
+=([a a])              0 
+=([a !a])             1
+=(atom)               ! exit
+</pre></div></div>
+<p>We’ll work through the evolution of this block:</p>
+<p>First thing is that since we’re trying to make the Nock specification small, we can get rid of the parentheses:</p>
+<div class="code"><div class="highlight"><pre>?cell               0
+?atom               1
++cell               ! exit
++atom               1 + atom
+=[a a]              0 
+=[a !a]             1
+=atom               ! exit
+</pre></div></div>
+<p>Then we can remove the words ‘cell’ and ‘atom.’<span class="intersentencespace"></span> Since the rules in the nock spec match top to bottom, we can specify matching a rule to a cells or atom by putting [a b] above a.<span class="intersentencespace"></span> A cell will match [a b] and and atom will not, therefore because all cells will match [a b],
+only atoms will match a below [a b].</p>
+<div class="code"><div class="highlight"><pre>?[a b]             0
+?a                 1
++[a b]             ! exit
++a                 1 + atom
+=[a a]             0 
+=[a !a]            1
+=a                 ! exit
+</pre></div></div>
+<p>Next little thing we can do, along the same principle, is change !a to b, because [a b] below [a a] will only match to a pair of unequal nouns.</p>
+<div class="code"><div class="highlight"><pre>?[a b]             0
+?a                 1
++[a b]             ! exit
++a                 1 + atom
+=[a a]             0 
+=[a !a]            1
+=a                 ! exit
+</pre></div></div>
+<p>Then there’s these lines, which we call our crash defaults:</p>
+<div class="code"><div class="highlight"><pre>10 ::    +[a b]           +[a b]
+14 ::    =a               =a
+21 ::    /a               /a
+39 ::    *a               *a
+</pre></div></div>
+<p>Basically the crash defaults determine when Nock needs to return an !<span class="intersentencespace"></span> exit, because something is nonsensical.<span class="intersentencespace"></span> In theory these lines imply that Nock spins forever in an infinite loop, in practice, Nock will just crash.</p>
+<div class="code"><div class="highlight"><pre>10 ::    +[a b]           +[a b]
+</pre></div></div>
+<p>means that Nock crashes if you try to increment a cell</p>
+<div class="code"><div class="highlight"><pre>14 ::    =a               =a
+</pre></div></div>
+<p>means that Nock crashes if you try run an equality test on an atom</p>
+<div class="code"><div class="highlight"><pre>   21 ::    /a               /a
+</pre></div></div>
+<p>means that Nock crashes if you try to reference a noun axis that doesn’t exist</p>
+<div class="code"><div class="highlight"><pre>39 ::    *a               *a
+</pre></div></div>
+<p>means that if you try to run something that’s not a valid formula (i.e.<span class="intersentencespace"></span> doesn’t match any of the preceding lines 1 through 38) through Nock, you guessed it, Nock crashes.</p>
+<p>Replacing !<span class="intersentencespace"></span> exit in our rules with the appropriate crash default, we get the canoncial Nock specification:</p>
+<div class="code"><div class="highlight"><pre>1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+...
+38 ::
+39 ::    *a               *a
+</pre></div></div>
+<p>And that’s it!<span class="intersentencespace"></span> That’s really all there is to Nock.<span class="intersentencespace"></span> Everything else in Urbit, including the elided lines 32 through 38, is just a structure built on top of Nock.<span class="intersentencespace"></span> All your playing around in Urbit reduces to some combination of what you now already know.</p>
+</div>
+<div id="cid10" data-tralics-id="cid10" class="chapter" data-number="4"><h1><a href="#cid10" class="heading hyperref"><span class="number">Chapter 4 </span>Nock Macros</a></h1>
+<blockquote class="quotation"><p class="noindent"><em>You get used to it.<span class="intersentencespace"></span> I don’t even see the code.<span class="intersentencespace"></span> All I see is blonde, brunette, redhead.</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span>
+—<strong>The Matrix</strong></p>
+</blockquote><p>In the last chapter we showed you the Nock specification with lines 32 through 37 removed.<span class="intersentencespace"></span> This chapter will explain what these lines are and what they do:</p>
+<div class="code"><div class="highlight"><pre>32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+</pre></div></div>
+<p>These lines describe the Nock operators 6 through 10, which are just macros that reduce to operators 0 through 5.<span class="intersentencespace"></span> As you can see, these operators are defined in terms of Nock operators covered in the last chapter.</p>
+<p>They add no new functionality to Nock, but we include them in the specification because they are essential to making Nock a practical basis for computation.</p>
+</div>
+<div id="cid11" data-tralics-id="cid11" class="section" data-number="4.1"><h2><a href="#cid11" class="heading hyperref"><span class="number">4.1 </span>Nock 7</a></h2>
+<p>We’ll start with the easiest macro: Nock 7</p>
+<div class="code"><div class="highlight"><pre>33 ::    *[a 7 b c]       *[a 2 b 1 c]
+</pre></div></div>
+<p>We actually already used Nock 7 in the last chapter while we were explaining Nock 2.</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([42 43] [2 [4 0 3] 1 [3 0 1]])
+1
+</pre></div></div>
+<p>Which sequentially applies the formulas <code>[4 0 3]</code> and <code>[3 0 1]</code> to our subject <code>[42 43]</code>.<span class="intersentencespace"></span> We use Nock 7 whenever we evaluate two formulas on our subject in series.<span class="intersentencespace"></span> The Nock 1 operator in <code>*[a 2 b 1 c]</code> is, as we know, the constant operator, which means that when Nock 2 applies, as in the above example, ‘[1 [3 0 1]]‘ to the subject, [3 0 1] is produced.</p>
+<p>Let’s work through a full reduction of the above example, refer to the specification at the end of the last chapter to get a better sense of where these rules are coming from.<span class="intersentencespace"></span> And as always, please copy along on pen and paper or in a text file.</p>
+<div class="code"><div class="highlight"><pre>*[[42 43] [2 [4 0 3] 1 [3 0 1]]]
+
+      27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+
+
+*[*[[42 43] [4 0 3]] *[[42 43] 1 [3 0 1]]]
+
+      26 ::    *[a 1 b]         b
+
+
+*[*[[42 43] [4 0 3]] [3 0 1]]
+
+      29 ::    *[a 4 b]         +*[a b]
+
+*[+*[[42 43] 0 3] [3 0 1]]
+
+      25 ::    *[a 0 b]         /[b a]
+
+*[+/[3 [42 43]] [3 0 1]]
+
+      18 ::    /[3 a b]         b
+
+*[+43 [3 0 1]]
+
+      11 ::    +a               1 + a
+
+*[44 [3 0 1]]
+
+      28 ::    *[a 3 b]         ?*[a b]
+
+?*[44 0 1]
+
+      25 ::    *[a 0 b]         /[b a]
+
+?/[1 44]
+
+      16 ::    /[1 a]           a
+
+?44
+
+      9  ::    ?a               1
+1
+</pre></div></div>
+<p>This reduction is overly long because we’ve included the full reduction sequences for the Nock 0, 3 and 4 operators, which can usually be omitted without loss of clarity.<span class="intersentencespace"></span> The notation is often helpful, but must be balanced against the needs of conciseness.</p>
+<p>Like so:</p>
+<div class="code"><div class="highlight"><pre>*[[42 43] [2 [4 0 3] 1 [3 0 1]]]
+
+    27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+
+
+*[*[[42 43] [4 0 3]] *[[42 43] 1 [3 0 1]]]
+
+    26 ::    *[a 1 b]         b
+
+*[*[[42 43] [4 0 3]] [3 0 1]]
+
+    29 ::    *[a 4 b]         +*[a b]
+
+*[44 [3 0 1]]
+
+    28 ::    *[a 3 b]         ?*[a b]
+1
+</pre></div></div>
+<p>The student of Nock should be able to fill in the missing steps in their minds.</p>
+<p>Informally, the formula <code>[7 b c]</code> composes the formulas <code>b</code> and
+<code>c</code>.<span class="intersentencespace"></span> To use a bit of math notation, if <code>d</code> is <code>[7 b c]</code>,</p>
+<div class="code"><div class="highlight"><pre>d(a) == c(b(a))
+</pre></div></div>
+<p>Let’s see how this works by applying some reductions to the
+definition of <code>7</code>, and producing a simpler definition that
+doesn’t look like a macro:</p>
+<p><strong><code>7</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>29 ::    *[a 7 b c]        *[a 2 b 1 c]
+
+*[a 2 b 1 c]
+
+23 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+
+*[*[a b] *[a 1 c]]
+
+22:    *[a 1 b]          b
+ 
+*[*[a b] c]
+</pre></div></div>
+<p><strong><code>7</code> Reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>7r ::     *[a 7 b c]         *[*[a b] c]
+</pre></div></div>
+<p>We’ll skip the full reduction process for the rest of these macros and simply use the reduced forms to explain their function.<span class="intersentencespace"></span> Skip to the Nock reference guidechapter 4 if you want to see the full reduction sequence.</p>
+</div>
+<div id="cid12" data-tralics-id="cid12" class="section" data-number="4.2"><h2><a href="#cid12" class="heading hyperref"><span class="number">4.2 </span>Nock 8</a></h2>
+<div class="code"><div class="highlight"><pre>34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+
+34r ::    *[a 8 b c]       *[[*[a b] a] c]
+</pre></div></div>
+<p>Nock 8 evaluates the formula <code>c</code> with the cell of <code>*[a b]</code> and the original
+subject <code>a</code>.<span class="intersentencespace"></span> In other words, in math notation, if <code>d</code> is <code>[8 b c]</code>,</p>
+<div class="code"><div class="highlight"><pre>d(a) == c([b(a) a])
+</pre></div></div>
+<p>But why?<span class="intersentencespace"></span> Suppose, for the purposes of <code>c</code>, we need not just <code>a</code>,
+but some intermediate noun computed from <code>a</code> that will be useful
+in <code>c</code>’s calculation.<span class="intersentencespace"></span> We apply <code>c</code> with a new subject that’s a
+cell of the intermediate value and the old subject - not at all
+unlike pushing a new variable on the stack.</p>
+<p>Let’s work through some examples:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [8 [4 0 1] [0 1]])
+[43 42]
+
+~tomsyt-balsen/try=&gt; .*([42 45] [8 [[4 0 2] [4 0 3]] [0 1]])
+[[43 46] 42 45]
+</pre></div></div>
+<p>For extra credit, a good question to ask yourself: In line 34,</p>
+<div class="code"><div class="highlight"><pre>    34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+</pre></div></div>
+<p>why do we need to write <code>[7 [0 1] b]</code> and not just <code>b</code>?</p>
+</div>
+<div id="cid13" data-tralics-id="cid13" class="section" data-number="4.3"><h2><a href="#cid13" class="heading hyperref"><span class="number">4.3 </span>Nock 6</a></h2>
+<div class="code"><div class="highlight"><pre>32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+
+32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+</pre></div></div>
+<p>Actually, <code>6</code> is a primitive known to every programmer - good old
+“if.”<span class="intersentencespace"></span> If <code>b</code> evaluates to <code>0</code>, we produce <code>c</code>; if <code>b</code> evaluates
+to <code>1</code>, we produce <code>d</code>; otherwise, we crash.</p>
+<p>For instance:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [6 [1 0] [4 0 1] [1 233]])
+43
+</pre></div></div>
+<p>and</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [6 [1 1] [4 0 1] [1 233]])
+233
+</pre></div></div>
+<p>We can actually simplify the semantics of <code>6</code>, at the expense of
+breaking the system a little, by creating a macro that works as
+“if” only if <code>b</code> is a proper boolean and produces <code>0</code> or <code>1</code>.</p>
+<p>This simpler “if” would be:</p>
+<div class="code"><div class="highlight"><pre>32s::    *[a 6 b c d]    *[a 2 [0 1] 2 [1 c d] [1 0] [4 4 b]]
+</pre></div></div>
+<p>This reduces to</p>
+<div class="code"><div class="highlight"><pre>32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
+</pre></div></div>
+<p>Let’s describe what each of <code>a</code>, <code>b</code>, <code>c</code> and <code>d</code> are.</p>
+<p><code>a</code> is our subject, some data that we want to run our <code>if</code> on</p>
+<p><code>b</code> is our test formula, which returns a <code>yes</code> or a <code>no</code> when we apply it to our subject.</p>
+<p><code>c</code> is our <code>then</code> formula, which we want to apply to our subject if our test formula produces a <code>yes</code>, i.e.<span class="intersentencespace"></span> a 0.</p>
+<p><code>d</code> is our <code>else</code> formula, which we want to apply to our subject if our test formula produces a <code>no</code>, i.e.<span class="intersentencespace"></span> a 1.</p>
+<p>Let’s say we have the following Nock expression:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [6 [3 0 1] [4 0 2] [4 0 1]])
+43
+</pre></div></div>
+<p>Our <code>test</code> is the formula [3 0 1], which tests if the subject is a cell.</p>
+<p>Our <code>then</code> is the formula [4 0 2], which increments the head of a cell.</p>
+<p>Our <code>else</code> is the formula [4 0 1], which increments an atom.</p>
+<p>If we changed our subject to a cell:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*([40 43] [6 [3 0 1] [4 0 2] [4 0 1]])
+41
+</pre></div></div>
+<p>With our simpler reduced if rule:</p>
+<div class="code"><div class="highlight"><pre>32sr::   *[a 6 b c d]     *[a *[[c d] [0 ++*[a b]]]]
+</pre></div></div>
+<p>we could rewrite</p>
+<div class="code"><div class="highlight"><pre>*[42 [6 [3 0 1] [4 0 2] [4 0 1]]]
+</pre></div></div>
+<p>as</p>
+<div class="code"><div class="highlight"><pre>*[42  *[[[4 0 2] [4 0 1]] [0 ++*[42 [3 0 1]]]]]
+</pre></div></div>
+<p>Since <code>*[42 [3 0 1]]</code> produces a <code>no</code>, i.e a <code>1</code>:</p>
+<div class="code"><div class="highlight"><pre>*[42  *[[[4 0 2] [4 0 1]] [0 ++1]]]]
+</pre></div></div>
+<p>which gets incremented twice
+</p><div class="code"><div class="highlight"><pre>*[42  *[[[4 0 2] [4 0 1]] [0 3]]]
+</pre></div></div>
+<p>and goes into a Nock 0 to select the tail of <code>[[4 0 2] [4 0 1]]</code></p>
+<div class="code"><div class="highlight"><pre>*[42 [4 0 1]]
+</pre></div></div>
+<p>which increments 42 to produce 43.<span class="intersentencespace"></span> You should be able to see how changing the subject to the cell <code>[40 43]</code> would cause a <code>0</code> to be produced by the test, and how that would cascade into the <code>then</code> formula <code>[4 0 2]</code> being selected and applied instead.</p>
+<p>Our real <code>if</code> is only slightly more complicated:</p>
+<div class="code"><div class="highlight"><pre>32r ::    *[a 6 b c d]     *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+</pre></div></div>
+<p>There appears to be an extra step here, using Nock 0 twice, first to select from the cell [2 3], and then to select from the cell [c d].</p>
+<p>The reason is fairly simple, if we just used the simpler version of <code>if</code>, tests that returned values other than 0 or 1 would have unexpected behaviour.<span class="intersentencespace"></span> If our our test produced a <code>3</code> we would then try to reference the axis /5 in our cell [c d].<span class="intersentencespace"></span> Since the tail of <code>d</code> could very well be a valid formula, strange things could result.</p>
+<p>We add the step of selecting from [2 3] because trying to reference anything other than /2 or /3 within [2 3] will crash, which is exactly what we want.<span class="intersentencespace"></span> (/1 of [2 3] won’t crash, but this is fine since our test can never produce a -1)</p>
+</div>
+<div id="cid14" data-tralics-id="cid14" class="section" data-number="4.4"><h2><a href="#cid14" class="heading hyperref"><span class="number">4.4 </span>Nock 9</a></h2>
+<div class="code"><div class="highlight"><pre>9r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+</pre></div></div>
+<p>We’ll discuss what Nock 9 does in the next chapter, when we introduce how to
+use <em>cores</em>, which are subjects containing both code and data.<span class="intersentencespace"></span> If you have a
+really fine instinctive sense of Nock, you might understand what <code>9</code> is for.</p>
+<p>Succinctly, we use Nock 9 to call a formulas held inside of the subject itself,
+and apply them to the subject.<span class="intersentencespace"></span> If you’ve been wondering how one writes Nock
+expressions that loop, this is how.</p>
+</div>
+<div id="cid15" data-tralics-id="cid15" class="section" data-number="4.5"><h2><a href="#cid15" class="heading hyperref"><span class="number">4.5 </span>Nock 10</a></h2>
+<div class="code"><div class="highlight"><pre>36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+</pre></div></div>
+<p>The second case of 10 is so easy it’s puzzling:</p>
+<div class="code"><div class="highlight"><pre>37 ::    *[a 10 b c]      *[a c]
+</pre></div></div>
+<p>For any <code>b</code>, the formula <code>[10 b c]</code> seems to be perfectly
+equivalent to the formula <code>c</code>.<span class="intersentencespace"></span> But why?<span class="intersentencespace"></span> Why would we say
+<code>[10 b c]</code> when we could just say <code>c</code>?</p>
+<p>The answer is that <code>10</code> is a hint to the interpreter.<span class="intersentencespace"></span> It’s true
+that <code>[10 b c]</code> has to be <em>semantically</em> equivalent to <code>c</code>, but
+it doesn’t have to be <em>practically</em> equivalent.<span class="intersentencespace"></span> Since whatever
+information is in <code>b</code> is discarded, a practical interpreter is
+free to ignore it, or to use it in any way that does not affect
+the results of the computation.</p>
+<p>And the other reduction of <code>10</code>:</p>
+<div class="code"><div class="highlight"><pre>    36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+</pre></div></div>
+<p>Reducing:</p>
+<div class="code"><div class="highlight"><pre>*[a 8 c 7 [0 3] d]
+
+  &lt;&lt;34r::    *[a 8 b c]       *[[*[a b] a] c]&gt;&gt;
+
+*[[*[a c] a] [7 [0 3] d]]
+
+  &lt;&lt;33r::    *[a 7 b c]       *[*[a b] c]&gt;&gt;
+
+*[*[[*[a c] a] 0 3] d]
+</pre></div></div>
+<p>If you’ve assimilated a bit of Nock already, you may feel the
+temptation to reduce this to</p>
+<div class="code"><div class="highlight"><pre>*[a d]
+</pre></div></div>
+<p>since it would be very reasonable to think that</p>
+<div class="code"><div class="highlight"><pre>*[[*[a c] a] 0 3]
+</pre></div></div>
+<p>is just <code>a</code>.<span class="intersentencespace"></span> And it seems to be - given the semantics of 8 as
+we’ve explained them.</p>
+<p>But there’s a problem, which is that <code>c</code> might not terminate.<span class="intersentencespace"></span> If <code>c</code> terminates, this reduction is correct.<span class="intersentencespace"></span> Otherwise it’s not.
+So the best we can do is:</p>
+<div class="code"><div class="highlight"><pre>36r::    *[a 10 [b c] d]  *[*[[*[a c] a] 0 3] d]
+</pre></div></div>
+<p>And that’s it!<span class="intersentencespace"></span> That’s the entirety of the Nock specification!</p>
+<div class="code"><div class="highlight"><pre>1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+38 ::
+39 ::    *a               *a
+</pre></div></div>
+</div>
+<div id="cid16" data-tralics-id="cid16" class="chapter" data-number="5"><h1><a href="#cid16" class="heading hyperref"><span class="number">Chapter 5 </span>Cores and Gates</a></h1>
+<blockquote class="quotation"><p class="noindent"><em>But are you crazy enough?</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span>
+—<strong>Point Break</strong></p>
+</blockquote></div>
+<div id="cid17" data-tralics-id="cid17" class="section" data-number="5.1"><h2><a href="#cid17" class="heading hyperref"><span class="number">5.1 </span>Playing with Nock</a></h2>
+<p>Now we’re going to actually do some cool stuff with Nock.</p>
+<p>Fortunately, we have an entire OS, Arvo, which is built on Nock.<span class="intersentencespace"></span> Unfortunately, there’s really no practical reason to work
+directly in Nock when you’re using Arvo - except for learning
+Nock, which you do once and never again.<span class="intersentencespace"></span> So the things we’ll
+have to do are a little bit cumbersome.</p>
+<p>What Arvo is good at is evaluating Hoon.<span class="intersentencespace"></span> And it’s possible to
+evaluate Nock from Hoon, much the way you can put inline assembly
+in C. Through this indirection, we have two ways to run Nock in
+Hoon: on the command line and via an app file.</p>
+<div id="uid29" data-tralics-id="uid29" class="subsection" data-number="5.1.1"><h3><a href="#uid29" class="heading hyperref"><span class="number">5.1.1 </span>Command line</a></h3>
+<p>From the Arvo command line, you can run one-liners with the Hoon
+rune <code>.*</code>:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; .*(42 [4 0 1])
+43
+</pre></div></div>
+</div>
+<div id="uid30" data-tralics-id="uid30" class="subsection" data-number="5.1.2"><h3><a href="#uid30" class="heading hyperref"><span class="number">5.1.2 </span>Application file</a></h3>
+<p>Unfortunately, the Arvo command line doesn’t do multiline input
+well, and if there’s any hope of writing complex Nock formulas
+it’s by using plenty of whitespace and linebreaks.</p>
+<p>So we’ve constructed a template for writing Nock formulas as Arvo
+applications.<span class="intersentencespace"></span> Unfortunately Arvo is a young OS and has no way to
+edit a file.<span class="intersentencespace"></span> But Arvo runs on Unix and Unix is a very old OS.
+Arvo syncs its filesystem with your <code>$URBIT_HOME</code> directory,
+propagating changes on either side.</p>
+<p>Let’s assume your <code>$URBIT_HOME</code> is <code>urb/</code>, and your ship is
+<code><span class="inline_math">\( \sim  \)</span>tomsyt-balsen</code>.<span class="intersentencespace"></span> The Nock application template is in</p>
+<div class="code"><div class="highlight"><pre>urb/tomsyt-balsen/try/bin/nock.hoon
+</pre></div></div>
+<p>Its text should be:</p>
+<div class="code"><div class="highlight"><pre>!:             ::  To write Nock as an Arvo application in Hoon
+|=  *          ::
+|=  [a=* ~]    ::  For educational purposes only
+:_  ~  :_  ~   ::
+:-  %la        ::  Preserve this mysterious boilerplate square
+%+  sell  %noun::
+.*  a          ::  Replace the formula with your own
+:::::::::::::::::
+               ::  Formula: increment
+[4 0 1]
+</pre></div></div>
+<p>For the rest of this document we’ll simply assume you can copy
+boilerplate, and write the rest of the file:</p>
+<div class="code"><div class="highlight"><pre>[4 0 1]                                      ::    bump /1
+</pre></div></div>
+<p>(The pseudocode in the comments is not in any way described.<span class="intersentencespace"></span> If
+you have trouble figuring it out, that’s okay, because it should
+make itself obvious by the end of the document.)</p>
+<p>Test this by running:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; :nock 42
+43
+</pre></div></div>
+<p>Our first complex example will be a decrement function.<span class="intersentencespace"></span> With or
+without <code>vere</code> running, copy the template from Unix:</p>
+<div class="code"><div class="highlight"><pre>$ cp urb/tomsyt-balsen/try/bin/nock.hoon urb/tomsyt-balsen/try/bin/dec.hoon
+</pre></div></div>
+<p>Then, use a Unix editor to change “Formula: increment” to
+“Formula: decrement” in <code>dec.hoon</code>.</p>
+<p>Either next time you start <code>vere</code>, or on your next keyboard event
+if you’re already running it, you’ll see something like</p>
+<div class="code"><div class="highlight"><pre> + /~tomsyt-balsen/try/1/bin/dec/hoon
+</pre></div></div>
+<p>Arvo has slurped up dec.hoon from your filesystem.<span class="intersentencespace"></span> To test it,</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; :dec 42
+43
+</pre></div></div>
+<p>Well, we didn’t change the formula, so it still increments.<span class="intersentencespace"></span> But
+it’s a start.</p>
+</div></div>
+<div id="cid18" data-tralics-id="cid18" class="section" data-number="5.2"><h2><a href="#cid18" class="heading hyperref"><span class="number">5.2 </span>Decrement</a></h2>
+<p>The only arithmetic operation in Nock is increment.<span class="intersentencespace"></span> So how do we
+decrement?<span class="intersentencespace"></span> The algorithm is obvious: to decrement <code>n</code>, start
+from <code>0</code>, and count up to <code>n-1</code>.<span class="intersentencespace"></span> Or rather, count up to a number
+<code>m</code> such that <code>m+1</code> equals <code>n</code>.</p>
+<p>(Is this going to be an <code>O(n)</code> algorithm?<span class="intersentencespace"></span> It is.<span class="intersentencespace"></span> How do we
+compute effectively in a platform where decrement is <code>O(n)</code>?<span class="intersentencespace"></span> Gosh, it seems difficult, doesn’t it?<span class="intersentencespace"></span> We’ll get to that.)</p>
+<p>The first thing we’re going to need is a counter.<span class="intersentencespace"></span> Right now
+our subject is just the atom we’re trying to decrement - <code>/1</code>,
+referenced with the formula <code>[0 1]</code>.<span class="intersentencespace"></span> Thus, to increment it,
+the formula is <code>[4 0 1]</code>.</p>
+<p>Let’s try to put the counter into the subject with one of our
+macros operators, <code>8</code>.<span class="intersentencespace"></span> Recall our revised rule for <code>8</code>:</p>
+<div class="code"><div class="highlight"><pre>34r::    *[a 8 b c]       *[[*[a b] a] c]
+</pre></div></div>
+<p>The formula <code>c</code> is applied to the subject <code>[*[a b] a]</code>.<span class="intersentencespace"></span> What is
+our <code>b</code>?<span class="intersentencespace"></span> It should just produce our initial counter value - 0.<span class="intersentencespace"></span> So, use operator <code>1</code> to produce a constant - <code>[1 0]</code>.<span class="intersentencespace"></span> Let’s
+put this counter in the subject, and then increment as usual.</p>
+<p>Edit <code>dec.hoon</code> so that the formula reads</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [1 0]                                      ::  just 0
+  [4 0 1]                                    ::  bump /1
+]                                            ::
+</pre></div></div>
+<p>Note that for these tall bracket structures, the space after <code>[</code>
+is essential.<span class="intersentencespace"></span> Then, you’ll see the file automatically update in
+Arvo:</p>
+<div class="code"><div class="highlight"><pre>: /~tomsyt-balsen/try/2/bin/dec/hoon
+~tomsyt-balsen/try=&gt; :dec 42
+</pre></div></div>
+<p>Whoops!<span class="intersentencespace"></span> It crashed:</p>
+<div class="code"><div class="highlight"><pre>! /~tomsyt-balsen/try/~2013.11.26..00.01.38..499b/bin/dec/:&lt;[4 1].[13 2]&gt;
+! /~tomsyt-balsen/try/~2013.11.26..00.01.38..499b/bin/dec/:&lt;[4 8].[13 2]&gt;
+! /~tomsyt-balsen/try/~2013.11.26..00.01.38..499b/bin/dec/:&lt;[5 1].[13 2]&gt;
+! /~tomsyt-balsen/try/~2013.11.26..00.01.38..499b/bin/dec/:&lt;[6 1].[13 2]&gt;
+! /~tomsyt-balsen/try/~2013.11.26..00.01.38..499b/bin/dec/:&lt;[7 1].[13 2]&gt;
+! exit
+</pre></div></div>
+<p>What did we do wrong?<span class="intersentencespace"></span> We forgot that the subject had changed.<span class="intersentencespace"></span> When we get to <code>[4 0 1]</code>, the subject is not <code>42</code>, but <code>[0 42]</code> -
+the counter is there.<span class="intersentencespace"></span> So our original argument, <code>42</code>, is
+actually at <code>/3</code>:</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [1 0]                                      ::  just 0
+  [4 0 3]                                    ::  bump /3
+]                                            ::
+
+: /~tomsyt-balsen/try/3/bin/dec/hoon
+~tomsyt-balsen/try=&gt; :dec 42
+43
+</pre></div></div>
+<p>Okay, at least it increments again.<span class="intersentencespace"></span> (Constantly readjusting tree
+addresses by hand is one good reason to use a higher-level
+language, like Hoon.)<span class="intersentencespace"></span> But now, perhaps, we can build a decrement
+that works for at least one input value - <code>1</code>.</p>
+<p>Obviously at some point we’ll have to build a loop.<span class="intersentencespace"></span> But for now,
+all we need is an <code>if</code> statement that compares the incremented
+counter to the original argument.<span class="intersentencespace"></span> We know the original argument
+is at <code>/3</code>, and the counter is at <code>/2</code>; we use the if operator,
+<code>6</code>, and the equality test operator <code>5</code>.<span class="intersentencespace"></span> If the comparison
+fails, we shrug our shoulders and keep incrementing the argument.</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [1 0]                                      ::  just 0
+  [ 6                                        ::  pick
+    [5 [4 0 2] [0 3]]                        ::  same (bump /2) /3
+    [0 2]                                    ::  /2
+    [4 0 3]                                  ::  bump /3
+  ]                                          :: 
+]                                            :: 
+
+: /~tomsyt-balsen/try/4/bin/dec/hoon
+~tomsyt-balsen/try=&gt; :dec 42
+43
+~tomsyt-balsen/try=&gt; :dec 1
+0
+</pre></div></div>
+<p>We’re getting closer.<span class="intersentencespace"></span> But now, that loop:</p>
+<p>Up till now, our subject has contained only data.<span class="intersentencespace"></span> If we want to
+loop, we’re obviously going to have to bite the bullet and put
+code in our subject - which will become a <code>[code data]</code> cell.<span class="intersentencespace"></span> In Nock (and Hoon) this is called a <code>core</code>.</p>
+<p>Suppose we take our <code>6</code> formula and put it in the subject.<span class="intersentencespace"></span> Then,
+with this core subject <code>[formula counter argument]</code>, we’ll run
+the formula itself.<span class="intersentencespace"></span> With this subject, the formula is <code>/2</code>, and
+of course the core itself is <code>/1</code>.<span class="intersentencespace"></span> So we can activate the core
+with <code>[2 [0 1] [0 2]]</code>.</p>
+<p>Of course, since the subject has changed again, we need to change
+the addresses again.<span class="intersentencespace"></span> The counter is now <code>/6</code> and the argument
+is now <code>/7</code>:</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [1 0]                                      ::  just 0
+  [ 8                                        ::  push
+    [ 1                                      ::  quid
+      [ 6                                    ::  pick
+        [5 [4 0 6] [0 7]]                    ::  same (bump /6) /7
+        [0 6]                                ::  /6
+        [4 0 7]                              ::  bump /7
+      ]                                      :: 
+    ]                                        :: 
+    [2 [0 1] [0 2]]                          ::  nock /1 /2
+  ]                                          :: 
+]                                            :: 
+</pre></div></div>
+<p>This does exactly the same thing as before:</p>
+<div class="code"><div class="highlight"><pre>: /~tomsyt-balsen/try/5/bin/dec/hoon
+~tomsyt-balsen/try=&gt; :dec 42
+43
+~tomsyt-balsen/try=&gt; :dec 1
+0
+</pre></div></div>
+<p>But somehow, we feel it <em>could</em> do better.<span class="intersentencespace"></span> Why?<span class="intersentencespace"></span> Because where
+we do the useless <code>[4 0 7]</code>, we have a subject containing the
+code we want to invoke.<span class="intersentencespace"></span> It’s just that the counter is wrong.</p>
+<p>We need to do the same thing as <code>[2 [0 1] [0 2]</code>, but the subject
+is not <code>[0 1]</code>.<span class="intersentencespace"></span> That would be <code>[formula counter argument]</code>.<span class="intersentencespace"></span> We
+need <code>[formula (counter + 1) argument]</code>.</p>
+<p>So, <code>formula</code> is <code>[0 2]</code>, <code>counter</code> is <code>[0 6]</code>, and <code>argument</code> is
+<code>[0 7]</code>.<span class="intersentencespace"></span> With autocons, we can just put them together to make a
+(superfluous) formula for <code>[formula counter argument]</code> - ie,</p>
+<div class="code"><div class="highlight"><pre>[[0 2] [0 6] [0 7]]               ::  cons /2 /6 /7
+</pre></div></div>
+<p>But we actually want to increment the counter:</p>
+<div class="code"><div class="highlight"><pre>[[0 2] [4 0 6] [0 7]]             ::  cons /2 (bump /6) /7
+</pre></div></div>
+<p>And to invoke our formula on this modified core:</p>
+<div class="code"><div class="highlight"><pre>[2 [[0 2] [4 0 6] [0 7]] [0 2]]   ::  nock (cons /2 (bump /6) /7) /2
+</pre></div></div>
+<p>If we put this into the decrement, it should actually work:</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [1 0]                                      ::  just 0
+  [ 8                                        ::  push
+    [ 1                                      ::  quid
+      [ 6                                    ::  pick
+        [5 [4 0 6] [0 7]]                    ::  same (bump /6) /7
+        [0 6]                                ::  /6
+        [ 2                                  ::  nock
+           [[0 2] [4 0 6] [0 7]]             ::  (cons /2 (bump /6) /7)
+           [0 2]                             ::  /2
+        ]                                    ::
+      ]                                      ::
+    ]                                        ::
+    [2 [0 1] [0 2]]                          ::  nock /1 /2
+  ]                                          ::
+]                                            ::
+</pre></div></div>
+<p>And it does:</p>
+<div class="code"><div class="highlight"><pre>: /~tomsyt-balsen/try/6/bin/dec/hoon
+~tomsyt-balsen/try=&gt; :dec 42
+41
+</pre></div></div>
+<p>But there’s one more step.<span class="intersentencespace"></span> Remember operator <code>9</code>?</p>
+<div class="code"><div class="highlight"><pre>35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+35r::    *[a 9 b c]       *[*[a c] *[*[a c] 0 b]]
+</pre></div></div>
+<p>Suppose <code>c</code> is a formula that produces a core.<span class="intersentencespace"></span> Then we see
+immediately what <code>9</code> does: it activates a core, using the formula
+at <code>/b</code> within the core.</p>
+<p>So we can rewrite our decrement to use <code>9</code>:</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [1 0]                                      ::  just 0
+  [ 8                                        ::  push
+    [ 1                                      ::  quid
+      [ 6                                    ::  pick
+        [5 [4 0 6] [0 7]]                    ::  same (bump /6) /7
+        [0 6]                                ::  /6
+        [9 2 [0 2] [4 0 6] [0 7]]            ::  call.2 (cons /2 bump /6 /7)
+      ]                                      :: 
+    ]                                        :: 
+    [9 2 0 1]                                ::  call.2 /1
+  ]                                          ::
+]                                            :: 
+</pre></div></div>
+<p>Seems to work nicely:</p>
+<div class="code"><div class="highlight"><pre>: /~tomsyt-balsen/try/6/bin/dec/hoon
+~tomsyt-balsen/try=&gt; :dec 42
+41
+</pre></div></div>
+<p>Of course, there are limits:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; :dec 0
+</pre></div></div>
+<p>You’ll have to hit <code>C</code>, and you’ll see a big ugly error stack.<span class="intersentencespace"></span> Nock can work wonders but it can’t decrement 0.<span class="intersentencespace"></span> (Yes, you can
+build signed integers in Hoon - they are represented as atoms
+with the sign bit low.)</p>
+<div id="uid31" data-tralics-id="uid31" class="subsection" data-number="5.2.1"><h3><a href="#uid31" class="heading hyperref"><span class="number">5.2.1 </span>A function</a></h3>
+<p>As we start to build up toward language-level primitives, it
+behooves us to do things the way a higher-level language would do
+them.<span class="intersentencespace"></span> Well, more exactly, the way Hoon does things.</p>
+<p>Surprisingly, although a formula defines a function of the
+subject, a function - at the language level - is not the same
+thing as a formula.<span class="intersentencespace"></span> Or rather, the argument is not the same
+thing as the subject.</p>
+<p>For instance, as we saw in decrement, the subject for the loop
+needs to contain the code itself.<span class="intersentencespace"></span> If we apply a formula which
+can’t call back into itself, our ability to loop is sorely
+diminished.<span class="intersentencespace"></span> So at the very least, when we call a function,
+the subject can’t just be <code>argument</code> - it has to be the cell
+<code>[formula argument]</code>, so that the function can recurse.</p>
+<p>Actually, it’s confusing to say <code>argument</code>, because this implies
+a special status for single and multiple arguments.<span class="intersentencespace"></span> In Nock and
+Hoon, we say <code>sample</code>, which is always one thing, but can be a
+cell for “functions of two arguments”, a triple for three, etc.<span class="intersentencespace"></span> Eg, the sample for a decrement function is an atom; the sample
+for an add function is a cell of two atoms; etc.</p>
+<p>Furthermore, a function needs more data than just the argument -
+it might, for instance, want to call other functions.<span class="intersentencespace"></span> Where’s it
+going to get them?<span class="intersentencespace"></span> There is no external environment in Nock.</p>
+<p>So the standard convention for a Nock function - or a Hoon
+function - is</p>
+<div class="code"><div class="highlight"><pre>[formula sample context]
+</pre></div></div>
+<p>Where <code>formula</code> is the code, <code>sample</code> is the argument(s), and
+<code>context</code> is any other data and/or code that may be useful.</p>
+<p>It’s a bit irregular that we are taking the external subject
+and using it directly from our formula.<span class="intersentencespace"></span> Let’s try to build a
+function with this convention and call it directly.</p>
+<p>First, we’ll build an increment function to keep things simple.<span class="intersentencespace"></span> We actually don’t need anything in the context, so we’ll put 0.</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [                                          ::  cons
+    [1 [4 0 6]]                              ::  quid bump /6  ::  formula
+    [1 0]                                    ::  just 0        ::  sample
+    [1 0]                                    ::  just 0        ::  context
+  ]                                          ::  
+  [ 9                                        ::  call
+    2                                        ::  .2
+    [0 4] [0 3] [0 11]                       ::  cons /4 /3 /11
+  ]                                          ::  
+]                                            ::
+</pre></div></div>
+<p>Why <code>[[0 4] [0 3] [0 11]]</code>?<span class="intersentencespace"></span> Our goal in calling the function is
+to take the blank default core we’ve created at <code>/2</code>, and
+substitute in the original subject of the outer formula, which
+before the outer <code>8</code> was <code>/1</code> and is now <code>/3</code>.<span class="intersentencespace"></span> Around this
+we wrap the formula from the default core, at <code>/4</code>, and the
+(dummy) context, at <code>/11</code> - that is, <code>/7</code> within <code>/2</code>.</p>
+<p>Let’s fit our decrement into this framework:</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [                                          ::  cons
+    [ 1                                      ::  quid    ::  formula
+      [ 8                                    ::  push
+        [1 0]                                ::  just 0
+        [ 8                                  ::  push
+          [ 1                                ::  quid
+            [ 6                              ::  pick
+              [5 [4 0 6] [0 30]]             ::  same /6 /30
+              [0 6]                          ::  /6
+              [9 2 [0 2] [4 0 6] [0 7]]      ::  call.2 /2 (bump /6) /11
+            ]                                ::
+          ]                                  ::
+          [9 2 0 1]                          ::  call.2 /1
+        ]                                    ::
+      ]                                      ::
+    ]                                        ::
+    [1 0]                                    ::  just 0  ::  sample
+    [1 0]                                    ::  just 0  ::  context
+  ]                                          ::
+  [9 2 [0 4] [0 3] [0 11]]                   ::  call.2 /4 /3 /11
+]                                            ::
+</pre></div></div>
+<p>Observe that nothing has changed from the way we called our
+increment function, and only one thing has changed within the
+decrement formula - the axis of the argument.<span class="intersentencespace"></span> Now at <code>/7</code> is not
+the naked argument to decrement, but our outer core.<span class="intersentencespace"></span> The sample
+is at <code>/6</code> within this <code>/7</code>, ie, at <code>/30</code>.</p>
+</div></div>
+<div id="cid19" data-tralics-id="cid19" class="section" data-number="5.3"><h2><a href="#cid19" class="heading hyperref"><span class="number">5.3 </span>A library</a></h2>
+<p>Frankly, this is getting close to the limits of anything you’d
+want to do in hand-generated Nock.<span class="intersentencespace"></span> But why not press on?</p>
+<p>What we’d really like to do is build a library of functions that
+can call each other.<span class="intersentencespace"></span> It’s easy to guess that this library will
+be a core.<span class="intersentencespace"></span> But what does this core look like?</p>
+<p>A function core, <code>[formula sample context]</code>, is a very useful
+kind of core, but it’s not the only kind of core.<span class="intersentencespace"></span> (Actually,
+because the word “function” is too easy to throw around, we have
+a special name for a function core: we call it a <code>gate</code>.<span class="intersentencespace"></span> Compare
+to “lambda” or “closure.”)</p>
+<p>But in general, a core is just <code>[code data]</code> - or, to use more
+lingo, <code>[battery payload]</code>.<span class="intersentencespace"></span> The payload can be anything - it’s
+just data.</p>
+<p>The battery can be one <em>or more</em> formulas, each of which is
+applied with the core as its subject.<span class="intersentencespace"></span> This is why <code>9</code> takes the
+axis operand <code>b</code>.<span class="intersentencespace"></span> If the core is a gate, the battery is just one
+formula; this is the head of the core, so <code>b</code> is 2.</p>
+<p>But not every core is a gate.<span class="intersentencespace"></span> Suppose we want to build a
+library?<span class="intersentencespace"></span> We could assemble a bundle of cores and put it in
+the context.<span class="intersentencespace"></span> So, let’s say we need to write subtract, which
+obviously is going to use decrement.<span class="intersentencespace"></span> So, the context will be</p>
+<div class="code"><div class="highlight"><pre>[subtract-gate decrement-gate]
+</pre></div></div>
+<p>But wait.<span class="intersentencespace"></span> Each gate is <code>[formula sample context]</code>.<span class="intersentencespace"></span> So, because
+Nock doesn’t do cycles, there’s no way the subtract gate and the
+decrement gate can each reference each other through the context.<span class="intersentencespace"></span> It happens to be the case here that subtract needs decrement, but
+decrement doesn’t need subtract.<span class="intersentencespace"></span> But we’re not looking for ugly
+at this point - we know Nock is more than capable of that.</p>
+<p>To support general mutual recursion, our library needs to be a
+battery in which each formula produces a gate.<span class="intersentencespace"></span> The context of
+that gate is the library core.</p>
+<p>Let’s repeat this again because it’s so important.<span class="intersentencespace"></span> Our library
+will be a battery in which each formula produces a gate.<span class="intersentencespace"></span> The
+context of that gate is the library core.</p>
+<p>Let’s build a trivial library core of this form, with one
+function, good old increment.<span class="intersentencespace"></span> Then, we’ll call it.</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [                                          ::  cons
+    [ 1                                      ::  quid          ::  battery
+      [1 [4 0 6]]                            ::  quid bump /6
+      [1 0]                                  ::  just 0
+      [0 1]                                  ::  /1
+    ]                                        ::
+    [1 0]                                    ::  just 0        ::  payload
+  ]                                          ::  
+  [ 8                                        ::  push
+    [9 2 0 2]                                ::  call.2 /2
+    [9 2 [0 4] [0 7] [0 11]]                 ::  call.2 /4 /7 /11
+  ]                                          ::
+]                                            ::
+</pre></div></div>
+<p>Compare this to the standalone increment above.<span class="intersentencespace"></span> It’s obviously
+more complex and it should be.</p>
+<p>First of all, what we put in the library core is not the function
+gate directly, but a formula that generates the gate.<span class="intersentencespace"></span> This way,
+and only this way, we can put the library itself in the context.</p>
+<p>Second, what’s the payload of the library core?<span class="intersentencespace"></span> It’s <code>0</code>,
+because the library doesn’t depend on anything.<span class="intersentencespace"></span> It certainly
+doesn’t depend on the argument to our application.</p>
+<p>Third, now we can’t just call the gate directly.<span class="intersentencespace"></span> We have to
+actually build it.<span class="intersentencespace"></span> So we need another <code>8</code> to “push it on the
+stack”, and then we call it with the usual <code>9</code>.<span class="intersentencespace"></span> Since the
+subject at this point is <code>[gate library argument]</code>, the sample we
+use is <code>[0 7]</code> rather than <code>[0 3]</code> - everything else is the same.</p>
+<p>But does it work?<span class="intersentencespace"></span> C’mon, you know it works:</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; :dec 42
+43
+</pre></div></div>
+<p>Okay, let’s go ahead and put our actual decrement function in
+the library.</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [                                          ::  cons
+    [ 1                                      ::  quid     :: formula
+      [ 1                                    ::  quid     :: decrement
+        [ 8                                  ::  push
+          [1 0]                              ::  just 0
+          [ 8                                ::  push dec
+            [ 1                              ::  quid
+              [ 6                            ::  pick
+                [5 [4 0 6] [0 30]]           ::  same (bump /6) /30
+                [0 6]                        ::  /6
+                [9 2 [0 2] [4 0 6] [0 7]]    ::  call.2 /2 (bump /6) /7
+              ]                              ::
+            ]                                :: 
+            [9 2 0 1]                        ::  call .2 /1
+          ]                                  ::
+        ]                                    ::
+      ]                                      ::
+      [1 0]                                  ::  just 0   :: sample
+      [0 1]                                  ::  /1       :: context
+    ]                                        ::
+    [1 0]                                    ::  just 0   :: payload
+  ]                                          ::
+  [ 8                                        ::  push
+    [9 2 0 2]                                ::  call.2 /2
+    [ 9                                      ::  call
+      2                                      ::  .2
+      [0 4] [0 7] [0 11]                     ::  /4 /7 /11
+    ]                                        ::
+  ]                                          ::
+]                                            ::
+                  
+~tomsyt-balsen/try=&gt; :dec 42
+43
+</pre></div></div>
+<p>Then, let’s go crazy and add a subtract function, which calls
+decrement.</p>
+<div class="code"><div class="highlight"><pre>[ 8                                          ::  push
+  [                                          ::  cons
+    [                                        ::  cons
+      [ 1                                    ::  quid       :: subtract
+        [ 1                                  ::  quid       :: formula
+          [ 8                                ::  push
+            [9 5 0 7]                        ::  call.5 /7
+            [ 6                              ::  pick
+              [5 [1 0] [0 29]]               ::  same just 0 /29
+              [0 28]                         ::  /29
+              [ 9                            ::  call
+                2                            ::  .2
+                [0 6]                        ::  /6
+                [ [9 2 [0 4] [0 28] [0 15]]  ::  call .2 /4 /28 /15
+                  [9 2 [0 4] [0 29] [0 15]]  ::  call .2 /4 /29 /15
+                ]                            ::
+                [0 15]                       ::  /15
+              ]                              ::
+            ]                                ::
+          ]                                  ::
+        ]                                    ::
+        [1 0]                                ::  just 0    ::  sample
+        [0 1]                                ::  /1        ::  context
+      ]                                      :: 
+      [ 1                                    ::  quid      :: decrement
+        [ 1                                  ::  quid      :: formula
+          [ 8                                ::  push
+            [1 0]                            ::  just 0
+            [ 8                              ::  push
+              [ 1                            ::  quid
+                [ 6                          ::  pick
+                  [5 [4 0 6] [0 30]]         ::  same bump /6 /30
+                  [0 6]                      ::  /6
+                  [9 2 [0 2] [4 0 6] [0 7]]  ::  call.2 /2 (bump /6) /7
+                ]                            ::
+              ]                              ::
+              [9 2 0 1]                      ::  call.2 /1
+            ]                                ::
+          ]                                  ::
+        ]                                    ::
+        [1 0]                                ::  just 0
+        [0 1]                                ::  /1
+      ]                                      ::
+    ]                                        ::
+    [1 0]                                    ::  just 0    :: payload
+  ]                                          :: 
+  [ 8                                        ::  push
+    [9 4 0 2]                                ::  call.4 /2
+    [ 9                                      ::  call
+      2                                      ::  .2
+      [0 4] [0 7] [0 11]                     ::  /4 /7 /11
+    ]                                        ::
+  ]                                          ::
+]
+</pre></div></div>
+<p>Note that the call to build the gate is <code>[9 4 0 2]</code>, because the
+subtract arm is the head of the battery, which is the head of the
+core - ie, <code>/2</code> within <code>/2</code> - ie, <code>/4</code>.</p>
+<p>Does this work?<span class="intersentencespace"></span> Really?</p>
+<div class="code"><div class="highlight"><pre>~tomsyt-balsen/try=&gt; :dec [42 12]
+30
+</pre></div></div>
+<p>##Exercises##</p>
+<p>Do you actually know Nock now?<span class="intersentencespace"></span> Well, possibly.</p>
+<p>A good exercise is to add more simple math functions to this
+battery.<span class="intersentencespace"></span> Try add, multiply, and divide.<span class="intersentencespace"></span> One way to start is by
+walking through the routines above and figuring out what they’re doing.</p>
+<p>Computing axes is slightly arduous (which is why we use Hoon,
+generally).<span class="intersentencespace"></span> We are torturing ourselves by using Nock, but we
+might as well use Hoon to calculate axes:</p>
+<div class="code"><div class="highlight"><pre>    ~tomsyt-balsen/try=&gt; (peg 3 3)
+    7
+    ~tomsyt-balsen/try=&gt; (peg 3 5)
+    13
+</pre></div></div>
+<p>Ie, <code>(peg a b)</code> is <code>/b</code> within <code>/a</code>.<span class="intersentencespace"></span> Writing Nock without this
+would be pretty tough.</p>
+</div>
+<div id="cid20" data-tralics-id="cid20" class="chapter" data-number="6"><h1><a href="#cid20" class="heading hyperref"><span class="number">Chapter 6 </span>Nock Reference</a></h1>
+<blockquote class="quotation"><p class="noindent"><em>Tl<span class="unicode">ö</span>n ser<span class="unicode">á</span> un laberinto, pero es un laberinto urdido por hombres, un
+laberinto destinado a que lo descifren los hombres.</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span></p>
+<p class="noindent"><em>Tl<span class="unicode">ö</span>n is surely a labyrinth, but it is a labyrinth devised
+by men, a labyrinth destined to be deciphered by men.</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span></p>
+<p class="noindent">—<a href="https://en.wikipedia.org/wiki/Tlon,_Uqbar,_Orbis_Tertius"><strong></strong><em><strong>Tl<span class="unicode">ö</span>n, Uqbar, Orbis Tertius</strong></em><strong></strong></a>, Jorge Luis Borges</p>
+</blockquote><p>This chapter is designed for the experienced programmer and can be read without reference to the previous tutorial chapters.</p>
+<p>It’s important to recognize that the pseudocode of the Nock spec is just that:
+pseudocode.<span class="intersentencespace"></span> It looks a little like Hoon.<span class="intersentencespace"></span> It isn’t Hoon - it’s just
+pseudocode.<span class="intersentencespace"></span> Or in other words, just English.<span class="intersentencespace"></span> At the bottom of every formal
+system is a system of axioms, which can only be written in English.<span class="intersentencespace"></span> (Why
+pseudocode, not Hoon?<span class="intersentencespace"></span> Since Hoon is defined in Nock, this would only give a
+false impression of nonexistent precision.)</p>
+<p>The logic of this pseudocode is a pattern-matching reduction, matching from the
+top down.<span class="intersentencespace"></span> To compute Nock, repeatedly reduce with the first line that matches.</p>
+</div>
+<div id="cid21" data-tralics-id="cid21" class="section" data-number="6.1"><h2><a href="#cid21" class="heading hyperref"><span class="number">6.1 </span>Nock Specification:</a></h2>
+<div class="code"><div class="highlight"><pre>1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+38 ::
+39 ::    *a               *a
+</pre></div></div>
+</div>
+<div id="cid22" data-tralics-id="cid22" class="section" data-number="6.2"><h2><a href="#cid22" class="heading hyperref"><span class="number">6.2 </span>1.<span class="intersentencespace"></span> Structures</a></h2>
+<div class="code"><div class="highlight"><pre>A noun is an atom or a cell.  An atom is any natural number.
+A cell is any ordered pair of nouns.
+</pre></div></div>
+<p>Nouns are the dumbest data model ever.<span class="intersentencespace"></span> Nouns make JSON look like XML and XML
+look like ASN.1.<span class="intersentencespace"></span> It may also remind you of Lisp’s S-expressions - you can
+think of nouns as “S-expressions without the S.”</p>
+<p>To be exact, a noun <em>is</em> an S-expression, except that classic S-expressions
+have multiple atom types (“S” is for “symbol”).<span class="intersentencespace"></span> Since Nock is designed to be
+used with a higher-level type system (such as Hoon’s), it does not need
+low-level types.<span class="intersentencespace"></span> An atom is just an unsigned integer of any size.</p>
+<p>For instance, it’s common to represent strings (or even whole text files) as
+atoms, arranging them LSB first - so “foo” becomes <code>0x6f6f66</code>.<span class="intersentencespace"></span> How do we know
+to print this as “foo”, not <code>0x6f6f66</code>?<span class="intersentencespace"></span> We need external information - such as
+a Hoon type.<span class="intersentencespace"></span> Similarly, other common atomic types - signed integers, floating
+point, etc
+- are all straightforward to map into atoms.</p>
+<p>It’s also important to note that, unlike Lisp, Nock cannot create cyclical data
+structures.<span class="intersentencespace"></span> It is normal and common for nouns in a Nock runtime system to have
+acyclic structure - shared subtrees.<span class="intersentencespace"></span> But there is no Nock computation that can
+make a child point to its parent.<span class="intersentencespace"></span> One consequence: Nock has no garbage
+collector.<span class="intersentencespace"></span> (Nor can dag structure be detected, as with Lisp <code>eq</code>.)</p>
+<p>There is also no single syntax for nouns.<span class="intersentencespace"></span> If you have nouns you have Nock; if
+you have Nock you have Hoon; if you have Hoon, you can write whatever parser
+you like.</p>
+</div>
+<div id="cid23" data-tralics-id="cid23" class="section" data-number="6.3"><h2><a href="#cid23" class="heading hyperref"><span class="number">6.3 </span>Line 5: Nock Function</a></h2>
+<div class="code"><div class="highlight"><pre>5  ::    nock(a)           *a
+</pre></div></div>
+<p>Nock is a pure (stateless) function from noun to noun.<span class="intersentencespace"></span> In our pseudocode (and
+only in our pseudocode) we express this with the prefix operator <code>*</code>.</p>
+<p>Normally <code>a</code> in <code>nock(a)</code> is a cell <code>[s f]</code>, or as we say</p>
+<div class="code"><div class="highlight"><pre>[subject formula]
+</pre></div></div>
+<p>Intuitively, the formula is your function and the subject is its argument.<span class="intersentencespace"></span> We
+call them something different because Hoon, or any other high-level language
+built on Nock, will build its own function calling convention which <em>does not</em>
+map directly to <code>*[subject formula]</code>.</p>
+</div>
+<div id="cid24" data-tralics-id="cid24" class="section" data-number="6.4"><h2><a href="#cid24" class="heading hyperref"><span class="number">6.4 </span>Line 6: Bracket grouping</a></h2>
+<div class="code"><div class="highlight"><pre>6  ::    [a b c]           [a [b c]]
+</pre></div></div>
+<p>Ie, brackets (in our pseudocode, as in Hoon) associate to the right.<span class="intersentencespace"></span> For those
+with Lisp experience, it’s important to note that Nock and Hoon use tuples or
+“improper lists” much more heavily than Lisp.<span class="intersentencespace"></span> The list terminator, normally 0,
+is never automatic.<span class="intersentencespace"></span> So the Lisp list</p>
+<div class="code"><div class="highlight"><pre>(a b c)
+</pre></div></div>
+<p>becomes the Nock noun</p>
+<div class="code"><div class="highlight"><pre>[a b c 0]
+</pre></div></div>
+<p>which is equivalent to</p>
+<div class="code"><div class="highlight"><pre>[a [b [c 0]]]
+</pre></div></div>
+<p>Note that we can and do use unnecessary brackets anyway, for
+emphasis.</p>
+</div>
+<div id="cid25" data-tralics-id="cid25" class="section" data-number="6.5"><h2><a href="#cid25" class="heading hyperref"><span class="number">6.5 </span>Lines 8-13: Pseudocode notation</a></h2>
+<div class="code"><div class="highlight"><pre>8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+</pre></div></div>
+<p>Here we define more pseudocode operators, which we’ll use in reductions further
+down.<span class="intersentencespace"></span> So far we have four built-in functions: <code>*</code> meaning Nock itself, <code>?</code>
+testing whether a noun is a cell or an atom, <code>+</code> incrementing an atom, and <code>=</code>
+testing for equality.<span class="intersentencespace"></span> Again, no rocket science here.</p>
+<p>We should note that in Nock and Hoon, <code>0</code> (pronounced “yes”) is true, and <code>1</code>
+(“no”) is false.<span class="intersentencespace"></span> Why?<span class="intersentencespace"></span> It’s fresh, it’s different, it’s new.<span class="intersentencespace"></span> And it’s
+annoying.<span class="intersentencespace"></span> And it keeps you on your toes.<span class="intersentencespace"></span> And it’s also just intuitively
+right.</p>
+</div>
+<div id="cid26" data-tralics-id="cid26" class="section" data-number="6.6"><h2><a href="#cid26" class="heading hyperref"><span class="number">6.6 </span>Lines 16-20: Noun Axes and Trees</a></h2>
+<div class="code"><div class="highlight"><pre>16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+</pre></div></div>
+<p>Slightly more interesting is our tree numbering.<span class="intersentencespace"></span> Every noun is of course a
+tree.<span class="intersentencespace"></span> The <code>/</code>, or axis, operator imposes an address space on that tree,
+mapping every nonzero atom to a tree position.</p>
+<p>1 is the root.<span class="intersentencespace"></span> The head of every node <code>n</code> is <code>2n</code>; the tail is <code>2n+1</code>.<span class="intersentencespace"></span> Thus a
+simple tree:</p>
+<div class="code"><div class="highlight"><pre>     1
+  2      3
+4   5  6   7
+         14 15
+</pre></div></div>
+<p>If the value of every leaf is its tree address, this tree is</p>
+<div class="code"><div class="highlight"><pre>  [[4 5] [6 14 15]]
+</pre></div></div>
+</div>
+<div id="cid27" data-tralics-id="cid27" class="section" data-number="6.7"><h2><a href="#cid27" class="heading hyperref"><span class="number">6.7 </span>Line 23:</a></h2>
+<div class="code"><div class="highlight"><pre>23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+</pre></div></div>
+<p>Um, what?</p>
+<p>Since Nock of an atom just crashes, the practical domain of the Nock function
+is always a cell.<span class="intersentencespace"></span> Conventionally, the head of this cell is the “subject,” the
+tail is the “formula,” and the result of Nocking it is the “product.”<span class="intersentencespace"></span> Basically, the subject is your data and the formula is your code.</p>
+<p>We could write line 23 less formally:</p>
+<div class="code"><div class="highlight"><pre>*[subject [formula-x formula-y]]
+=&gt;  [*[subject formula-x] *[subject formula-y]]
+</pre></div></div>
+<p>In other words, if you have two Nock formulas <code>x</code> and <code>y</code>, a formula that
+computes the pair of them is just <code>[x y]</code>.<span class="intersentencespace"></span> We can recognize this because no
+atom is a valid formula, and every formula that <em>does not</em> use line 19 has an
+atomic head.</p>
+<p>If you know Lisp, you can think of this feature as a sort of “implicit cons.”<span class="intersentencespace"></span> Where in Lisp you would write <code>(cons x y)</code>, in Nock you write <code>[x y]</code>.</p>
+</div>
+<div id="cid28" data-tralics-id="cid28" class="section" data-number="6.8"><h2><a href="#cid28" class="heading hyperref"><span class="number">6.8 </span>Line 26: Constant</a></h2>
+<div class="code"><div class="highlight"><pre>26 ::    *[a 1 b]          b
+</pre></div></div>
+<p><code>1</code> is the constant operator.<span class="intersentencespace"></span> It produces its argument without
+reference to the subject.</p>
+</div>
+<div id="cid29" data-tralics-id="cid29" class="section" data-number="6.9"><h2><a href="#cid29" class="heading hyperref"><span class="number">6.9 </span>Line 27: Recursion</a></h2>
+<div class="code"><div class="highlight"><pre>27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+</pre></div></div>
+<p>Line 22 brings us the essential magic of recursion.<span class="intersentencespace"></span> <code>2</code> is the Nock operator.<span class="intersentencespace"></span> If you can compute a subject and a formula, you can evaluate them in the
+interpreter.<span class="intersentencespace"></span> In most fundamental languages, like Lisp, <code>eval</code> is a curiosity.<span class="intersentencespace"></span> But Nock has no <code>apply</code> - so all our work gets done with <code>2</code>.</p>
+</div>
+<div id="cid30" data-tralics-id="cid30" class="section" data-number="6.10"><h2><a href="#cid30" class="heading hyperref"><span class="number">6.10 </span>Lines 28-30: Cell Test, Increment, Equality</a></h2>
+<div class="code"><div class="highlight"><pre>28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+</pre></div></div>
+<p>In lines 23-25, we meet our axiomatic functions again:</p>
+<p>For instance, if <code>x</code> is a formula that calculates some atomic product, <code>[4 x]</code>
+calculates that product plus one.</p>
+</div>
+<div id="cid31" data-tralics-id="cid31" class="section" data-number="6.11"><h2><a href="#cid31" class="heading hyperref"><span class="number">6.11 </span>Lines 10, 14, 21, 39: Crash defaults</a></h2>
+<div class="code"><div class="highlight"><pre>    10 ::    +[a b]           +[a b]
+    14 ::    =a               =a
+    21 ::    /a               /a
+    39 ::    *a               *a
+</pre></div></div>
+<p>The nock function is defined for every noun, but on many nouns it does nothing
+useful.<span class="intersentencespace"></span> For instance, if <code>a</code> is an atom, <code>*a</code> reduces to… <code>*a</code>.<span class="intersentencespace"></span> In theory,
+this means that Nock spins forever in an infinite loop.<span class="intersentencespace"></span> In other words, Nock
+produces no result - and in practice, your interpreter will stop.</p>
+<p>(Another way to see this is that Nock has “crash-only” semantics.<span class="intersentencespace"></span> There is no
+exception mechanism.<span class="intersentencespace"></span> The only way to catch Nock errors is to simulate Nock in
+a higher-level virtual Nock - which, in fact, we do all the time.<span class="intersentencespace"></span> A simulator
+(or a practical low-level interpreter) can report, out of band, that Nock would
+not terminate.<span class="intersentencespace"></span> It cannot recognize all infinite loops, of course, but it can
+catch the obvious ones - like <code>*42</code>.)</p>
+</div>
+<div id="cid32" data-tralics-id="cid32" class="section" data-number="6.12"><h2><a href="#cid32" class="heading hyperref"><span class="number">6.12 </span>Line 32: Nock 6</a></h2>
+<p><strong><code>6</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>32 ::    *[a 6 b c d]      *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+
+*[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+
+*[*[a 0 1] *[a 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]]
+
+25 ::    *[a 0 b]          /[b a]
+
+*[a *[a 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+
+*[a *[*[a [1 c d]] *[a [1 0] 2 [1 2 3] [1 0] 4 4 b]]]
+
+26 ::    *[a 1 b]          b
+
+23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+
+*[a *[[c d] [*[a 1 0] *[a 2 [1 2 3] [1 0] 4 4 b]]]]
+
+26 ::    *[a 1 b]          b
+
+*[a *[[c d] [0 *[a 2 [1 2 3] [1 0] 4 4 b]]]]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+
+*[a *[[c d] [0 *[*[a [1 2 3]] *[a [1 0] 4 4 b]]]]]
+
+26 ::    *[a 1 b]          b
+
+*[a *[[c d] [0 *[[2 3] *[a [1 0] 4 4 b]]]]]
+
+23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+
+*[a *[[c d] [0 *[[2 3] [*[a [1 0]] *[a 4 4 b]]]]]]
+
+26 ::    *[a 1 b]          b
+
+*[a *[[c d] [0 *[[2 3] [0 *[a 4 4 b]]]]]]
+
+29 ::    *[a 4 b]          +*[a b]
+
+*[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+</pre></div></div>
+<p><strong><code>6</code> Reduced:</strong>
+</p><div class="code"><div class="highlight"><pre>	32r ::   *[a 6 b c d]               *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+</pre></div></div>
+<p><code>6</code> is a primitive known to every programmer - good old “if.”<span class="intersentencespace"></span> If <code>b</code> evaluates
+to <code>0</code>, we produce <code>c</code>; if <code>b</code> evaluates to <code>1</code>, we produce <code>d</code>; otherwise, we
+crash.<span class="intersentencespace"></span> We could have defined “if” as a built-in function, like increment
+by arbitrarily inventing another operator:</p>
+<div class="code"><div class="highlight"><pre>::    $[0 b c]         b
+::    $[1 b c]         c
+</pre></div></div>
+<p>Then we could restate <code>6</code> quite compactly:</p>
+<div class="code"><div class="highlight"><pre>32c::    *[a 6 b c d]     *[a $[*[a b] c d]]
+</pre></div></div>
+<p>However, since we <em>can</em> write <code>if</code> as a macro, albeit a funky macro, we do so
+as to keep the Nock specification small.</p>
+<p>In real life, of course, the Nock implementor knows that <code>6</code> is “if” and
+implements it as such.<span class="intersentencespace"></span> It’s worth noting that in practical, compiler-generated
+Nock, we never do anything as funky as these <code>6</code> macro internals.<span class="intersentencespace"></span> There’s no
+reason we couldn’t build formulas at runtime, but we have no reason to and we
+don’t - except when actually metaprogramming.<span class="intersentencespace"></span> As in most languages, normally
+code is code and data is data.</p>
+</div>
+<div id="cid33" data-tralics-id="cid33" class="section" data-number="6.13"><h2><a href="#cid33" class="heading hyperref"><span class="number">6.13 </span>Line 29: Nock 7</a></h2>
+<p><strong><code>7</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>33 ::    *[a 7 b c]        *[a 2 b 1 c]
+
+*[a 2 b 1 c]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+
+*[*[a b] *[a 1 c]]
+
+26:    *[a 1 b]          b
+ 
+*[*[a b] c]
+ 
+```text
+**`7` Reduced:**
+
+```text
+33r ::     *[a 7 b c]         *[*[a b] c]
+</pre></div></div>
+<p><code>7</code> is an old mathematical friend, function composition.<span class="intersentencespace"></span> It’s
+easy to see how this is built out of <code>2</code>.<span class="intersentencespace"></span> The data to evaluate
+is simply <code>b</code>, and the formula is <code>c</code> quoted.</p>
+</div>
+<div id="cid34" data-tralics-id="cid34" class="section" data-number="6.14"><h2><a href="#cid34" class="heading hyperref"><span class="number">6.14 </span>Line 30: Nock 8</a></h2>
+<p><strong><code>8</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>34 ::    *[a 8 b c]        *[a 7 [[7 [0 1] b] 0 1] c]
+
+*[a 7 [[7 [0 1] b] 0 1] c]   
+
+33r ::     *[a 7 b c]         *[*[a b] c]
+
+*[*[a [7 [0 1] b] 0 1]] c]
+
+23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+
+*[[*[a [7 [0 1] b]] *[a 0 1]] c]
+
+25 ::    *[a 0 b]          /[b a]
+
+*[[*[a [7 [0 1] b]] /[1 a]] c]
+
+16 ::    /[1 a]            a
+
+*[[*[a [7 [0 1] b]] a] c]
+
+33r ::     *[a 7 b c]         *[*[a b] c]
+
+*[[*[*[a 0 1]] b] a] c]
+</pre></div></div>
+<p><strong><code>8</code> Reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>34r ::     *[a 8 b c]        *[[*[a b] a] c]
+</pre></div></div>
+<p><code>8</code> is similar to <code>7</code>, except that the subject for <code>c</code> is not simply the
+product of <code>b</code>, but the ordered pair of the product of <code>b</code> and the original
+subject.</p>
+<p>Why would we want to do this?<span class="intersentencespace"></span> Imagine a higher-level language in which the
+programmer declares a variable.<span class="intersentencespace"></span> This language is likely to generate an <code>8</code>,
+because the variable is computed against the present subject, and used in a
+calculation which depends both on the original subject and the new variable.</p>
+</div>
+<div id="cid35" data-tralics-id="cid35" class="section" data-number="6.15"><h2><a href="#cid35" class="heading hyperref"><span class="number">6.15 </span>Line 31: Nock 9</a></h2>
+<p><strong><code>9</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>31 :: *[a 9 b c]        *[a 7 c [2 [0 1] [0 b]]]
+
+*[a 7 c [2 [0 1] [0 b]]]
+
+33r ::     *[a 7 b c]         *[*[a b] c]
+
+*[*[a c] [2 [0 1] [0 b]]]
+
+27 ::     *[a 2 b c]        *[*[a b] *[a c]]
+
+*[*[*[a c] [0 1]] *[*[a c] [0 b]]]
+
+25 ::     *[a 0 b]          /[b a]
+</pre></div></div>
+<p><strong><code>9</code> Reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>31r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+</pre></div></div>
+<p><code>9</code> is a calling convention.<span class="intersentencespace"></span> With <code>c</code>, we produce a noun which contains both
+code and data - a <em>core</em>.<span class="intersentencespace"></span> We use this core as the subject, and apply the
+formula within it at slot <code>b</code>.</p>
+<p>A <em>core</em> is a construct which is behind any kind of interesting control flow in
+Hoon.<span class="intersentencespace"></span> Of course, the Nock programmer is not constrained to use the same
+techniques as the Hoon compiler, but it is probably a good idea.</p>
+<p>In Hoon, all the flow structures from your old life as an Earth programmer
+become cores.<span class="intersentencespace"></span> Functions and/or closures are cores, objects are cores modules
+are cores, even loops are cores.</p>
+<p>The core is just a cell whose tail is data (possibly containing other cores)
+and whose head is code (containing one or more formulas).<span class="intersentencespace"></span> The tail is the
+<em>payload</em> and the head is the <em>battery</em>.<span class="intersentencespace"></span> Hence your core is</p>
+<div class="code"><div class="highlight"><pre>[battery payload]
+</pre></div></div>
+<p>To activate a core, pick a formula out of the battery, and use the entire core
+(<em>not</em> just the payload) as the subject.</p>
+<p>(A core formula is called an <em>arm</em>.<span class="intersentencespace"></span> An arm is almost like an object-oriented
+method, but not quite - a method would be an arm that produces a function on an
+argument.<span class="intersentencespace"></span> The arm is just a function of the core, ie, a computed attribute.)</p>
+</div>
+<div id="cid36" data-tralics-id="cid36" class="section" data-number="6.16"><h2><a href="#cid36" class="heading hyperref"><span class="number">6.16 </span>Line 36 and 37: Nock 10</a></h2>
+<p>**<code>10</code> Reduction:</p>
+<div class="code"><div class="highlight"><pre> 36 :: *[a 10 [b c] d]   *[a 8 c 7 [0 3] d]
+
+34r ::     *[a 8 b c]        [[*[a b] a] c]
+
+*[[*[a c] a] 7 [0 2] d]
+
+33r ::     *[a 7 b c]        *[*[a b] c]
+
+*[*[[*[a c] a] 0 3] d]
+</pre></div></div>
+<p><strong><code>10</code> reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>36r ::    *[a 10 [b c] d]   *[*[[*[a c] a] 0 3] d]
+
+33 ::    *[a 10 b c]       *[a c]
+</pre></div></div>
+<p>If <code>b</code> is an atom and <code>c</code> is a formula, the formula <code>[10 b c]</code> appears to be
+equivalent to <code>c</code>.<span class="intersentencespace"></span> Likewise if <code>[b c]</code> is a cell, <code>[10 [b c] d]</code> appears to be
+equivalent to <code>d</code>.</p>
+<p><code>10</code> is actually a hint operator.<span class="intersentencespace"></span> The <code>b</code> or <code>[b c]</code>is discarded information -
+it is not used, formally, in the computation.<span class="intersentencespace"></span> It may help the interpreter
+compute the expression more efficiently, however.</p>
+<p>Every Nock computes the same result - but not all at the same speed.<span class="intersentencespace"></span> What
+hints are supported?<span class="intersentencespace"></span> What do they do?<span class="intersentencespace"></span> Hints are a higher-level convention
+which do not, and should not, appear in the Nock spec.<span class="intersentencespace"></span> Some are defined in
+Hoon.<span class="intersentencespace"></span> Indeed, a naive Nock interpreter not optimized for Hoon will run Hoon
+quite poorly.<span class="intersentencespace"></span> When it gets the product, however, the product will be right.</p>
+<p>(Why is the c in <code>[b c]</code> is computed?<span class="intersentencespace"></span> Because <code>c</code> could crash.<span class="intersentencespace"></span> A correct
+Nock cannot simply ignore it, and treat both variants of <code>10</code> as equivalent.)</p>
+</div>
+    </div>
+  </body>
+</html>

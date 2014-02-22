@@ -1,0 +1,1200 @@
+\chapter{Hoon Attacks}
+
+\begin{quote}
+\noindent \emph{Como todos los hombres de Babilonia, he sido procónsul;
+como todos, esclavo\ldots}
+\bigskip \newline
+\noindent \emph{Like all men in Babylon, I have been proconsul;
+like all, a slave\ldots}
+\medskip \newline
+---\href{https://en.wikipedia.org/wiki/The_Lottery_in_Babylon}{\textbf{\emph{La lotería en Babilonia}}}, Jorge Luis Borges
+\end{quote}
+
+\section{Principles of type}
+
+By working through the Nock tutorial, you've actually come closer
+than you know to knowing Hoon.  Hoon is actually not much more
+than a fancy wrapper around Nock. People who know C can think of
+Hoon as the C to Urbit's Nock---just a sprinkling of syntax,
+wrapped around machine code and memory.
+
+For instance, it's easy to imagine how instead of calculating
+tree axes by hand, we could actually assign \emph{names} to different
+parts of the tree---and those names would stay the same as we
+pushed more data on the subject.  It can't hurt to dream, right?
+
+The way we're going to do this is by associating something called
+a \kode{type} with the subject.  You may have heard of types before.
+Technically, Hoon is a statically typed language, which just
+means that the type isn't a part of your program: it's just a
+piece of data the compiler keeps around as it turns your Hoon
+into Nock.
+
+In some languages, especially functional languages, types are
+dangerous scary concepts that involve a lot of math.  For those
+who like this sort of thing, that's the sort of thing they like.
+For the rest of us, there's Hoon. It's a functional language, but
+not one of those scary ones.
+
+A lot of other languages use dynamic types, in which the type of
+a value is carried along with the data as you use it.  Even
+languages like Lisp, which are nominally typeless, look rather
+typed from the Hoon perspective.  For example, a Lisp atom knows
+dynamically whether it's a symbol or an integer.  A Hoon atom is
+just a Nock atom, which is just a number.  So without a static
+type, Hoon doesn't even know how to print an atom properly.
+
+When we parse a Hoon expression, file, etc, we produce what we
+call a \kode{hoon}, which (if you know the CS jargon) is an AST.  A
+hoon is a noun that's converted into a Nock formula, with
+the assistance of a type which describes the subject of the
+formula:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+[subject\PYZhy{}type hoon] =\PYZgt{} formula
+\end{Verbatim}
+\end{framed_shaded}
+
+But actually this isn't quite right, because Hoon does something
+called ``type inference.''  When we have a type that describes the
+subject for the formula we're trying to generate, as we generate
+that formula we want to also generate a type for the product of
+that formula on that subject.  So our compiler computes:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+[subject\PYZhy{}type hoon] =\PYZgt{} [product\PYZhy{}type formula]
+\end{Verbatim}
+\end{framed_shaded}
+
+As long as \kode{subject-type} is a correct description of some
+subject, you can take any \kode{hoon} and compile it against
+\kode{subject-type}, producing a \kode{formula} such that {\tt *(subject
+formula)} is a product correctly described by \kode{product-type}.
+
+Actually, this works well enough that in Hoon there is no direct
+syntax for defining or declaring a type.  There is only a syntax
+for constructing hoons.  Types are always produced by inference.
+
+\section{Printing types}
+
+Let's start looking at types with the simplest possible kind of
+hoon---an atomic constant, which ignores the subject and its
+type, and just produces its own subject.  Here's everyone's
+favorite atomic constant:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 42
+42
+\end{Verbatim}
+\end{framed_shaded}
+
+Let's also print its type---in two different ways:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; 42
+42
+@ud
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(42)
+[\PYZpc{}atom p=\PYZsq{}ud\PYZsq{}]
+\end{Verbatim}
+\end{framed_shaded}
+
+W-what?  Since types are of course static, printing them out
+dynamically involves a little bit of black magic at the Hoon
+and/or Arvo levels.  All will be revealed in due course.
+
+But a type, like everything else in Hoon, is a noun.  Suffice it
+to say that \kode{-:!\textgreater{}(42)} is just printing this noun, whereas
+\kode{:type; 42} is rendering it intelligently as a string.  In this
+case, the rendering is actually Hoon syntax, but in general it's
+just a string.
+
+In this case, looking directly at the type noun is preferable.
+But for a core, the type actually contains the entire codebase.
+It is no problem to compute with this, but we can't look at it
+without scrolling more or less to infinity.
+
+\section{Atom examples}
+
+Let's look at some more of these atoms:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; 0x42
+0x42
+@ux
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; \PYZsq{}foo\PYZsq{}
+\PYZsq{}foo\PYZsq{}
+@ta
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; \PYZti{}2013.12.6
+\PYZti{}2013.12.6
+@da
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; .127.0.0.1
+.127.0.0.1
+@if
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; \PYZti{}m45
+\PYZti{}m45
+@dr
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; `@da`(add \PYZti{}2013.12.6 \PYZti{}m45)
+\PYZti{}2013.12.6..00.45.00
+@da
+\end{Verbatim}
+\end{framed_shaded}
+
+Okay, we got a little out of control with that last one.  But the
+point should be clear.
+
+Note again that there is no dynamic type here.  All these values
+are atoms.  Let's cast them all to decimals to see (don't worry
+about the cast syntax---we'll cover that later):
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`0x42
+66
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZsq{}foo\PYZsq{}
+7.303.014
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`.127.0.0.1
+2.130.706.433
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZti{}2013.12.6
+170.141.184.500.724.667.905.957.736.036.171.776.000
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZti{}m45
+49.806.208.999.015.789.363.200
+\end{Verbatim}
+\end{framed_shaded}
+
+(Yes, 45 minutes is actually quite a large number when your unit
+of time is \( 2^{-64} \) seconds.)
+
+What are these atoms, anyway?  Let's look at the actual type noun
+(which, without magic, exists only at compile time):
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(42)
+[\PYZpc{}atom p=\PYZsq{}ud\PYZsq{}]
+\end{Verbatim}
+\end{framed_shaded}
+
+\kode{p} is called the \kode{odor} of the atom.  In this case, it's \kode{'ud'},
+i.e., unsigned decimal:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZsq{}ud\PYZsq{}
+25.717
+\end{Verbatim}
+\end{framed_shaded}
+
+That's an unsigned-decimal interpretation of the atom `ud', which
+without a cast is an atom of odor \kode{@ta}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; \PYZsq{}ud\PYZsq{}
+\PYZsq{}ud\PYZsq{}
+@ta
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(\PYZsq{}ud\PYZsq{})
+[\PYZpc{}atom p=\PYZsq{}ta\PYZsq{}]
+\end{Verbatim}
+\end{framed_shaded}
+
+In case this is at all mysterious, we note:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (add \PYZsq{}u\PYZsq{} (mul 256 \PYZsq{}d\PYZsq{}))
+25.717
+\end{Verbatim}
+\end{framed_shaded}
+
+As a general convention, when we represent UTF-8/ASCII text as an
+atom, we store it LSB first.  A text atom is generally called a
+\kode{cord}; if it is ASCII only, a \kode{span}; if it is ASCII restricted
+to the Hoon symbol subset (lowercase with hyphens), a \kode{term}.
+
+\section{The logic of smell}
+
+What is an odor, anyway?  We've seen that the type of an atom
+constant gets an odor which is a function of its syntax.  We've
+also seen that when we print atoms on the console, the printer is
+(in some black-magic way) aware of the odor, and can print the
+atom in roughly the same syntax we originally entered it.
+
+Hoon's type system is generally strong, but odors are weak.  The
+parser itself will only generate a \kode{@ta} for an actual ASCII
+span, but not every atom is a constant.  For instance, consider
+our construction of \kode{'ud'}.  Let's look at the type:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; \PYZsq{}u\PYZsq{}
+\PYZsq{}u\PYZsq{}
+@ta
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; 256
+256
+@ud
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; (add \PYZsq{}u\PYZsq{} (mul 256 \PYZsq{}d\PYZsq{}))
+25.717
+@
+\end{Verbatim}
+\end{framed_shaded}
+
+Not only are we mixing atoms of different odors in our
+arithmetic, but the result appears to be\ldots{} odorless.  It is
+odorless.  But we can cast it back:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; `@ta`(add \PYZsq{}u\PYZsq{} (mul 256 \PYZsq{}d\PYZsq{}))
+\PYZsq{}ud\PYZsq{}
+@ta
+\end{Verbatim}
+\end{framed_shaded}
+
+While Hoon's type system is quite intelligent in some ways, it is
+by no means smart enough to evaluate your arithmetic and conclude
+that it produces a valid ASCII span.  We can convert any atom to
+any other odor of atom, without any sanity checks:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@dr`25.717
+\PYZti{}.s0..0000.0000.0000.6475
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@if`25.717
+.0.0.100.117
+\end{Verbatim}
+\end{framed_shaded}
+
+It so happens that \kode{25.717} is a valid amount of time, and also a
+valid IPv4 address.  But obviously not all atoms are meaningful
+values of every odor.  We're not going to annoy you by stressing
+out the console printer with bad ASCII, but we could.
+
+(And why do we say \kode{25.717} rather than \kode{25,717}?  Are we\ldots{}
+Germans?  No, but we want all atom syntaxes to be URL-safe.
+See below.)
+
+Odors are a weak type system because the programmer often knows,
+at a logical level not at all available to the type system, that
+(for example) \kode{(add 'u' (mul 256 'd'))} produces an ASCII span.
+We want to keep the programmer from accidentally using a date as
+if it were text, but we don't want to keep her from intentionally
+converting between odors or ascribing odor to the result of an
+arbitrary computation.
+
+An odor is exactly what it looks like---an ASCII span.  This span
+is a taxonomy which grows more specific to the right.  For
+instance, \kode{@t} for UTF-8 text, \kode{@ta} for URL-safe ASCII text,
+\kode{@tas} for a Hoon symbol; or \kode{@u} for an unsigned integer, \kode{@ux}
+for an unsigned integer formatted as hexadecimal.
+
+The general principle of type enforcement is that atoms change
+freely either up or down the taxonomy, but not across.  For
+instance, you can treat a \kode{@tas} as a \kode{@t}, as in a strong type
+system; but you can also treat a \kode{@t} as a \kode{@tas}, or an \kode{@} as
+anything.  However, passing a \kode{@t} to a function that expects an
+\kode{@ux} is a type error.
+
+Even the ability to cast a \kode{@ud} to a \kode{@dr} is a syntactic hack;
+casts in Hoon do not evade type enforcement.  When you write
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+`@dr`25.717
+\end{Verbatim}
+\end{framed_shaded}
+
+the parser actually produces the equivalent of
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+`@dr``@`25.717
+\end{Verbatim}
+\end{framed_shaded}
+
+because we can't turn \kode{@ud} directly into \kode{@dr}, but we can turn
+\kode{@ud} into \kode{@} and \kode{@} into \kode{@dr}.
+
+\section{The smell of size}
+
+Besides these prefixes, which indicate the rendering and/or
+meaning of atoms, the odor system has another orthogonal
+mechanism to restrict the size of atoms.  Like the prefix, this
+mechanism is weak---it is not enforced and trivially evaded.
+
+An odor span contains two parts, both optional: a lowercase
+prefix and an uppercase suffix.  The suffix, if present, is a
+single character A-Z \kode{c} which indicates an atom of size less
+than or equal to \kode{n} bits, where \kode{n} is \kode{1 \textless{}\textless{} (c---'A')}.
+Thus, \kode{@tD} is one UTF-8 byte (whatever that means); \kode{@tN}
+is a kilobyte or less of UTF-8.
+
+(It's easy to complain from a standards perspective that ``UTF-8''
+defines a format for bytestreams, not bytes, and at a strict
+level it means no more to say ``one UTF-8 byte'' than to say, say,
+``one GIF byte.''  But odors are not a strict type system.  It is
+possible for a byte to \emph{smell} of UTF-8---or even of GIF.)
+
+When enforcing conversions, \kode{@t} has no size information and can
+be used as \kode{@tD}; and \kode{@tD}, of course, can be used as \kode{@t}.  But
+using \kode{@tN} as \kode{@tD} is an error.  There is no way to generate
+the smell of size from a constant without a cast.  And of course
+arithmetic results have no odor at all.
+
+While the utility of this mechanism is debatable, at worst it
+serves as a comment which documents the programmer's intentions.
+
+A full table---for convenience, not because you're stupid:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+A   1 bit
+B   2 bits
+C   4 bits
+D   1 byte
+E   2 bytes
+F   4 bytes
+G   8 bytes
+H   16 bytes
+I   32 bytes
+J   64 bytes
+K   128 bytes
+L   256 bytes
+M   512 bytes
+N   1K
+O   2K
+P   4K
+Q   8K
+R   16K
+S   32K
+T   64K
+U   128K
+V   256K
+W   512K
+X   1MB
+Y   2MB
+Z   4MB
+\end{Verbatim}
+\end{framed_shaded}
+
+You of course can build an atom larger than 4MB, though whether
+you should is another question entirely.  But the type system
+cannot express a size odor above 4MB.
+
+\section{Known and unknown odors}
+
+The variety of units and formats which an atom can represent is
+essentially infinite.  The set of syntaxes which Hoon can parse
+and print is fundamentally limited.
+
+For instance, Hoon has no syntax which means ``number of miles.''
+But within your program, nothing stops you from using the odor
+system to distinguish a number of miles from, for instance, a
+number of kilometers:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@udm`25.717
+25.717
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@udk`25.717
+25.717
+\end{Verbatim}
+\end{framed_shaded}
+
+The printer has no idea what a \kode{@udm} is, but it knows what a
+\kode{@ud} and can print accordingly.  Then, if you have a function
+which expects a \kode{@udm} and you try to pass it a \kode{@udk}, it will
+fail.  The feature seems banal, but spacecraft have been laid low
+by less.
+
+This is clearly a crude mechanism.  If you don't like it, you
+don't have to use it.
+
+\section{Known odors}
+
+Hoon knows about the following odors, with defined meanings:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+@c              UTF\PYZhy{}32 codepoint
+@d              date
+  @da           absolute date
+  @dr           relative date (i.e., timespan)
+@f              yes or no (inverse boolean)
+@n              nil
+@p              phonemic base
+@r              IEEE floating\PYZhy{}point
+  @rd           double precision  (64 bits)
+  @rh           half precision (16 bits)
+  @rq           quad precision (128 bits)
+  @rs           single precision (32 bits)
+@s              signed integer, sign bit low
+  @sb           signed binary
+  @sd           signed decimal
+  @sv           signed base32
+  @sw           signed base64
+  @sx           signed hexadecimal
+@t              UTF\PYZhy{}8 text (cord)
+  @ta           ASCII text (span)
+    @tas        ASCII symbol (term)
+@u              unsigned integer
+  @ub           unsigned binary
+  @ud           unsigned decimal
+  @uv           unsigned base32
+  @uw           unsigned base64
+  @ux           unsigned hexadecimal
+\end{Verbatim}
+\end{framed_shaded}
+
+Each of these forms has a URL-safe syntax, which we'll get to.
+Each parses as an atomic constant in Hoon, and each is printed
+by the Hoon prettyprinter.
+
+But first, a little more Hoonology.
+
+\section{The humble type}
+
+What is a Hoon type, anyway?  We know a type is a noun.  So is
+everything.  What are the semantics of this noun?
+
+Regardless of what this highly overloaded word may and does and
+does mean in every other system of computation that has deployed
+it, a type in Hoon has two roles.
+
+One, it defines a set of nouns.  Any finite noun is either in
+this set, or not in it.
+
+Two, it ascribes semantics to all nouns in this set.  For
+example, a Hoon type exports a semantic namespace.
+
+With this settled, let's start by introducing, purely in an
+informal and totally friendly way, the \kode{tile} syntax in which
+\kode{type} itself is defined in \kode{/=main=/arvo/hoon/hoon}.  This is
+not the full definition of \kode{type}, just a simple subset:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  type  \PYZdl{}|  ?(\PYZpc{}noun \PYZpc{}void)
+          \PYZdl{}\PYZpc{}  [\PYZpc{}atom p=term]
+              [\PYZpc{}cell p=type q=type]
+          ==
+\end{Verbatim}
+\end{framed_shaded}
+
+Again, never mind the syntax.  We can easily describe this subset
+of \kode{type} in plain English.
+
+It can be \kode{\%noun} (i.e., the atom \kode{1.853.189.998}).  Set:
+all nouns.  Examples:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; *
+0
+*
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(*)
+\PYZpc{}noun
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; `*`\PYZpc{}noun
+1.853.189.998
+*
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(`*`\PYZpc{}noun)
+\PYZpc{}noun
+\end{Verbatim}
+\end{framed_shaded}
+
+It can be the atom \kode{\%void}.  Set: no nouns.  We can't show any
+examples producing \kode{\%void}---by definition, none of them would
+terminate.  Because that's what \kode{\%void} means.
+
+It can be the cell \kode{[\%atom p]}, where \kode{p} is a \kode{term} (\kode{@tas}),
+possibly empty (i.e., \kode{0}).  Set: all atoms.  Examples: above.
+
+It can be the triple \kode{[\%cell p q]} (i.e., \kode{[\%cell [p q]]}), where
+each of \kode{p} and \kode{q} is itself a \kode{type}.  Set: all cells of \kode{p}
+and \kode{q}.  Examples:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; [3 4]
+[3 4]
+[@ud @ud]
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}([3 4])
+[\PYZpc{}cell p=[\PYZpc{}atom p=\PYZpc{}ud] q=[\PYZpc{}atom p=\PYZpc{}ud]]
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{The noble cube}
+
+Let's introduce another kind of type here, because we'll need it
+to talk about constant syntax:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  type  \PYZdl{}|  ?(\PYZpc{}noun \PYZpc{}void)
+          \PYZdl{}\PYZpc{}  [\PYZpc{}atom p=term]
+              [\PYZpc{}cell p=type q=type]
+              [\PYZpc{}cube p=* q=type]
+          ==
+\end{Verbatim}
+\end{framed_shaded}
+
+Note that when we enter an ordinary constant, like \kode{42}, its type
+\kode{[\%atom \%ud]} is the set of all atoms (with odor \kode{@ud}, but any
+atom can have that or any odor).  Its type is certainly not the
+set consisting exclusively of the value \kode{42}.
+
+But here's how we produce this ``cubical'' constant:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; \PYZpc{}42
+\PYZpc{}42
+\PYZpc{}42
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(\PYZpc{}42)
+[\PYZpc{}cube p=42 q=[\PYZpc{}atom p=\PYZpc{}ud]]
+\end{Verbatim}
+\end{framed_shaded}
+
+In general, a \kode{\%cube} type contains \kode{p}, a single noun, and \kode{q},
+a base type which provides semantics.
+
+Syntactically, any atomic constant can be preceded by \kode{\%} to
+generate a cube.  The exception is \kode{@tas}, which always needs \kode{\%}
+and is always cubical.
+
+\section{Canonical atom syntaxes}
+
+Let's briefly cover the syntax of each built-in odor.  It would
+be counterproductive to specify them exactly here; first, this is
+a tutorial rather than a spec, and second the spec is the code.
+For the exact semantics, consult \kode{++so} in \kode{hoon.hoon}.  Rather,
+we'll explain the form and run through some examples.
+
+If some of these syntaxes seem contrived or odd, bear in mind:
+none of them collides with any of the others, and they are all
+URL-safe and more.  The canonical atom forms use only lowercase
+characters, numbers, \kode{.}, \kode{-}, and \kode{\textasciitilde}.  A cell form adds \kode{\_}.
+
+\subsection{Unsigned decimal, \kode{@ud}}
+
+Unsigned decimal is the common or neutral atom representation.
+It's not very compact and in many cases conveys no intelligible
+information at all, but it's impossible to screw up.  \kode{@ud} is
+the default print format for both \kode{@u} and \kode{@}---i.e., unsigned
+numbers with no printing preference, and opaque atoms.
+
+Hoon's unsigned decimal format is the normal Continental syntax.
+It differs from the Anglo-American only in the use of periods,
+rather than commas, between groups of 3:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 0
+0
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 19
+19
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 1.024
+1.024
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 65.536
+65.536
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (bex 20)
+1.048.576
+\end{Verbatim}
+\end{framed_shaded}
+
+An unsigned decimal not broken into groups is a syntax error.
+Also, whitespace or even linebreaks can appear between the dot
+and the next group.
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 65.  536
+65.536
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Unsigned hexadecimal, \kode{@ux}}
+
+\kode{@ux} has the same syntax as \kode{@ud}, except that it's prefixed by
+\kode{0x} and uses groups of four.  Hex digits are lowercase only.
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 0x0
+0x0
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`0x17
+23
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`(bex 20)
+0x10.0000
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} 0x10.  0000
+0x10.0000
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Unsigned base64, \kode{@uw}}
+
+\subsection{Unsigned base32, \kode{@uv}}
+
+The prefix is \kode{0w} for base64 and \kode{0v} for base32.  The digits
+for \kode{@uw} are, in order: \kode{0-9}, \kode{a-z}, \kode{A-Z}, -, \sig:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`0w\PYZhy{}
+62
+\end{Verbatim}
+\end{framed_shaded}
+
+For \kode{@uv}, the digits are \kode{0-9}, \kode{a-v}.
+
+\subsection{Signed decimal, \kode{@sd}}
+
+\subsection{Signed hexadecimal, \kode{@sx}}
+
+\subsection{Signed base64, \kode{@sw}}
+
+\subsection{Signed base32, \kode{@sv}}
+
+\subsection{Signed binary, \kode{@sb}}
+
+Obviously, without finite-sized integers, the sign extension
+trick does not work.  A signed integer in Hoon is a different way
+to use atoms than an unsigned integer; even for positive numbers,
+the signed integer cannot equal the unsigned.
+
+The prefix for a negative signed integer is a single \kode{-} before
+the unsigned syntax.  The prefix for a \emph{positive} signed integer
+is \kode{--}.  The sign bit is the low bit:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}1
+\PYZhy{}1
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}\PYZhy{}1
+\PYZhy{}\PYZhy{}1
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZhy{}1
+1
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZhy{}\PYZhy{}1
+2
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZhy{}2
+3
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZhy{}\PYZhy{}2
+4
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZhy{}0x10
+0x1f
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZhy{}\PYZhy{}0x10
+0x20
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZhy{}\PYZhy{}0w\PYZhy{}
+124
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@sw`124
+\PYZhy{}\PYZhy{}0w\PYZhy{}
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Absolute date, \kode{@da}}
+
+Urbit dates represent 128-bit chronological time, with 2\^{}64
+seconds from the start of the universe to the end.  2\^{}127 is
+3:30:08 PM on 226 AD, for reasons not clear or relevant:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@da`(bex 127)
+\PYZti{}226.12.5..15.30.08
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@da`(dec (bex 127))
+\PYZti{}226.12.5..15.30.08
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@da`(dec (bex 127))
+\PYZti{}226.12.5..15.30.07..ffff.ffff.ffff.ffff
+\end{Verbatim}
+\end{framed_shaded}
+
+The time of day and/or second fragment is optional:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}2013.12.7
+0x8000.000d.2140.7280.0000.0000.0000.0000
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}2013.12.7..15.30.07
+0x8000.000d.2141.4c7f.0000.0000.0000.0000
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}2013.12.7..15.30.07..1234
+0x8000.000d.2141.4c7f.1234.0000.0000.0000
+\end{Verbatim}
+\end{framed_shaded}
+
+We also do BC:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}226\PYZhy{}.12.5
+0x7fff.fffc.afb1.b800.0000.0000.0000.0000
+\end{Verbatim}
+\end{framed_shaded}
+
+The semantics of the time system are that UGT (Urbit Galactic
+Time) is GMT/UTC as of leap second 25.  UGT is chronological and
+will never add leap seconds, even if UTC continues this mistake.
+If a gap appears, it must be resolved in the presentation layer,
+with timezones and other human curiosities.
+
+\subsection{Relative date, \kode{@dr}}
+
+It's also nice to have a syntax for basic time intervals:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}s1
+0x1.0000.0000.0000.0000
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}m1
+0x3c.0000.0000.0000.0000
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (div \PYZti{}m1 \PYZti{}s1)
+60
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (div \PYZti{}h1 \PYZti{}m1)
+60
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (div \PYZti{}h1 \PYZti{}s1)
+3.600
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (div \PYZti{}d1 \PYZti{}h1)
+24
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@da`(add \PYZti{}2013.11.30 \PYZti{}d1)
+\PYZti{}2013.12.1
+\end{Verbatim}
+\end{framed_shaded}
+
+There are no \kode{@dr} intervals under a second or over a day.  Since
+the resolution is so high, though, \kode{(div \sig s1 1.000.000)} produces
+a pretty accurate microsecond.
+
+\subsection{Loobean, \kode{@f}}
+
+A loobean, or just \kode{bean}, is 0 or 1.  \kode{0} is yes, \kode{1} is no:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`.y
+0
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`.n
+1
+\end{Verbatim}
+\end{framed_shaded}
+
+People who find this strange are probably strange themselves.
+
+\subsection{Nil, \kode{@n}}
+
+Nil indicates an absence of information, as in a list terminator.
+The only value is \kode{\sig}, \kode{0}.
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZti{}
+0
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Unicode text, \kode{@t}}
+
+\kode{@t} is a sequence of UTF-8 bytes, LSB first---sometimes called a
+\kode{cord}.  For lowercase numbers and letters, the canonical syntax
+is \kode{\sig\sig text}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZti{}\PYZti{}foo
+\PYZsq{}foo\PYZsq{}
+\end{Verbatim}
+\end{framed_shaded}
+
+Note that the prettyprinter makes an unprincipled exception and
+prints the text in a noncanonical format:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}\PYZti{}foo
+0x6f.6f66
+\end{Verbatim}
+\end{framed_shaded}
+
+We want to be able to encode an arbitrary Unicode string as a
+single URL-safe token, using no punctuation but \kode{.\sig -}, in \kode{@t}.
+Space is \kode{.}, \kode{.} is \kode{\sig.}, \kode{\sig} is \kode{\sig\sig}, \kode{-} is \kode{-}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZti{}\PYZti{}foo.bar
+\PYZsq{}foo bar\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZti{}\PYZti{}foo.bar\PYZti{}.baz\PYZti{}\PYZti{}moo\PYZhy{}hoo
+\PYZsq{}foo bar.baz\PYZti{}moo\PYZhy{}hoo\PYZsq{}
+\end{Verbatim}
+\end{framed_shaded}
+
+For all other ASCII/Unicode characters, insert the Unicode
+codepoint in lower-case hexadecimal, followed by \kode{.}.  For
+example, for U+2605 ``BLACK STAR'', write ★ α:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZti{}\PYZti{}foo\PYZti{}2605.bar
+\PYZsq{}foo★bar\PYZsq{}
+\end{Verbatim}
+\end{framed_shaded}
+
+This UTF-32 codepoint is of course converted to UTF-8:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}\PYZti{}foo\PYZti{}2605.bar
+0x72.6162.8598.e26f.6f66
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{URL-safe ASCII text, \kode{@ta}}
+
+\kode{@ta} encodes the ASCII subset that all canonical atom syntaxes
+restrict themselves to.  The prefix is \kode{\sig.}.  There are no escape
+sequences except \kode{\sig\sig}, which means \kode{\sig}, and \kode{\sig-}, which means
+\kode{\_}.  \kode{-} and \kode{.}\ encode themselves.  No other characters
+besides numbers and lowercase letters need apply.
+
+Let's cast these to \kode{@t} to see them quoted:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@t`\PYZti{}.foo
+\PYZsq{}foo\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@t`\PYZti{}.foo.bar
+\PYZsq{}foo.bar\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@t`\PYZti{}.foo\PYZti{}\PYZti{}bar
+\PYZsq{}foo\PYZti{}bar\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@t`\PYZti{}.foo\PYZti{}\PYZhy{}bar
+\PYZsq{}foo\PYZus{}bar\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@t`\PYZti{}.foo\PYZhy{}bar
+\PYZsq{}foo\PYZhy{}bar\PYZsq{}
+\end{Verbatim}
+\end{framed_shaded}
+
+A \kode{@ta} atom is called a \kode{span}.
+
+\subsection{Codepoint, \kode{@c}}
+
+Normally when we build atoms of Unicode text, we use a UTF-8
+bytestream, LSB first.  But sometimes it's useful to build atoms
+of one or more UTF-32 words.
+
+The codepoint syntax is the same as \kode{@t}, except with a \kode{\sig-}
+prefix.  Let's repeat our examples, with hex display:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}\PYZhy{}foo
+0x6f.0000.006f.0000.0066
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZti{}\PYZhy{}foo.bar
+0x72.0000.0061.0000.0062.0000.0020.0000.006f.0000.006f.0000.0066
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Phonemic, \kode{@p}}
+
+We've seen \kode{@p} used for ships, of course.  But it's not just for
+ships---it's for any short number optimized for memorability, not
+for arithmetic.  \kode{@p} is great for checksums, for instance.
+
+That said, \kode{@p} is subtly customized for the sociopolitical
+design of Urbit as a digital republic.  For example, one feature
+we \emph{don't} want is the ability to see at a glance which carrier
+and cruiser issued a destroyer.  Consider the carrier \kode{0x21}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x21
+\PYZti{}mep
+\end{Verbatim}
+\end{framed_shaded}
+
+It issues \kode{255} cruisers, including \kode{0x4321}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x4321
+\PYZti{}pasnut
+\end{Verbatim}
+\end{framed_shaded}
+
+Which issues \kode{65.535} destroyers, including \kode{0x8765.4321} and
+several successors:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x8765.4321
+\PYZti{}famsyr\PYZhy{}dirwes
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x8766.4321
+\PYZti{}lidlug\PYZhy{}maprec
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x8767.4321
+\PYZti{}tidlus\PYZhy{}roplen
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x8768.4321
+\PYZti{}lisnel\PYZhy{}lonbet
+\end{Verbatim}
+\end{framed_shaded}
+
+Of course, anyone who can juggle bits can see that
+\kode{\sig famsyr-dirwes} is a close cousin of \kode{\sig lidlug-maprec}.  But she
+actually has to juggle bits to do it.  Obfuscation does not
+prevent calculated associations, just automatic ones.
+
+But at the yacht level, we actually want to see a uniform 32-bit
+space of yachts directly associated with the destroyer:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0x9.8765.4321
+\PYZti{}talfes\PYZhy{}sibwaclux\PYZhy{}tomwyc\PYZhy{}famsyr\PYZhy{}dirwes
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0xba9.8765.4321
+\PYZti{}tacbep\PYZhy{}ronreg\PYZhy{}famsyr\PYZhy{}dirwes
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0xd.cba9.8765.4321
+\PYZti{}bicsub\PYZhy{}ritbyt\PYZhy{}famsyr\PYZhy{}dirwes
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@p`0xfed.cba9.8765.4321
+\PYZti{}sivrep\PYZhy{}hadfeb\PYZhy{}famsyr\PYZhy{}dirwes
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{IPv4 address, \kode{@if}}
+
+\subsection{IPv6 address, \kode{@is}}
+
+Urbit lives atop IP and would be very foolish to not support
+a syntax for the large atoms that are IPv4 and IPv6 addresses.
+
+\kode{@if} is the standard IPv4 syntax, prefixed with \kode{.}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`.127.0.0.1
+0x7f00.0001
+\end{Verbatim}
+\end{framed_shaded}
+
+\kode{@is} is the same as \kode{@if}, but with 8 groups of 4 hex digits:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`.dead.beef.0.cafe.42.babe.dead.beef
+0xdead.beef.0000.cafe.0042.babe.dead.beef
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{IEEE single-precision, \kode{@rs}}
+
+\subsection{IEEE double-precision, \kode{@rd}}
+
+\subsection{IEEE quad-precision, \kode{@rq}}
+
+\subsection{IEEE half-precision, \kode{@rh}}
+
+Hoon does not yet support floating point, so these syntaxes
+don't actually work.  But the syntax for a single-precision
+float is the normal English syntax, with a \kode{.} prefix:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+.6.2832             ::  τ as @rs
+.\PYZhy{}6.2832            ::  \PYZhy{}τ as @
+.\PYZti{}6.2832            ::  τ as @rd
+.\PYZti{}\PYZhy{}6.2832           ::  \PYZhy{}τ as @rd
+.\PYZti{}\PYZti{}6.2832           ::  τ as @rh
+.\PYZti{}\PYZti{}\PYZti{}6.2832          ::  τ as @rq
+\end{Verbatim}
+\end{framed_shaded}
+
+(Hoon is a Tauist language and promotes \href{http://tauday.com/}{International Tau Day}.)
+
+\subsection{Transparent cell syntax}
+
+By adding \kode{\_}, we can encode arbitrary nouns in our safe subset.
+The prefix to a canonical cell is \kode{.\_}; the separator is \kode{\_};
+the terminator is \kode{\_\_}.  Thus:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} .\PYZus{}3\PYZus{}4\PYZus{}\PYZus{}
+[3 4]
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; .\PYZus{}.127.0.0.1\PYZus{}.\PYZus{}0x12\PYZus{}19\PYZus{}\PYZus{}\PYZus{}\PYZti{}tasfyn\PYZhy{}partyv\PYZus{}\PYZus{}
+[.127.0.0.1 [0x12 19] \PYZti{}tasfyn\PYZhy{}partyv]
+[@if [@ux @ud] @p]
+\end{Verbatim}
+\end{framed_shaded}
+
+Those who don't see utility in this strange feature have
+perhaps never needed to jam a data structure into a URL.
+
+\subsection{Opaque noun syntax}
+
+Speaking of jam, sometimes we really don't care what's inside our
+noun.  Then, the syntax to use is a variant of \kode{@uw} prefixed by
+\kode{\sig}, which incorporates the built-in \kode{jam} and \kode{cue} marshallers:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (jam [3 4])
+78.241
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@uw`(jam [3 4])
+0wj6x
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (cue 0wj6x)
+[3 4]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZti{}0wj6x
+[3 4]
+\end{Verbatim}
+\end{framed_shaded}
+
+\section{Noncanonical syntaxes}
+
+These are syntaxes for constants which don't fit the canonical
+character-set constraints.
+
+\subsection{Hoon symbol, \kode{@tas}}
+
+\kode{@tas}, a \kode{term}, is our most exclusive odor.  The only
+characters permitted are lowercase ASCII, \kode{-} except as the first
+or last character, and \kode{0-9} except as the first character.
+
+The syntax for \kode{@tas} is the text itself, always preceded by \kode{\%}.
+This means a term is always cubical.  You can cast it to \kode{@tas}
+if you like, but we just about always want the cube:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZpc{}dead\PYZhy{}fish9
+\PYZpc{}dead\PYZhy{}fish9
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(\PYZpc{}dead\PYZhy{}fish9)
+[\PYZpc{}cube p=271.101.667.197.767.630.546.276 q=[\PYZpc{}atom p=\PYZpc{}tas]]
+\end{Verbatim}
+\end{framed_shaded}
+
+The empty \kode{@tas} has a special syntax, \kode{\$}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZpc{}\PYZdl{}
+\PYZpc{}\PYZdl{}
+\end{Verbatim}
+\end{framed_shaded}
+
+A term without \kode{\%} is not a constant, but a name:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} dead\PYZhy{}fish9
+! \PYZhy{}find\PYZhy{}limb.dead\PYZhy{}fish9
+! find\PYZhy{}none
+! exit
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Loobeans, \kode{@f}}
+
+\kode{.y} is a little cumbersome, so we can say \kode{\&} and \kode{\textbar{}}.
+The \kode{\%} prefix cubes as usual.
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`\PYZam{}
+0
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ud`|
+1
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Cords, \kode{@t}}
+
+The canonical \kode{\sig\sig} syntax for \kode{@t}, while it has its place,
+is intolerable in a number of ways---especially when it comes to
+escaping capitals.  So \kode{@t} is both printed and parsed in a
+conventional-looking single-quote syntax:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZsq{}foo bar\PYZsq{}
+\PYZsq{}foo bar\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZsq{}foo bar\PYZsq{}
+0x72.6162.206f.6f66
+\end{Verbatim}
+\end{framed_shaded}
+
+Escape \kode{'} with \kode{\textbackslash{}}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZsq{}Foo \PYZbs{}\PYZsq{}bar\PYZsq{}
+\PYZsq{}Foo \PYZbs{}\PYZsq{}bar\PYZsq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `@ux`\PYZsq{}\PYZbs{}\PYZsq{}\PYZsq{}
+0x27
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Strings}
+
+Text in Hoon is generally manipulated in two ways, depending on
+what you're doing: as an atomic cord/span/term, or as a \kode{tape}
+which is a list of bytes (\emph{not} codepoints).
+
+To generate a tape, use double quotes:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZdq{}foo\PYZdq{}
+\PYZdq{}foo\PYZdq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} `*`\PYZdq{}foo\PYZdq{}
+[102 111 111 0]
+\end{Verbatim}
+\end{framed_shaded}
+
+We're getting off the constant reservation, but strings also
+interpolate with curly-braces:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZdq{}hello \PYZob{}(weld \PYZdq{}wor\PYZdq{} \PYZdq{}ld\PYZdq{})\PYZcb{} is a fun thing to say\PYZdq{}
+\PYZdq{}hello world is a fun thing to say\PYZdq{}
+\end{Verbatim}
+\end{framed_shaded}
+
+And they can be joined across space or lines with a \kode{.}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZdq{}hello\PYZdq{}.\PYZdq{}world\PYZdq{}
+\PYZdq{}helloworld\PYZdq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZdq{}hello\PYZdq{}. \PYZdq{}world\PYZdq{}
+\PYZdq{}helloworld\PYZdq{}
+\end{Verbatim}
+\end{framed_shaded}

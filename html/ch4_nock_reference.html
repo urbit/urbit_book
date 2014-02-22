@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="stylesheets/pygments.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/softcover.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <title>urbit_tutorial</title>
+    
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+        },
+        TeX: {
+          extensions: ["AMSmath.js", "AMSsymbols.js"],
+          equationNumbers: {
+            autoNumber: "AMS",
+            formatNumber: function (n) { return "6" + '.' + n }
+          },
+          Macros: {
+            PolyTeX:    "Poly{\\TeX}",
+            PolyTeXnic: "Poly{\\TeX}nic",
+            sig: "\\textasciitilde",
+ket: "\\verb+^+",
+phep: "\\kode{-{}-}"
+          }
+        },
+        showProcessingMessages: false,
+        messageStyle: "none",
+        imageFont: null
+      });
+
+      </script>
+      <script type="text/javascript" src="MathJax/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+    
+  </head>
+  <body>
+    
+    <div id="book">
+      <div id="cid20" data-tralics-id="cid20" class="chapter" data-number="6" data-chapter="ch4_nock_reference"><h1><a href="ch4_nock_reference_fragment.html#cid20" class="heading hyperref"><span class="number">Chapter 6 </span>Nock Reference</a></h1>
+<blockquote class="quotation"><p class="noindent"><em>Tl<span class="unicode">ö</span>n ser<span class="unicode">á</span> un laberinto, pero es un laberinto urdido por hombres, un
+laberinto destinado a que lo descifren los hombres.</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span></p>
+<p class="noindent"><em>Tl<span class="unicode">ö</span>n is surely a labyrinth, but it is a labyrinth devised
+by men, a labyrinth destined to be deciphered by men.</em></p>
+<p style="margin-top: 6.0pt"><span class="break"></span></p>
+<p class="noindent">—<a href="https://en.wikipedia.org/wiki/Tlon,_Uqbar,_Orbis_Tertius"><strong></strong><em><strong>Tl<span class="unicode">ö</span>n, Uqbar, Orbis Tertius</strong></em><strong></strong></a>, Jorge Luis Borges</p>
+</blockquote><p>This chapter is designed for the experienced programmer and can be read without reference to the previous tutorial chapters.</p>
+<p>It’s important to recognize that the pseudocode of the Nock spec is just that:
+pseudocode.<span class="intersentencespace"></span> It looks a little like Hoon.<span class="intersentencespace"></span> It isn’t Hoon - it’s just
+pseudocode.<span class="intersentencespace"></span> Or in other words, just English.<span class="intersentencespace"></span> At the bottom of every formal
+system is a system of axioms, which can only be written in English.<span class="intersentencespace"></span> (Why
+pseudocode, not Hoon?<span class="intersentencespace"></span> Since Hoon is defined in Nock, this would only give a
+false impression of nonexistent precision.)</p>
+<p>The logic of this pseudocode is a pattern-matching reduction, matching from the
+top down.<span class="intersentencespace"></span> To compute Nock, repeatedly reduce with the first line that matches.</p>
+</div>
+<div id="cid21" data-tralics-id="cid21" class="section" data-number="6.1"><h2><a href="ch4_nock_reference_fragment.html#cid21" class="heading hyperref"><span class="number">6.1 </span>Nock Specification:</a></h2>
+<div class="code"><div class="highlight"><pre>1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+38 ::
+39 ::    *a               *a
+</pre></div></div>
+</div>
+<div id="cid22" data-tralics-id="cid22" class="section" data-number="6.2"><h2><a href="ch4_nock_reference_fragment.html#cid22" class="heading hyperref"><span class="number">6.2 </span>1.<span class="intersentencespace"></span> Structures</a></h2>
+<div class="code"><div class="highlight"><pre>A noun is an atom or a cell.  An atom is any natural number.
+A cell is any ordered pair of nouns.
+</pre></div></div>
+<p>Nouns are the dumbest data model ever.<span class="intersentencespace"></span> Nouns make JSON look like XML and XML
+look like ASN.1.<span class="intersentencespace"></span> It may also remind you of Lisp’s S-expressions - you can
+think of nouns as “S-expressions without the S.”</p>
+<p>To be exact, a noun <em>is</em> an S-expression, except that classic S-expressions
+have multiple atom types (“S” is for “symbol”).<span class="intersentencespace"></span> Since Nock is designed to be
+used with a higher-level type system (such as Hoon’s), it does not need
+low-level types.<span class="intersentencespace"></span> An atom is just an unsigned integer of any size.</p>
+<p>For instance, it’s common to represent strings (or even whole text files) as
+atoms, arranging them LSB first - so “foo” becomes <code>0x6f6f66</code>.<span class="intersentencespace"></span> How do we know
+to print this as “foo”, not <code>0x6f6f66</code>?<span class="intersentencespace"></span> We need external information - such as
+a Hoon type.<span class="intersentencespace"></span> Similarly, other common atomic types - signed integers, floating
+point, etc
+- are all straightforward to map into atoms.</p>
+<p>It’s also important to note that, unlike Lisp, Nock cannot create cyclical data
+structures.<span class="intersentencespace"></span> It is normal and common for nouns in a Nock runtime system to have
+acyclic structure - shared subtrees.<span class="intersentencespace"></span> But there is no Nock computation that can
+make a child point to its parent.<span class="intersentencespace"></span> One consequence: Nock has no garbage
+collector.<span class="intersentencespace"></span> (Nor can dag structure be detected, as with Lisp <code>eq</code>.)</p>
+<p>There is also no single syntax for nouns.<span class="intersentencespace"></span> If you have nouns you have Nock; if
+you have Nock you have Hoon; if you have Hoon, you can write whatever parser
+you like.</p>
+</div>
+<div id="cid23" data-tralics-id="cid23" class="section" data-number="6.3"><h2><a href="ch4_nock_reference_fragment.html#cid23" class="heading hyperref"><span class="number">6.3 </span>Line 5: Nock Function</a></h2>
+<div class="code"><div class="highlight"><pre>5  ::    nock(a)           *a
+</pre></div></div>
+<p>Nock is a pure (stateless) function from noun to noun.<span class="intersentencespace"></span> In our pseudocode (and
+only in our pseudocode) we express this with the prefix operator <code>*</code>.</p>
+<p>Normally <code>a</code> in <code>nock(a)</code> is a cell <code>[s f]</code>, or as we say</p>
+<div class="code"><div class="highlight"><pre>[subject formula]
+</pre></div></div>
+<p>Intuitively, the formula is your function and the subject is its argument.<span class="intersentencespace"></span> We
+call them something different because Hoon, or any other high-level language
+built on Nock, will build its own function calling convention which <em>does not</em>
+map directly to <code>*[subject formula]</code>.</p>
+</div>
+<div id="cid24" data-tralics-id="cid24" class="section" data-number="6.4"><h2><a href="ch4_nock_reference_fragment.html#cid24" class="heading hyperref"><span class="number">6.4 </span>Line 6: Bracket grouping</a></h2>
+<div class="code"><div class="highlight"><pre>6  ::    [a b c]           [a [b c]]
+</pre></div></div>
+<p>Ie, brackets (in our pseudocode, as in Hoon) associate to the right.<span class="intersentencespace"></span> For those
+with Lisp experience, it’s important to note that Nock and Hoon use tuples or
+“improper lists” much more heavily than Lisp.<span class="intersentencespace"></span> The list terminator, normally 0,
+is never automatic.<span class="intersentencespace"></span> So the Lisp list</p>
+<div class="code"><div class="highlight"><pre>(a b c)
+</pre></div></div>
+<p>becomes the Nock noun</p>
+<div class="code"><div class="highlight"><pre>[a b c 0]
+</pre></div></div>
+<p>which is equivalent to</p>
+<div class="code"><div class="highlight"><pre>[a [b [c 0]]]
+</pre></div></div>
+<p>Note that we can and do use unnecessary brackets anyway, for
+emphasis.</p>
+</div>
+<div id="cid25" data-tralics-id="cid25" class="section" data-number="6.5"><h2><a href="ch4_nock_reference_fragment.html#cid25" class="heading hyperref"><span class="number">6.5 </span>Lines 8-13: Pseudocode notation</a></h2>
+<div class="code"><div class="highlight"><pre>8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+</pre></div></div>
+<p>Here we define more pseudocode operators, which we’ll use in reductions further
+down.<span class="intersentencespace"></span> So far we have four built-in functions: <code>*</code> meaning Nock itself, <code>?</code>
+testing whether a noun is a cell or an atom, <code>+</code> incrementing an atom, and <code>=</code>
+testing for equality.<span class="intersentencespace"></span> Again, no rocket science here.</p>
+<p>We should note that in Nock and Hoon, <code>0</code> (pronounced “yes”) is true, and <code>1</code>
+(“no”) is false.<span class="intersentencespace"></span> Why?<span class="intersentencespace"></span> It’s fresh, it’s different, it’s new.<span class="intersentencespace"></span> And it’s
+annoying.<span class="intersentencespace"></span> And it keeps you on your toes.<span class="intersentencespace"></span> And it’s also just intuitively
+right.</p>
+</div>
+<div id="cid26" data-tralics-id="cid26" class="section" data-number="6.6"><h2><a href="ch4_nock_reference_fragment.html#cid26" class="heading hyperref"><span class="number">6.6 </span>Lines 16-20: Noun Axes and Trees</a></h2>
+<div class="code"><div class="highlight"><pre>16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+</pre></div></div>
+<p>Slightly more interesting is our tree numbering.<span class="intersentencespace"></span> Every noun is of course a
+tree.<span class="intersentencespace"></span> The <code>/</code>, or axis, operator imposes an address space on that tree,
+mapping every nonzero atom to a tree position.</p>
+<p>1 is the root.<span class="intersentencespace"></span> The head of every node <code>n</code> is <code>2n</code>; the tail is <code>2n+1</code>.<span class="intersentencespace"></span> Thus a
+simple tree:</p>
+<div class="code"><div class="highlight"><pre>     1
+  2      3
+4   5  6   7
+         14 15
+</pre></div></div>
+<p>If the value of every leaf is its tree address, this tree is</p>
+<div class="code"><div class="highlight"><pre>  [[4 5] [6 14 15]]
+</pre></div></div>
+</div>
+<div id="cid27" data-tralics-id="cid27" class="section" data-number="6.7"><h2><a href="ch4_nock_reference_fragment.html#cid27" class="heading hyperref"><span class="number">6.7 </span>Line 23:</a></h2>
+<div class="code"><div class="highlight"><pre>23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+</pre></div></div>
+<p>Um, what?</p>
+<p>Since Nock of an atom just crashes, the practical domain of the Nock function
+is always a cell.<span class="intersentencespace"></span> Conventionally, the head of this cell is the “subject,” the
+tail is the “formula,” and the result of Nocking it is the “product.”<span class="intersentencespace"></span> Basically, the subject is your data and the formula is your code.</p>
+<p>We could write line 23 less formally:</p>
+<div class="code"><div class="highlight"><pre>*[subject [formula-x formula-y]]
+=&gt;  [*[subject formula-x] *[subject formula-y]]
+</pre></div></div>
+<p>In other words, if you have two Nock formulas <code>x</code> and <code>y</code>, a formula that
+computes the pair of them is just <code>[x y]</code>.<span class="intersentencespace"></span> We can recognize this because no
+atom is a valid formula, and every formula that <em>does not</em> use line 19 has an
+atomic head.</p>
+<p>If you know Lisp, you can think of this feature as a sort of “implicit cons.”<span class="intersentencespace"></span> Where in Lisp you would write <code>(cons x y)</code>, in Nock you write <code>[x y]</code>.</p>
+</div>
+<div id="cid28" data-tralics-id="cid28" class="section" data-number="6.8"><h2><a href="ch4_nock_reference_fragment.html#cid28" class="heading hyperref"><span class="number">6.8 </span>Line 26: Constant</a></h2>
+<div class="code"><div class="highlight"><pre>26 ::    *[a 1 b]          b
+</pre></div></div>
+<p><code>1</code> is the constant operator.<span class="intersentencespace"></span> It produces its argument without
+reference to the subject.</p>
+</div>
+<div id="cid29" data-tralics-id="cid29" class="section" data-number="6.9"><h2><a href="ch4_nock_reference_fragment.html#cid29" class="heading hyperref"><span class="number">6.9 </span>Line 27: Recursion</a></h2>
+<div class="code"><div class="highlight"><pre>27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+</pre></div></div>
+<p>Line 22 brings us the essential magic of recursion.<span class="intersentencespace"></span> <code>2</code> is the Nock operator.<span class="intersentencespace"></span> If you can compute a subject and a formula, you can evaluate them in the
+interpreter.<span class="intersentencespace"></span> In most fundamental languages, like Lisp, <code>eval</code> is a curiosity.<span class="intersentencespace"></span> But Nock has no <code>apply</code> - so all our work gets done with <code>2</code>.</p>
+</div>
+<div id="cid30" data-tralics-id="cid30" class="section" data-number="6.10"><h2><a href="ch4_nock_reference_fragment.html#cid30" class="heading hyperref"><span class="number">6.10 </span>Lines 28-30: Cell Test, Increment, Equality</a></h2>
+<div class="code"><div class="highlight"><pre>28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+</pre></div></div>
+<p>In lines 23-25, we meet our axiomatic functions again:</p>
+<p>For instance, if <code>x</code> is a formula that calculates some atomic product, <code>[4 x]</code>
+calculates that product plus one.</p>
+</div>
+<div id="cid31" data-tralics-id="cid31" class="section" data-number="6.11"><h2><a href="ch4_nock_reference_fragment.html#cid31" class="heading hyperref"><span class="number">6.11 </span>Lines 10, 14, 21, 39: Crash defaults</a></h2>
+<div class="code"><div class="highlight"><pre>    10 ::    +[a b]           +[a b]
+    14 ::    =a               =a
+    21 ::    /a               /a
+    39 ::    *a               *a
+</pre></div></div>
+<p>The nock function is defined for every noun, but on many nouns it does nothing
+useful.<span class="intersentencespace"></span> For instance, if <code>a</code> is an atom, <code>*a</code> reduces to… <code>*a</code>.<span class="intersentencespace"></span> In theory,
+this means that Nock spins forever in an infinite loop.<span class="intersentencespace"></span> In other words, Nock
+produces no result - and in practice, your interpreter will stop.</p>
+<p>(Another way to see this is that Nock has “crash-only” semantics.<span class="intersentencespace"></span> There is no
+exception mechanism.<span class="intersentencespace"></span> The only way to catch Nock errors is to simulate Nock in
+a higher-level virtual Nock - which, in fact, we do all the time.<span class="intersentencespace"></span> A simulator
+(or a practical low-level interpreter) can report, out of band, that Nock would
+not terminate.<span class="intersentencespace"></span> It cannot recognize all infinite loops, of course, but it can
+catch the obvious ones - like <code>*42</code>.)</p>
+</div>
+<div id="cid32" data-tralics-id="cid32" class="section" data-number="6.12"><h2><a href="ch4_nock_reference_fragment.html#cid32" class="heading hyperref"><span class="number">6.12 </span>Line 32: Nock 6</a></h2>
+<p><strong><code>6</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>32 ::    *[a 6 b c d]      *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+
+*[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+
+*[*[a 0 1] *[a 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]]
+
+25 ::    *[a 0 b]          /[b a]
+
+*[a *[a 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+
+*[a *[*[a [1 c d]] *[a [1 0] 2 [1 2 3] [1 0] 4 4 b]]]
+
+26 ::    *[a 1 b]          b
+
+23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+
+*[a *[[c d] [*[a 1 0] *[a 2 [1 2 3] [1 0] 4 4 b]]]]
+
+26 ::    *[a 1 b]          b
+
+*[a *[[c d] [0 *[a 2 [1 2 3] [1 0] 4 4 b]]]]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]]
+
+*[a *[[c d] [0 *[*[a [1 2 3]] *[a [1 0] 4 4 b]]]]]
+
+26 ::    *[a 1 b]          b
+
+*[a *[[c d] [0 *[[2 3] *[a [1 0] 4 4 b]]]]]
+
+23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+
+*[a *[[c d] [0 *[[2 3] [*[a [1 0]] *[a 4 4 b]]]]]]
+
+26 ::    *[a 1 b]          b
+
+*[a *[[c d] [0 *[[2 3] [0 *[a 4 4 b]]]]]]
+
+29 ::    *[a 4 b]          +*[a b]
+
+*[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+</pre></div></div>
+<p><strong><code>6</code> Reduced:</strong>
+</p><div class="code"><div class="highlight"><pre>	32r ::   *[a 6 b c d]               *[a *[[c d] [0 *[[2 3] [0 ++*[a b]]]]]]
+</pre></div></div>
+<p><code>6</code> is a primitive known to every programmer - good old “if.”<span class="intersentencespace"></span> If <code>b</code> evaluates
+to <code>0</code>, we produce <code>c</code>; if <code>b</code> evaluates to <code>1</code>, we produce <code>d</code>; otherwise, we
+crash.<span class="intersentencespace"></span> We could have defined “if” as a built-in function, like increment
+by arbitrarily inventing another operator:</p>
+<div class="code"><div class="highlight"><pre>::    $[0 b c]         b
+::    $[1 b c]         c
+</pre></div></div>
+<p>Then we could restate <code>6</code> quite compactly:</p>
+<div class="code"><div class="highlight"><pre>32c::    *[a 6 b c d]     *[a $[*[a b] c d]]
+</pre></div></div>
+<p>However, since we <em>can</em> write <code>if</code> as a macro, albeit a funky macro, we do so
+as to keep the Nock specification small.</p>
+<p>In real life, of course, the Nock implementor knows that <code>6</code> is “if” and
+implements it as such.<span class="intersentencespace"></span> It’s worth noting that in practical, compiler-generated
+Nock, we never do anything as funky as these <code>6</code> macro internals.<span class="intersentencespace"></span> There’s no
+reason we couldn’t build formulas at runtime, but we have no reason to and we
+don’t - except when actually metaprogramming.<span class="intersentencespace"></span> As in most languages, normally
+code is code and data is data.</p>
+</div>
+<div id="cid33" data-tralics-id="cid33" class="section" data-number="6.13"><h2><a href="ch4_nock_reference_fragment.html#cid33" class="heading hyperref"><span class="number">6.13 </span>Line 29: Nock 7</a></h2>
+<p><strong><code>7</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>33 ::    *[a 7 b c]        *[a 2 b 1 c]
+
+*[a 2 b 1 c]
+
+27 ::    *[a 2 b c]        *[*[a b] *[a c]] 
+
+*[*[a b] *[a 1 c]]
+
+26:    *[a 1 b]          b
+ 
+*[*[a b] c]
+ 
+```text
+**`7` Reduced:**
+
+```text
+33r ::     *[a 7 b c]         *[*[a b] c]
+</pre></div></div>
+<p><code>7</code> is an old mathematical friend, function composition.<span class="intersentencespace"></span> It’s
+easy to see how this is built out of <code>2</code>.<span class="intersentencespace"></span> The data to evaluate
+is simply <code>b</code>, and the formula is <code>c</code> quoted.</p>
+</div>
+<div id="cid34" data-tralics-id="cid34" class="section" data-number="6.14"><h2><a href="ch4_nock_reference_fragment.html#cid34" class="heading hyperref"><span class="number">6.14 </span>Line 30: Nock 8</a></h2>
+<p><strong><code>8</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>34 ::    *[a 8 b c]        *[a 7 [[7 [0 1] b] 0 1] c]
+
+*[a 7 [[7 [0 1] b] 0 1] c]   
+
+33r ::     *[a 7 b c]         *[*[a b] c]
+
+*[*[a [7 [0 1] b] 0 1]] c]
+
+23 ::    *[a [b c] d]      [*[a b c] *[a d]]
+
+*[[*[a [7 [0 1] b]] *[a 0 1]] c]
+
+25 ::    *[a 0 b]          /[b a]
+
+*[[*[a [7 [0 1] b]] /[1 a]] c]
+
+16 ::    /[1 a]            a
+
+*[[*[a [7 [0 1] b]] a] c]
+
+33r ::     *[a 7 b c]         *[*[a b] c]
+
+*[[*[*[a 0 1]] b] a] c]
+</pre></div></div>
+<p><strong><code>8</code> Reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>34r ::     *[a 8 b c]        *[[*[a b] a] c]
+</pre></div></div>
+<p><code>8</code> is similar to <code>7</code>, except that the subject for <code>c</code> is not simply the
+product of <code>b</code>, but the ordered pair of the product of <code>b</code> and the original
+subject.</p>
+<p>Why would we want to do this?<span class="intersentencespace"></span> Imagine a higher-level language in which the
+programmer declares a variable.<span class="intersentencespace"></span> This language is likely to generate an <code>8</code>,
+because the variable is computed against the present subject, and used in a
+calculation which depends both on the original subject and the new variable.</p>
+</div>
+<div id="cid35" data-tralics-id="cid35" class="section" data-number="6.15"><h2><a href="ch4_nock_reference_fragment.html#cid35" class="heading hyperref"><span class="number">6.15 </span>Line 31: Nock 9</a></h2>
+<p><strong><code>9</code> Reduction:</strong></p>
+<div class="code"><div class="highlight"><pre>31 :: *[a 9 b c]        *[a 7 c [2 [0 1] [0 b]]]
+
+*[a 7 c [2 [0 1] [0 b]]]
+
+33r ::     *[a 7 b c]         *[*[a b] c]
+
+*[*[a c] [2 [0 1] [0 b]]]
+
+27 ::     *[a 2 b c]        *[*[a b] *[a c]]
+
+*[*[*[a c] [0 1]] *[*[a c] [0 b]]]
+
+25 ::     *[a 0 b]          /[b a]
+</pre></div></div>
+<p><strong><code>9</code> Reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>31r ::     *[a 9 b c]        *[*[a c] *[*[a c] 0 b]] 
+</pre></div></div>
+<p><code>9</code> is a calling convention.<span class="intersentencespace"></span> With <code>c</code>, we produce a noun which contains both
+code and data - a <em>core</em>.<span class="intersentencespace"></span> We use this core as the subject, and apply the
+formula within it at slot <code>b</code>.</p>
+<p>A <em>core</em> is a construct which is behind any kind of interesting control flow in
+Hoon.<span class="intersentencespace"></span> Of course, the Nock programmer is not constrained to use the same
+techniques as the Hoon compiler, but it is probably a good idea.</p>
+<p>In Hoon, all the flow structures from your old life as an Earth programmer
+become cores.<span class="intersentencespace"></span> Functions and/or closures are cores, objects are cores modules
+are cores, even loops are cores.</p>
+<p>The core is just a cell whose tail is data (possibly containing other cores)
+and whose head is code (containing one or more formulas).<span class="intersentencespace"></span> The tail is the
+<em>payload</em> and the head is the <em>battery</em>.<span class="intersentencespace"></span> Hence your core is</p>
+<div class="code"><div class="highlight"><pre>[battery payload]
+</pre></div></div>
+<p>To activate a core, pick a formula out of the battery, and use the entire core
+(<em>not</em> just the payload) as the subject.</p>
+<p>(A core formula is called an <em>arm</em>.<span class="intersentencespace"></span> An arm is almost like an object-oriented
+method, but not quite - a method would be an arm that produces a function on an
+argument.<span class="intersentencespace"></span> The arm is just a function of the core, ie, a computed attribute.)</p>
+</div>
+<div id="cid36" data-tralics-id="cid36" class="section" data-number="6.16"><h2><a href="ch4_nock_reference_fragment.html#cid36" class="heading hyperref"><span class="number">6.16 </span>Line 36 and 37: Nock 10</a></h2>
+<p>**<code>10</code> Reduction:</p>
+<div class="code"><div class="highlight"><pre> 36 :: *[a 10 [b c] d]   *[a 8 c 7 [0 3] d]
+
+34r ::     *[a 8 b c]        [[*[a b] a] c]
+
+*[[*[a c] a] 7 [0 2] d]
+
+33r ::     *[a 7 b c]        *[*[a b] c]
+
+*[*[[*[a c] a] 0 3] d]
+</pre></div></div>
+<p><strong><code>10</code> reduced:</strong></p>
+<div class="code"><div class="highlight"><pre>36r ::    *[a 10 [b c] d]   *[*[[*[a c] a] 0 3] d]
+
+33 ::    *[a 10 b c]       *[a c]
+</pre></div></div>
+<p>If <code>b</code> is an atom and <code>c</code> is a formula, the formula <code>[10 b c]</code> appears to be
+equivalent to <code>c</code>.<span class="intersentencespace"></span> Likewise if <code>[b c]</code> is a cell, <code>[10 [b c] d]</code> appears to be
+equivalent to <code>d</code>.</p>
+<p><code>10</code> is actually a hint operator.<span class="intersentencespace"></span> The <code>b</code> or <code>[b c]</code>is discarded information -
+it is not used, formally, in the computation.<span class="intersentencespace"></span> It may help the interpreter
+compute the expression more efficiently, however.</p>
+<p>Every Nock computes the same result - but not all at the same speed.<span class="intersentencespace"></span> What
+hints are supported?<span class="intersentencespace"></span> What do they do?<span class="intersentencespace"></span> Hints are a higher-level convention
+which do not, and should not, appear in the Nock spec.<span class="intersentencespace"></span> Some are defined in
+Hoon.<span class="intersentencespace"></span> Indeed, a naive Nock interpreter not optimized for Hoon will run Hoon
+quite poorly.<span class="intersentencespace"></span> When it gets the product, however, the product will be right.</p>
+<p>(Why is the c in <code>[b c]</code> is computed?<span class="intersentencespace"></span> Because <code>c</code> could crash.<span class="intersentencespace"></span> A correct
+Nock cannot simply ignore it, and treat both variants of <code>10</code> as equivalent.)</p>
+</div>
+    </div>
+  </body>
+</html>

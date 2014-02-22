@@ -1,0 +1,564 @@
+\chapter{Setup}
+
+\begin{quote}
+\noindent \emph{Tlön será un laberinto, pero es un laberinto urdido por hombres, un
+laberinto destinado a que lo descifren los hombres.}
+\medskip \newline
+\noindent \emph{Tlön is surely a labyrinth, but it is a labyrinth devised
+by men, a labyrinth destined to be deciphered by men.}
+\medskip \newline
+\noindent ---\href{https://en.wikipedia.org/wiki/Tlon,_Uqbar,_Orbis_Tertius}{\textbf{\emph{Tlön, Uqbar, Orbis Tertius}}}, Jorge Luis Borges
+\end{quote}
+
+\section{Prepare your computer}
+
+Urbit runs on Unix machines only.  It depends on:
+
+\begin{itemize}
+\item gmp
+\item libsigsegv
+\item openssl
+\item libssl-dev (Linux only)
+\item ncurses (Linux only)
+\end{itemize}
+
+Currently we support OSX, Linux (not all distributions have been
+tested) and *BSD.  There are no instructions for BSD, because
+only people with a serious clue run BSD.  Intrepid ninjas may
+attempt ports to other OSes.  If you're not an intrepid ninja,
+try a VM (eg, VirtualBox).
+
+\subsection{Configure OS X}
+
+\begin{enumerate}
+\item Do you have XCode?  Type \kode{gcc}.  If it says \kode{no input files}, you have XCode.
+
+Otherwise, install XCode: \kode{https://developer.apple.com/xcode/}, with the
+command line tools.
+\item Install dependencies
+
+\begin{itemize}
+\item Do you have Homebrew?  Type \kode{brew}.  If it does something, you have Homebrew.
+
+Otherwise, \kode{ruby -e "\$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"}
+will install it.
+
+And follow up with \kode{sudo brew install gmp libsigsegv openssl}
+
+This will ask you for the root password, which ideally you know.
+\item Macports? Type \kode{port}.  If it does something, you have Macports.
+
+Otherwise go \href{http://www.macports.org/install.php}{here}.
+
+Then \kode{sudo port install gmp libsigsegv openssl}
+
+Enter your root password at the prompt.
+\end{itemize}
+\end{enumerate}
+
+\subsection{Configure Linux (Ubuntu or Debian)}
+
+\begin{enumerate}
+\item \kode{sudo apt-get install libgmp3-dev libsigsegv-dev openssl libssl-dev libncurses5-dev git make exuberant-ctags}
+\end{enumerate}
+
+\subsection{Configure Linux (AWS)}
+
+\begin{enumerate}
+\item \kode{sudo yum --enablerepo epel install gcc git gmp-devel openssl-devel ncurses-devel libsigsegv-devel ctags}
+\end{enumerate}
+
+\subsection{Get the source}
+
+Either:
+
+A. Download and unzip \kode{https://github.com/urbit/urbit/archive/master.zip}.
+
+B. \kode{git clone https://github.com/urbit/urbit.git}.
+
+\subsection{Set up your enviroment}
+
+\kode{cd} to the unpacked Urbit directory you just created.  If this works,
+\kode{ls urb} should show:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+urbit.pill  zod/
+\end{Verbatim}
+\end{framed_shaded}
+
+Great!  Now, let's do some dirty Unix stuff to set up your environment.
+If you know what this is doing, feel free to do it right.  Otherwise:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+echo \PYZdq{}export URBIT\PYZus{}HOME=`pwd`/urb\PYZdq{} \PYZgt{}\PYZgt{}\PYZti{}/.bash\PYZus{}profile
+source \PYZti{}/.bash\PYZus{}profile
+\end{Verbatim}
+\end{framed_shaded}
+
+To make sure this worked,
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+echo \PYZdl{}URBIT\PYZus{}HOME
+\end{Verbatim}
+\end{framed_shaded}
+
+should show \kode{/urb} within the current directory.
+
+\subsection{Build}
+
+\kode{make}.  Sometimes things are just easy.
+
+\subsection{Run}
+
+Run \kode{bin/vere -c mypier}, where \kode{mypier} is a directory that doesn't yet exist.
+All your state (an append-only log and a memory checkpoint) will live in this
+directory.  Its name doesn't matter and is not visible internally.
+
+A \emph{pier} is an Urbit virtual machine that hosts one or more Urbit identities,
+or \emph{ships}.  When you run \kode{vere -c}, it automatically creates a 128-bit ship,
+or \kode{submarine}.  Your name (a hash of a randomly-generated public key) will
+look like:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}nidted
+\end{Verbatim}
+\end{framed_shaded}
+
+First you'll see a string of messages like:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+vere: urbit home is /Users/cyarvin/Documents/src/u3/urb
+loom: mapped 1024MB
+time: \PYZti{}2013.9.1..03.57.11..4935
+ames: on localhost, UDP 63908.
+generating 2048\PYZhy{}bit RSA pair...
+\end{Verbatim}
+\end{framed_shaded}
+
+and then it'll pause a little, `cause this is slow\ldots{} and then
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+saving passcode in /Users/cyarvin/.urbit/\PYZti{}magsut\PYZhy{}hopful.txt
+(for real security, write it down and delete the file...)
+\end{Verbatim}
+\end{framed_shaded}
+
+and, then, if the network gods are happy, your submarine will start pulling
+down Arvo files:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+/\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}dted/main/1/bin/ticket/hoon
+/\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}dted/main/1/bin/reset/hoon
+/\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}nidted/main/1/bin/ye/hoon
+/\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}nidted/main/1/bin/ls/hoon
+\end{Verbatim}
+\end{framed_shaded}
+
+and the like.  You'll see a couple pages of this stuff.  Don't worry too much
+about the details right now.  Finally, you'll get the Arvo shell prompt (which
+is also a Hoon REPL):
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}nidted/try=\PYZgt{}
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{Register}
+
+Next, you need to decide whether a mere submarine is enough for
+you right now.  This monicker is a mouthful.  You can stick with
+it (for now), but\ldots{} you're going to need a wider xterm.
+
+Which might be fine!  However, please note that just by sending a
+simple email, you can get a much better ship---a \kode{destroyer},
+with a nice short name like
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc
+\end{Verbatim}
+\end{framed_shaded}
+
+Just email \kode{urbit@urbit.org}, with your submarine in the subject.
+We'll send you destroyers---not one, but \emph{two}.  Yes, two!  Tell
+us something cool in the body, and we'll send you even more.
+
+If you have a destroyer, you need to configure it.  Otherwise,
+just stretch that xterm wide and skip to section 1.2.
+
+Your destroyers will arrive in the form of [ship ticket] pairs.
+Let's say one of your ships is \kode{\sig waclux-tomwyc} and its ticket is
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}ribdyr\PYZhy{}famtem\PYZhy{}larrun\PYZhy{}figtyd
+\end{Verbatim}
+\end{framed_shaded}
+
+(What are these strings, anyway?  Just random unsigned integers,
+rendered in Hoon's syllabic base, \kode{@p}.)
+
+A new life awaits you on the off-world colonies!  To begin, just
+type at the prompt:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+:begin \PYZti{}waclux\PYZhy{}tomwyc
+\end{Verbatim}
+\end{framed_shaded}
+
+and follow the directions.  When the script completes, hit return
+and you'll be the \kode{\sig waclux-tomwyc} you wanted to be.
+
+\section{Play with Arvo}
+
+If all went well, you now have a nice short prompt:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{}
+\end{Verbatim}
+\end{framed_shaded}
+
+If all did not go well (send us another email), or you're just
+too impatient to wait for your destroyer, you have a big long
+prompt.  Which is fine, really, just ugly---and all these
+exercises will still work.
+
+\subsection{Example commands}
+
+Let's try a few quick things to stretch your fingers.  Type these
+command lines and you should see the matching results:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZdq{}hello, world\PYZdq{}
+\PYZdq{}hello, world\PYZdq{}
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (add 2 2)
+4
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :hello \PYZpc{}world
+\PYZdq{}hello, world.\PYZdq{}
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :cat /=main=/bin/hello/hoon
+::
+::  /=main=/bin/hello/hoon
+::
+|=  *
+|=  [planet=@ta \PYZti{}]
+\PYZca{}\PYZhy{}  bowl
+:\PYZus{}  \PYZti{}  :\PYZus{}  \PYZti{}
+:\PYZhy{}  \PYZpc{}\PYZpc{}
+!\PYZgt{}(\PYZdq{}hello, \PYZob{}(trip planet)\PYZcb{}.\PYZdq{})
+\end{Verbatim}
+\end{framed_shaded}
+
+What did you just do?
+
+One, you used Arvo as a Hoon REPL to print the constant {\tt "hello,
+world"}, which is a fancy way to write the Nock noun
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+[104 101 108 108 111 44 32 119 111 114 108 100 0]
+\end{Verbatim}
+\end{framed_shaded}
+
+Two, you called the Hoon \kode{add} function to see that two plus two
+is four.  Math seems to work the same on the off-world colonies.
+
+Three, you ran the Arvo application \kode{:hello} with the argument
+\kode{\%world}, which is just a fancy way to write the atom
+\kode{431.316.168.567} (or, for non-Germans, \kode{431,316,168,567}).  You
+might recognize it better as \kode{0x64.6c72.6f77}---the ASCII
+characters in LSB first order.
+
+(Is Urbit German?  Sadly, no.  But all our noun print formats are
+URL-safe, which dot is and comma isn't.)
+
+And you (4) used the Arvo application :cat to print the Hoon file
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+/=main=/bin/hello/hoon
+\end{Verbatim}
+\end{framed_shaded}
+
+which, supposing your current date is
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}2013.9.1..04.38.31..f259
+\end{Verbatim}
+\end{framed_shaded}
+
+(i.e., September 1, 2013 at 4:38:31 GMT/LS25 plus 0xf259/65536
+seconds), is equivalent to the global path
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+/\PYZti{}waclux\PYZhy{}tomwyc/main/\PYZti{}2013.8.23..04.38.31..f259/bin/hello/hoon
+\end{Verbatim}
+\end{framed_shaded}
+
+which anyone in Urbit can, see and even use---but we're getting
+ahead of ourselves.
+
+\subsection{Control characters}
+
+In any case, what we've seen is that Arvo is a dangerous and
+powerful operating system which if handled improperly can cause
+serious injury or loss of life.  We exaggerate.  Slightly.
+
+The first thing you need to know is how to control this tool.
+Try your arrow keys---you'll see that Arvo has traditional Unix
+history editing.  Up and down, left and right work, as do the
+simple emacs controls:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZca{}A  go to beginning of line
+\PYZca{}B  left arrow
+\PYZca{}D  delete next character
+\PYZca{}E  go to end of line
+\PYZca{}F  right arrow
+\PYZca{}K  kill to end of line
+\PYZca{}L  clear the screen
+\PYZca{}R  search through history
+\PYZca{}U  kill the whole line
+\PYZca{}Y  yank (restore from kill ring)
+\end{Verbatim}
+\end{framed_shaded}
+
+Don't expect any other emacs (or even readline---this is not readline, it's
+internal to Arvo) commands to work.
+
+There are also some special control keys specific to Arvo.  It's
+a good idea to learn these first so that you feel in, um,
+control.
+
+First, we'll quit out of an infinite loop with \kode{\^{}C}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :infinite
+\end{Verbatim}
+\end{framed_shaded}
+
+When you hit return at the end of this line, Arvo will appear to
+hang.  Do not be alarmed!  This is not a bug---it means that
+we've started running our infinite loop before printing the next
+console prompt.  Simply hit \kode{\^{}C}, and you'll see
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+! intr
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :infinite
+\end{Verbatim}
+\end{framed_shaded}
+
+(There may be some stacktrace stuff before the \kode{! intr}, depending
+on whether your kernel was compiled with debugging.)
+
+Hit \kode{\^{}U} to delete the line and escape from infinity.  Arvo is a
+deterministic OS; you interrupted it while processing an event
+that would never terminate.  It returns to the state it was in
+before you hit return---as if nothing had ever happened.
+
+You're probably used to using nondeterministic, preemptive OSes,
+in which the difference between a waiting task and an
+executing event isn't apparent to the user.  Since Arvo is not
+preemptive, it has two very different states: waiting and
+working.
+
+When Arvo is working, \kode{\^{}C} cancels the event it's working on.
+This event never happened.  Don't worry, nothing bad will happen
+to your computer.
+
+When Arvo is waiting, use \kode{\^{}D} to end the current task, which is
+the task that's currently prompting you.  If there is a live
+prompt and the cursor is not at the end, \kode{\^{}D} will delete the
+current character---as in Unix.
+
+Try this by running
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :begin
+
+Do you have a ship and a ticket? yes
+\end{Verbatim}
+\end{framed_shaded}
+
+Then hit \kode{\^{}D} and you'll be back to the command prompt (which,
+unlike in Unix, is not a task itself, but part of the OS).
+
+We don't always want to kill the prompting task.  We often want
+to switch between tasks, or between tasks and the command line.
+Sort of like switching between windows, except in a command line.
+We do this with \kode{\^{}X}.  Try
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :begin
+
+Do you have a ship and a ticket? yes
+\end{Verbatim}
+\end{framed_shaded}
+
+But hit \kode{\^{}X} instead of \kode{\^{}D}.  You'll get a prompt again.  Use
+it:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :begin
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :hello \PYZpc{}world
+\PYZdq{}hello, world.\PYZdq{}
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{}
+\end{Verbatim}
+\end{framed_shaded}
+
+Hit \kode{\^{}X} again:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :begin
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :hello \PYZpc{}world
+\PYZdq{}hello, world.\PYZdq{}
+Do you have a ship and a ticket? yes
+\end{Verbatim}
+\end{framed_shaded}
+
+And finally, hit \kode{\^{}C} to kill the task.
+
+There's one more magic control key that switches your whole
+reality.  This is \kode{\^{}W}, which switches between the ships in a pier.
+Do you have multiple ships in your pier?  Sure---you still have
+your old submarine.  Hit \kode{\^{}W}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}machec\PYZhy{}binnev\PYZhy{}dordeb\PYZhy{}sogduc\PYZhy{}\PYZhy{}dosmul\PYZhy{}sarrum\PYZhy{}faplec\PYZhy{}nidted/try=\PYZgt{}
+\end{Verbatim}
+\end{framed_shaded}
+
+Hit \kode{\^{}W} again:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{}
+\end{Verbatim}
+\end{framed_shaded}
+
+Finally, Arvo is a single-level store.  Since it's not the '70s
+anymore and disk is cheap, everything you do is saved for ever.
+(In fact, it's saved in two ways---as a memory image and an event
+log---so you, or the government if they haz your filez, can
+repeat every computation you've every performed.)
+
+If the current prompt is just the shell prompt, \kode{\^{}D} on an empty
+line will log out---as in Unix:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{}
+oxford:\PYZti{}/urbit; pwd
+/Users/cyarvin/urbit
+oxford:\PYZti{}/urbit; echo \PYZdq{}hello, world\PYZdq{}
+hello, world
+oxford:\PYZti{}/urbit;
+\end{Verbatim}
+\end{framed_shaded}
+
+Then you can restart and be right back where you were---just
+run \kode{vere} without \kode{-c}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+oxford:\PYZti{}/urbit; bin/vere mypier
+vere: urbit home is /Users/cyarvin/urb
+loom: loaded 9MB
+time: \PYZti{}2013.9.1..17.23.05..0cc1
+ames: on localhost, UDP 60342.
+http: live on 8080
+rest: checkpoint to event 383
+rest: old 0v1c.gkr1o, new 0v10.m4gdu
+\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} playback complete\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}
+waclux\PYZhy{}tomwyc/try=\PYZgt{}
+\end{Verbatim}
+\end{framed_shaded}
+
+Use your arrow keys and you'll see your history is still there.
+Arvo is indestructible and can be shut down however you like
+without losing data.  Also, starting a new task while an old
+one is still running will kill the old one safely.
+
+But don't try to operate the same ship on two Unix hosts at the
+same time.  This will confuse everyone, including yourself.
+
+\subsection{System administration}
+
+Sometimes we make changes to Hoon or Arvo (we never make changes
+to Nock) and you need to update your ship.
+
+There are two steps to updating.  You need to get the new files,
+and you need to install them.  To get them:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :update
+: /\PYZti{}waclux\PYZhy{}tomwyc/arvo/2/hoon/hoon
+: /\PYZti{}waclux\PYZhy{}tomwyc/arvo/2/dill/hoon
+: /\PYZti{}waclux\PYZhy{}tomwyc/arvo/2/batz/hoon
+\end{Verbatim}
+\end{framed_shaded}
+
+To install them (the simplest, slowest, most general way):
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :reset
+
+\PYZpc{}reset\PYZhy{}start
+\PYZpc{}reset\PYZhy{}parsed
+\PYZpc{}reset\PYZhy{}compiled
+\PYZpc{}hoon\PYZhy{}load
+[\PYZpc{}tang /\PYZti{}waclux\PYZhy{}tomwyc/arvo/\PYZti{}2013.11.26..20.29.15..090f/zuse \PYZti{}tirnux\PYZhy{}latwex]
+[\PYZpc{}vane \PYZpc{}a /\PYZti{}waclux\PYZhy{}tomwyc/arvo/\PYZti{}2013.11.26..20.29.15..090f/ames \PYZti{}tolryn\PYZhy{}watret]
+[\PYZpc{}vane \PYZpc{}b /\PYZti{}waclux\PYZhy{}tomwyc/arvo/\PYZti{}2013.11.26..20.29.15..090f/batz \PYZti{}donfex\PYZhy{}ladsem]
+[\PYZpc{}vane \PYZpc{}c /\PYZti{}waclux\PYZhy{}tomwyc/arvo/\PYZti{}2013.11.26..20.29.15..090f/clay \PYZti{}picsug\PYZhy{}mitref]
+[\PYZpc{}vane \PYZpc{}d /\PYZti{}waclux\PYZhy{}tomwyc/arvo/\PYZti{}2013.11.26..20.29.15..090f/dill \PYZti{}dilpex\PYZhy{}laptug]
+[\PYZpc{}vane \PYZpc{}e /\PYZti{}waclux\PYZhy{}tomwyc/arvo/\PYZti{}2013.11.26..20.29.15..090f/eyre \PYZti{}forbur\PYZhy{}disben]
+\end{Verbatim}
+\end{framed_shaded}
+
+All of your state, including running tasks, will be unchanged.
+
+\subsection{Chat}
+
+Okay, fine.  You're a long way from being an Arvo ninja.  But---
+you're ready for the two most important uses of Urbit right now.
+One, coding.  Two, chatting.
+
+To start coding, read the next chapter.  To start chatting,
+simply type
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :chat
+\PYZam{}
+\end{Verbatim}
+\end{framed_shaded}
+
+and type \kode{?} for help.

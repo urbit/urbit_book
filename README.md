@@ -1,4 +1,3 @@
-book
-====
+# Urbit: The Personal Cloud Computer
 
-A softcover book
+This is a book on [Urbit](http://urbit.org/).

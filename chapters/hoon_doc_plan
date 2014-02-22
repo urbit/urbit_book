@@ -1,0 +1,35 @@
+
+Hoon Doc
+
+
+Tutorial
+
+Basic Math
+
+Runes: |=, |-, ?:, $
+
+List manipulation
+
+Sorting
+
+
+
+
+
+Reference
+
+
+| gates
+? tests
+: tuples
+$ macros
+^ types
+= compositions
+% invocations
+& gears
+~ hints
+# pretty printer
+; misc. macros
+! special
+
+

@@ -1,0 +1,429 @@
+\chapter{Hoon Goes Wild}
+
+\begin{quote}
+\emph{What good is a phone call if you're unable to speak?}
+\medskip \newline
+---\textbf{The Matrix}
+\end{quote}
+
+\section{More simple types}
+
+Before we actually do some programming with Hoon, let's meet two
+more kinds of type---\kode{\%face} and \kode{\%fork}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+++  type  \PYZdl{}|  ?(\PYZpc{}noun \PYZpc{}void)
+          \PYZdl{}\PYZpc{}  [\PYZpc{}atom p=term]
+              [\PYZpc{}cell p=type q=type]
+              [\PYZpc{}cube p=* q=type]
+              [\PYZpc{}face p=term q=type]
+              [\PYZpc{}fork p=type q=type]
+          ==
+\end{Verbatim}
+\end{framed_shaded}
+
+\subsection{\kode{\%fork}}
+
+\kode{\%fork} is simply a union type.  A type is a set of nouns---
+\kode{[\%fork p q]} means ``it could be a p, or maybe a q.''
+
+Any branching computation in which different branches produce
+different types will generate a fork.  For example, without
+worrying too much about the mysterious \kode{?:}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; ?:(\PYZam{} \PYZpc{}foo [13 10])
+\PYZpc{}foo
+\PYZob{} \PYZpc{}foo [@ud @ud] \PYZcb{}
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(?:(\PYZam{} \PYZpc{}foo [13 10]))
+[ \PYZpc{}fork
+  p=[\PYZpc{}cube p=7.303.014 q=[\PYZpc{}atom p=\PYZpc{}tas]]
+  q=[\PYZpc{}cell p=[\PYZpc{}atom p=\PYZpc{}ud] q=[\PYZpc{}atom p=\PYZpc{}ud]]
+]
+\end{Verbatim}
+\end{framed_shaded}
+
+Here we start to understand why the type renderer is useful, as
+\kode{\{ \%foo [@ud @ud] \}} (which is \emph{not} in any way Hoon syntax) is a
+little easier to read than the actual type noun.
+
+(Readers of a mathematical bent may ask: since Hoon has a union
+type, where is the intersection type?  There is none.  Hoon is
+not one of these languages whose goal is to be as mathematically
+powerful as possible.  Since a programming language is a UI for
+programmers, and programmers are not mathematicians, Hoon is
+designed to be as powerful as it has to be---and no more.)
+
+\subsection{\kode{\%face}}
+
+A type is not just a set of nouns---it's also a semantics for
+that set.  In practice, this means a namespace.
+
+Let's use this feature:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} foo=42
+foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} :type; foo=42
+foo=42
+foo=@ud
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(foo=42)
+[\PYZpc{}face p=\PYZpc{}foo q=[\PYZpc{}atom p=\PYZpc{}ud]]
+\end{Verbatim}
+\end{framed_shaded}
+
+With \kode{\%face}, we've simply wrapped a label around another type.
+Note that this doesn't impair our ability to compute with the
+value, which is of course the same noun it always was:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (add 17 foo=42)
+59
+\end{Verbatim}
+\end{framed_shaded}
+
+But how do we use this namespace?
+
+To play comfortably with names, it'll help if we introduce some
+Arvo shell syntax.  As in Unix, you can bind variables in the
+Arvo shell:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test 42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} test
+42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} (add 17 test)
+59
+\end{Verbatim}
+\end{framed_shaded}
+
+(\kode{=variable expression} is \emph{not} in any way Hoon syntax---any
+Hoon expression is a valid Arvo command, but not every Arvo
+command is a Hoon expression.)
+
+Let's put a \kode{\%face} inside this shell variable and try to use it:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} test
+foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} foo.test
+42
+\end{Verbatim}
+\end{framed_shaded}
+
+You probably expected it to be \kode{test.foo}.  This disoriented
+feeling should vanish in a few minutes.  Let's go further:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} test
+foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} foo.test
+42
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test bar=foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} test
+bar=foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(test)
+[\PYZpc{}face p=\PYZpc{}bar q=[\PYZpc{}face p=\PYZpc{}foo q=[\PYZpc{}atom p=\PYZpc{}ud]]]
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} bar.test
+foo=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(bar.test)
+[\PYZpc{}face p=\PYZpc{}foo q=[\PYZpc{}atom p=\PYZpc{}ud]]
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} foo.bar.test
+42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(foo.bar.test)
+[\PYZpc{}atom p=\PYZpc{}ud]
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} foo.test
+! \PYZhy{}find\PYZhy{}limb.foo
+! find\PYZhy{}none
+! exit
+\end{Verbatim}
+\end{framed_shaded}
+
+\section{Name resolution}
+
+We're starting to learn a little about name resolution in Hoon.
+We've seen that \kode{foo.bar.test} means ``foo in bar in test.''  We've
+seen that faces have to be unwrapped a layer at a time, so ``foo in
+test'' is an error.
+
+Let's try some cells:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [cat=3 dog=4]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} cat.test
+3
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [cat=3 dog=[pig=9 rat=12]]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} rat.dog.test
+12
+\end{Verbatim}
+\end{framed_shaded}
+
+We see that name resolution seeks into cells.  This solves one of
+the problems we had when programming in Nock.  For example:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [cow=97 test]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} cow.test
+97
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} rat.dog.test
+12
+\end{Verbatim}
+\end{framed_shaded}
+
+By replacing \kode{test} with \kode{[cow=97 test]}, we've done exactly the
+same thing as nock \kode{8}.  (And we'll do more of it.)  Note that
+because we didn't wrap a face around \kode{test}, we seek into it when
+looking for \kode{dog}, and \kode{rat.dog.test} works just the same way.
+Even though \kode{dog} is now at a different axis within \kode{test}.
+
+For reasons we'll see soon, we often want empty names.  As we saw
+before, the syntax for an empty name is \kode{\$}.
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test \PYZdl{}=42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZdl{}.test
+42
+\end{Verbatim}
+\end{framed_shaded}
+
+And interesting cases tell us more about the search algorithm:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [cat=3 cat=[pig=9 rat=12]]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} cat.test
+3
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} pig.cat.test
+! \PYZhy{}find\PYZhy{}limb.pig
+! find\PYZhy{}none
+! exit
+\end{Verbatim}
+\end{framed_shaded}
+
+We see that when we search a cell, we search the head first.  It
+is not in any way an error to have two faces with the same name.
+And in fact, we can even work with this constraint:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZca{}cat.test
+[pig=9 rat=12]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} pig.\PYZca{}cat.test
+9
+\end{Verbatim}
+\end{framed_shaded}
+
+A \kode{limb} to resolve is not just a name---it takes a prefix which
+is an arbitrary number of \kode{\^{}} characters.  This count is the
+number of name instances to ignore before matching.  For
+instance:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [cat=3 cat=[pig=9 rat=12] cat=42]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZca{}\PYZca{}cat.test
+42
+\end{Verbatim}
+\end{framed_shaded}
+
+We're actually ready to describe the full resolution model\ldots{}
+
+\subsection{Wing resolution}
+
+A \kode{wing} is a dot-separated list, reading outside to in from
+right to left.  Each element is a \kode{limb}.  We've seen one kind of
+limb---the name, with \kode{\^{}} prefixes.
+
+But we can also use axes directly from Hoon.  For instance:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [cat=3 dog=[pig=9 rat=12]]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} +3.test
+dog=[pig=9 rat=12]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} dog.test
+[pig=9 rat=12]
+\end{Verbatim}
+\end{framed_shaded}
+
+Note the difference between these two.  The noun is the same---
+they are both \kode{[9 12]}.  But the type is different:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(+3.test)
+[ \PYZpc{}face
+  p=\PYZpc{}dog
+    q
+  [ \PYZpc{}cell
+    p=[\PYZpc{}face p=\PYZpc{}pig q=[\PYZpc{}atom p=\PYZpc{}ud]]
+    q=[\PYZpc{}face p=\PYZpc{}rat q=[\PYZpc{}atom p=\PYZpc{}ud]]
+  ]
+]
+
+
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(dog.test)
+[ \PYZpc{}cell
+  p=[\PYZpc{}face p=\PYZpc{}pig q=[\PYZpc{}atom p=\PYZpc{}ud]]
+  q=[\PYZpc{}face p=\PYZpc{}rat q=[\PYZpc{}atom p=\PYZpc{}ud]]
+]
+\end{Verbatim}
+\end{framed_shaded}
+
+The axis gets us to the \kode{\%dog} face; the name actually removes it.
+So we can write
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} pig.dog.+3.test
+9
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} pig.dog.test
+9
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} pig.+3.test
+! \PYZhy{}find\PYZhy{}limb.pig
+! find\PYZhy{}none
+! exit
+\end{Verbatim}
+\end{framed_shaded}
+
+Perhaps this is obvious.  Perhaps it's not.
+
+\subsection{Axis syntax}
+
+This may seem like overkill.  Perhaps it \emph{is} overkill.  But Hoon
+has five syntaxes for an axis limb.
+
+The first we've seen already: the axis itself as a decimal, e.g.,
+\kode{+3}.  The second is a simple dot, meaning \kode{+1}:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test 42
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} ..test
+42
+\end{Verbatim}
+\end{framed_shaded}
+
+Yes, that's the limb \kode{.}, as applied (with \kode{.}), to \kode{test}.  Have
+we gone crazy?  Perhaps---but in fact, this one gets used a lot.
+
+Then we have an list-indexing syntax for constant offsets in
+lists that (as is the Hoon convention) flow to the right.
+Indices start at 1.  \kode{\&} produces the list element, \kode{\textbar{}} produces
+the suffix:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [1 2 3 4 \PYZti{}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZam{}2.test
+2
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} |2.test
+[3 4 \PYZti{}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZam{}1.test
+1
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} |1.test
+[2 3 4 \PYZti{}]
+\end{Verbatim}
+\end{framed_shaded}
+
+This mechanism---which essentially just converts the list index
+into an axis for \kode{+}---is not used much, but nice when needed.
+It applies only to constant indices, though, which is odd.  (For
+non-constant indices, use the Hoon function \kode{snag}.)
+
+Finally, we have a graphical binary syntax which reads from left
+to right, alternating the pairs \kode{-}/\kode{+} and \kode{\textless{}}/\kode{\textgreater{}} to mean head
+and tail respectively.  For example:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test [[[8 9] [10 11]] [12 13] 14 30 31]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}.test
+[[8 9] 10 11]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} +.test
+[[12 13] 14 30 31]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}\PYZlt{}.test
+[8 9]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} +\PYZgt{}.test
+[14 30 31]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} +\PYZgt{}\PYZhy{}.test
+14
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}\PYZgt{}\PYZhy{}.test
+10
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} +\PYZgt{}+\PYZlt{}.test
+30
+\end{Verbatim}
+\end{framed_shaded}
+
+The alternating glyphs create pleasant graphical patterns which
+are moderately memorable when used in moderation.  Of course, in
+general, when we have names we should use them.
+
+\subsection{Resolving forks}
+
+What happens when we resolve a name in a fork?  Yikes.  The
+general principle is that name resolution across a fork works if,
+and only if, the names resolve to the same axis on both branches.
+
+For instance:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} =test ?:(\PYZam{} [pig=3 dog=4] [pig=\PYZpc{}pig dog=\PYZpc{}dog cat=\PYZpc{}cat])
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(test)
+[ \PYZpc{}fork
+    p
+  [ \PYZpc{}cell
+    p=[\PYZpc{}face p=\PYZpc{}pig q=[\PYZpc{}atom p=\PYZpc{}ud]]
+    q=[\PYZpc{}face p=\PYZpc{}dog q=[\PYZpc{}atom p=\PYZpc{}ud]]
+  ]
+    q
+  [ \PYZpc{}cell
+    p=[\PYZpc{}face p=\PYZpc{}pig q=[\PYZpc{}cube p=6.777.200 q=[\PYZpc{}atom p=\PYZpc{}tas]]]
+      q
+    [ \PYZpc{}cell
+      p=[\PYZpc{}face p=\PYZpc{}dog q=[\PYZpc{}cube p=6.778.724 q=[\PYZpc{}atom p=\PYZpc{}tas]]]
+      q=[\PYZpc{}face p=\PYZpc{}cat q=[\PYZpc{}cube p=7.627.107 q=[\PYZpc{}atom p=\PYZpc{}tas]]]
+    ]
+  ]
+]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} pig.test
+3
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} \PYZhy{}:!\PYZgt{}(pig.test)
+[\PYZpc{}fork p=[\PYZpc{}atom p=\PYZpc{}ud] q=[\PYZpc{}cube p=6.777.200 q=[\PYZpc{}atom p=\PYZpc{}tas]]]
+\end{Verbatim}
+\end{framed_shaded}
+
+And yet:
+
+\begin{framed_shaded}
+\begin{Verbatim}[fontsize=\relsize{-2.5},fontseries=b,commandchars=\\\{\}]
+\PYZti{}waclux\PYZhy{}tomwyc/try=\PYZgt{} dog.test
+! \PYZhy{}find\PYZhy{}limb.dog
+! find\PYZhy{}fork
+! exit
+\end{Verbatim}
+\end{framed_shaded}
+
+Why?  Because \kode{dog} is at \kode{+3} on one side of the fork, \kode{+6} on
+the other.
+
+Frighteningly enough, we now have all the tools we need to really
+start programming in Hoon\ldots{}

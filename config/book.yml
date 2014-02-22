@@ -1,0 +1,12 @@
+---
+slug: urbit_tutorial
+filename: urbit_tutorial
+title: Urbit
+subtitle: The Personal Cloud Computer
+description: A tutorial for Urbit
+author: C.G. Yarvin, J.C. Burnham, M.D. Hartl
+copyright: 2014
+uuid: b1e1c858-a2ca-487a-9279-bf2ffcd664d2
+cover: images/cover.png
+pdf_preview_page_range: 1..30
+epub_mobi_preview_chapter_range: 0..1
