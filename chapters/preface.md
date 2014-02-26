@@ -106,21 +106,20 @@ Portable software can be trivially executed with the same semantics on any
 general-purpose computer. One can transfer portable from one machine to any
 other machine, and expect it to produce the same output. If the two machines
 differ in their output, it is easy to see which one is correct and which has an 
-an implementation error.
+implementation error.
 
 In contrast, unportable sofware must be modified for each platform
 it is run on without any expectation of identical semantics on different
 platforms and with complex chains of dependency on other software tools and
-libraries, also ususally different per platform.
+libraries, also usually different per platform.
 
 Unportable software drastically increases complexity, making it difficult for
 ordinary users to understand and administer their own general-purpose computer
 and incentivizing them to use special-purpose applications and services
 administered by others. A lack of portability makes the goal of
-indifference to resource locality almost impossible to acheive. 
+indifference to resource locality almost impossible to achieve. 
 
 [Add section on Network Identity]
 
 
 This book is designed for the novice programmer...
-
