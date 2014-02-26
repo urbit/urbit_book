@@ -49,7 +49,7 @@ This should return `42`. Don't worry about what this is doing yet.
 It's very important that you actually go to your prompt and type in our
 examples. Copying and pasting is cheating, although using your up-arrow is not. This might seem silly, but to learn
 Nock (or any language)  it's very important that your fingers get
-comfortable writing it. 
+comfortable writing it.
 
 If you accidentally make a mistake typing in a Nock expression, you'll get a
 syntax error:
@@ -120,7 +120,7 @@ Enough about errors, let's practice some expressions that work:
 
 
 The perceptive reader will notice the pattern here: If a is a number, `.*(a [0 1])` always produces `a`. To test it, run the following, but
-replace `a` with any number you like. 
+replace `a` with any number you like.
 
 ```text
 .*(a [0 1])
@@ -149,7 +149,7 @@ different:
 This pattern is pretty easy: `*(a [1 0])` always produces `0`, no matter what a
 is.
 
-Again, play around with the above yourself by choosing your own values for a: 
+Again, play around with the above yourself by choosing your own values for a:
 
 ```text
 .*(a [1 0])
@@ -178,7 +178,7 @@ As an exercise, run the last three lines again but replace `374` and `40` with
 numbers of your own.
 
 You've probably already guessed the pattern here: `.*(a [1 b])` always produces
-`b`, regardless of `a`. But feel free to test it, replacing `a` and `b` with any number. 
+`b`, regardless of `a`. But feel free to test it, replacing `a` and `b` with any number.
 
 ```text
 .*(a [1 b])
@@ -375,7 +375,7 @@ Nock of any noun `a` followed by `[1 b]`, where `b` is a noun, produces `b`. Thi
 	*[a [0 1]]
 	```
 
-	replace `a` with an atom, a cell, and multiple cells, and return them all respectively in Arvo (using, of course, the proper Arvo syntax).  
+	replace `a` with an atom, a cell, and multiple cells, and return them all respectively in Arvo (using, of course, the proper Arvo syntax).
 
 
 2. Using the rule for:
@@ -1586,12 +1586,12 @@ A formula with a second formula at its head instead of an operator distributes t
 ```text
 *[a [b c] d]          [*[a b c] *[a d]]
 ```
-`[b c]` is the first formula, d is the second formula.
+where `[b c]` is the first formula, `d` is the second formula.
 
 **Nock 2**
 
 ```text
-*[subject 2 formula-a formula]               *[*[subject formula1] *[subject formula2]]
+*[subject 2 formula1 formula2]       *[*[subject formula1] *[subject formula2]]
 ```
 which translates to
 
@@ -1623,7 +1623,8 @@ which translates to
 43
 ```
 
-## Section VI: Conclusion
+## Conclusion
+\label{sec:conclusion}
 
 Let's list out all the rules we've learned so far, with the explanations collapsed:
 
@@ -1640,7 +1641,7 @@ A cell is an ordered pair of nouns.
 +(cell)               ! exit
 +(atom)               1 + atom
 =([a a])              0
-=([a !a])              1
+=([a !a])             1
 =(atom)               ! exit
 
 
@@ -1694,7 +1695,7 @@ That looks cleaner. Now let's look at an abridged version of the real Nock spec,
 39 ::    *a               *a
 ```
 
-Since the Nock spec has been designed to be as concise as possible, a couple things are notationally different from the rules we've learned.
+Since the Nock spec has been designed to be as concise as possible, a couple of things are notationally different from the rules we've learned.
 
 The largest difference is the block that defines what the `/` or axis operator does:
 
@@ -1708,7 +1709,7 @@ The largest difference is the block that defines what the `/` or axis operator d
 ```
 This block of pseudocode is functionally equivalent to saying:
 
-The head of axis /n is /(2n) and the tail of axis /n is /(2n+1).
+The head of axis `/n` is `/(2n)` and the tail of axis `/n` is `/(2n+1)`.
 
 If you read and understood Section~\ref{sec:noun_structure}, you understand what this is doing, even if you can't parse its recursive structure.
 
@@ -1748,8 +1749,7 @@ First thing is that since we're trying to make the Nock specification small, we 
 =atom               ! exit
 
 ```
-Then we can remove the words 'cell' and 'atom.' Since the rules in the nock spec match top to bottom, we can specify matching a rule to a cells or atom by putting [a b] above a. A cell will match [a b] and and atom will not, therefore because all cells will match [a b],
-only atoms will match a below [a b].
+Then we can remove the words 'cell' and 'atom.' Since the rules in the Nock spec match top to bottom +++Has this convention yet been discussed? If not, this is the chance to introduce it.+++ we can specify matching a rule to a cells or atom by putting `[a b]` above `a`. A cell will match `[a b]` and an atom will not, because all cells will match `[a b]`, only atoms will match a below `[a b]`.
 
 ```text
 ?[a b]             0
@@ -1762,7 +1762,7 @@ only atoms will match a below [a b].
 
 ```
 
-Next little thing we can do, along the same principle, is change !a to b, because [a b] below [a a] will only match to a pair of unequal nouns.
+Next little thing we can do, along the same principle, is change `!a` to `b`, because `[a b]` below `[a a]` will only match to a pair of unequal nouns.
 
 ```text
 ?[a b]             0
@@ -1781,30 +1781,32 @@ Then there's these lines, which we call our crash defaults:
 21 ::    /a               /a
 39 ::    *a               *a
 ```
-Basically the crash defaults determine when Nock needs to return an ! exit, because something is nonsensical. In theory these lines imply that Nock spins forever in an infinite loop, in practice, Nock will just crash.
+Basically the crash defaults determine when Nock needs to return a `! exit`, because something is nonsensical. In theory these lines imply that Nock spins forever in an infinite loop; in practice, Nock will just crash.
 
+
+In other words, the rule
 ```text
 10 ::    +[a b]           +[a b]
 
 ```
-means that Nock crashes if you try to increment a cell
+means that Nock crashes if you try to increment a cell, the rule
 
 ```text
 14 ::    =a               =a
 ```
-means that Nock crashes if you try run an equality test on an atom
+means that Nock crashes if you try run an equality test on an atom, the rule
 
 ```text
    21 ::    /a               /a
 ```
-means that Nock crashes if you try to reference a noun axis that doesn't exist
+means that Nock crashes if you try to reference a noun axis that doesn't exist, and the rule
 
 ```text
 39 ::    *a               *a
 ```
-means that if you try to run something that's not a valid formula (i.e. doesn't match any of the preceding lines 1 through 38) through Nock, you guessed it, Nock crashes.
+means that if you try to run something that's not a valid formula (i.e., that doesn't match any of the preceding lines 1 through 38) through Nock, it crashes.
 
-Replacing ! exit in our rules with the appropriate crash default, we get the canoncial Nock specification:
+Replacing `! exit` in our rules with the appropriate crash default, we get the canoncial Nock specification:
 
 ```text
 1  ::    A noun is an atom or a cell.
