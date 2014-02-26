@@ -98,7 +98,7 @@ general-purpose client, it is also a general-purpose server. In other words, a
 network of PC2's is, by definition, a general-purpose social network. 
 
 By no means is this concept an idea original to Urbit. Many, many systems
-desinged to implement the PC2 have been tried and, without exception, have
+designed to implement the PC2 have been tried and, without exception, have
 failed to do so. These previous attempts have been crippled by their inadequate
 solution two fundamental problems: software portability and network identity.
 
