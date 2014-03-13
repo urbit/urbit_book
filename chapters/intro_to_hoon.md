@@ -1,10 +1,16 @@
 # Introductory Hoon
-Let's learn some Hoon.
 
-Just like we used nock.hoon to write and evaluate Nock programs, we're going to be using a file called app.hoon to write and evaluate Hoon.
+Let's learn some Hoon.
 
 
 ## What is Hoon?
+
+[how Hoon compiles to Nock]
+
+
+Just like we used nock.hoon to write and evaluate Nock programs, we're going to be using a file called app.hoon to write and evaluate Hoon.
+
+[quick and dirty tutorial on how to evaluate Hoon in Arvo]
 
 
 ## Glyphs and Runes
@@ -78,12 +84,16 @@ Nock Runes:
 
 ## Basic Types: Axils and Atom Odors
 
+Axils
+
 @ atom
 ^ cell
 * noun
 ? loobean
 ~ null
 
+
+Odors
 
 @c              UTF-32 codepoint
 @d              date
@@ -116,6 +126,8 @@ Nock Runes:
 @if 
 @is
 
+Size odors
+
 A   1 bit
 B   2 bits
 C   4 bits
@@ -143,38 +155,44 @@ X   1MB
 Y   2MB
 Z   4MB
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Cores and Arms
+
+[refresher on Cores at nock level, discussion of arms]
+
+bartis, barhep, centis, buc
 
 ## Basic Math Functions
 
+[explain dec, add, mul ...]
+
 ## Noun Surgery and Bit Logic
 
+bloqs
+
+
 ## Noun Orders
+
+
 
 ## Time
 
 ## Lists
 
+bartar,
+
+snag, swag, slag, scag etc.
+
 ## Signed Ints
+
+++  si
 
 ## Modulo bloq
 
+++  fe
+
 ## Phonetic Base
+
+
 
 ## Unit
 
