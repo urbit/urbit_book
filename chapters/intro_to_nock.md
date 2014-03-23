@@ -199,17 +199,17 @@ can nest inside other cells.)
 
 Collectively, both atoms and cells are called nouns. And Nock is just a list of
 rules (or a set of patterns) for transforming nouns.  You put one noun in, you
-get another noun out. It's like algebra: \( f(x) = y \), \( Nock(noun_a) = noun_b \)
+get another noun out. It's like algebra: \( f(x) = y \), \( \nock(\noun_a) = \noun_b \)
 
 The atom `42` is a noun, the cell `[0 1]` is a noun and in fact `.*(42 [0 1])`
 is a noun too, except that it's wrapped in syntax that tells Arvo "run
 this noun through Nock". The notation `.*(42 [0 1])` is actually the way to tell Arvo
-(Urbit's operating system) to evaluate \( Nock(\)`[42 [0 1]`]\( ) \). The cellular noun
+(Urbit's operating system) to evaluate \( \nock(\)`[42 [0 1]`]\( ) \). The cellular noun
 `[42 [0 1]]` goes into Nock, the atomic noun `42` comes out.
 
 We could rewrite our very first example again as
 
-\( Nock(\)`[42 [0 1]`]\( ) =\) `42`
+\( \nock(\)`[42 [0 1]`]\( ) =\) `42`
 
 or
 
@@ -233,7 +233,7 @@ except that to evaluate it in Arvo, we need to give it the proper syntax:
 \end{codelisting}
 
 Actually, we almost never use the mathematical notation. For the sake of
-brevity we almost always write \( Nock(noun) \) using the notation `*noun`.
+brevity we almost always write \( \nock(noun) \) using the notation `*noun`.
 
 \begin{codelisting}
 \label{code:nock_syntax}
@@ -243,7 +243,7 @@ brevity we almost always write \( Nock(noun) \) using the notation `*noun`.
 ```
 \end{codelisting}
 
-Thus, \( Nock(\)`[42 [0 1]`]\( ) \) and `*[42 [0 1]]` mean the same thing. If we want to tell Arvo to evaluate
+Thus, \( \nock(\)`[42 [0 1]`]\( ) \) and `*[42 [0 1]]` mean the same thing. If we want to tell Arvo to evaluate
 the noun, we use `.*(42 [0 1])`. You will notice that the outermost brackets
 somewhat confusingly disappear when we use the `.*()` function in Arvo; we will
 explain why in Chapter~\ref{cha:dont_know}.
@@ -316,7 +316,7 @@ Arvo syntax:
 
 Math notation:
 
-\( Nock(\)`[42 [0 1]`]\( ) = \) `42`
+\( \nock(\)`[42 [0 1]`]\( ) = \) `42`
 
 Nock notation:
 

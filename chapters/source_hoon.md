@@ -1,6 +1,4 @@
-#Appendix A: hoon.hoon
-
-
+# Appendix A: hoon.hoon
 
 \begin{codelisting}
 \label{code:source_hoon_preface}
@@ -48,7 +46,7 @@ At your prompt,
 ~%    %mood
     +
   ~
-|%       
+|%
 ```
 
 This volume describes various models (such as types and rune functions, for example) used by Urbit. Many of the models are defined in terms of other models. The source itself is listed in alphabetical order for easy reference. The order has been changed here in order of ascending complexity. The easiest to understand models are listed first, although some grouping has been done for related models.
@@ -59,7 +57,7 @@ This volume describes various models (such as types and rune functions, for exam
 ```
 
 An `axis` the tree address described by the [Nock
-specification](/bestiary/nock/). `,@` means that an `axis` produces an atom. 
+specification](/bestiary/nock/). `,@` means that an `axis` produces an atom.
 
 ```
 ++  bloq  ,@                                            ::  blockclass
@@ -67,7 +65,7 @@ specification](/bestiary/nock/). `,@` means that an `axis` produces an atom.
 A bloq is a bare atom most often used in bit manipulation functions for setting
 the size of block of bits to operate on. `bloq` should always be read as a
 binary power. For example, a `bloq` of 0 means single bits, whereas a `bloq` of
-3 means bytes. 
+3 means bytes.
 
 ```
 ++  odor  ,@ta                                          ::  atom format
@@ -114,7 +112,7 @@ A tape is a list of chars. This is roughly equivalent to what in many other lang
 ++  cord  ,@t                                           :: text atom (UTF-8)
 ```
 
-A `cord` is an atom of text, or a stream of UTF-8 bits mapped to an atom. 
+A `cord` is an atom of text, or a stream of UTF-8 bits mapped to an atom.
 
 'foo' is a cord.
 
@@ -135,7 +133,7 @@ A span is an ASCII text atom. The prefix is `~.`. There are no escape sequences 
 
 ++  term  ,@tas                                         :: text atom (hoon)
 
-A `term` is a subset of ASCII text. The only characters permitted are lowercase ASCII, `-` except as the first or last character, and 0-9 except as the first character.  
+A `term` is a subset of ASCII text. The only characters permitted are lowercase ASCII, `-` except as the first or last character, and 0-9 except as the first character.
 
 `%foo` is a term.
 
@@ -158,7 +156,7 @@ A date is a list of a year cell (a loobean head for AD or BC and a year atom), a
 
 ++  time  ,@da                                          ::  galactic time
 
-A time is an atom that maps to a time. 
+A time is an atom that maps to a time.
 
 ~2014.2.17..14.47.50..0f86 is a time.
 
@@ -196,16 +194,13 @@ A pint is a cell of two atom pairs.
 ```
 A spot is a cell of a path and a pint. Used for a specific spot in a file
 
-
-
-
-
+```
 ++  base  ?([%atom p=odor] %noun %cell %bean %null)     ::
+```
 
 A base is any one of the following cases: atom with an odor, noun, cell, loobean, or null.
 
-
-
+```
 ++  axis  ,@                                            ::  tree address
 ++  also  ,[p=term q=wing r=type]                       ::  alias
 ++  base  ?([%atom p=odor] %noun %cell %bean %null)     ::
