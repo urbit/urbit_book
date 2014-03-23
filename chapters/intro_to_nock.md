@@ -10,19 +10,60 @@ assembly language in that (a) everything in Urbit executes as Nock; (b) you
 wouldn't want to program directly in Nock; and (c) learning to program directly
 in Nock is a great way to start understanding Urbit from the ground up.
 
-Just as Unix runs C programs by compiling them to assembler, Urbit runs Hoon
-programs by compiling them to Nock.  You could try to learn Hoon without
-learning Nock.  But just as C is a thin wrapper over the physical CPU, Hoon is
-a thin wrapper over the Nock virtual machine.  It's a tall stack made of thin
-layers, which is much easier to learn a layer at a time.
+Nock is a simple mechanical device and is meant to feel that way.It has a simple data structure; just natural numbers and nested pairs of natural numbers. And eleven operations (six primitives, five macros) mapped to the numbers 0 through 10. Nock is only 39 lines long, which is short enough that we can print it here: 
 
-And unlike most fundamental theories of computing, there's really nothing smart
-or interesting about Nock.  Of course, in a strictly formal sense, all of
-computing is math.  But that doesn't mean it needs to feel like math.  Nock is
-a simple mechanical device and it's meant to feel that way.
+\begin{codelisting}
+\label{code:nock_spec}
+\codecaption{Nock: All there is to Urbit}
+```text
+1  ::    A noun is an atom or a cell.
+2  ::    An atom is a natural number.
+3  ::    A cell is an ordered pair of nouns.
+4  ::
+5  ::    nock(a)          *a
+6  ::    [a b c]          [a [b c]]
+7  ::
+8  ::    ?[a b]           0
+9  ::    ?a               1
+10 ::    +[a b]           +[a b]
+11 ::    +a               1 + a
+12 ::    =[a a]           0
+13 ::    =[a b]           1
+14 ::    =a               =a
+15 ::
+16 ::    /[1 a]           a
+17 ::    /[2 a b]         a
+18 ::    /[3 a b]         b
+19 ::    /[(a + a) b]     /[2 /[a b]]
+20 ::    /[(a + a + 1) b] /[3 /[a b]]
+21 ::    /a               /a
+22 ::
+23 ::    *[a [b c] d]     [*[a b c] *[a d]]
+24 ::
+25 ::    *[a 0 b]         /[b a]
+26 ::    *[a 1 b]         b
+27 ::    *[a 2 b c]       *[*[a b] *[a c]]
+28 ::    *[a 3 b]         ?*[a b]
+29 ::    *[a 4 b]         +*[a b]
+30 ::    *[a 5 b]         =*[a b]
+31 ::
+32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
+33 ::    *[a 7 b c]       *[a 2 b 1 c]
+34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
+35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
+36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
+37 ::    *[a 10 b c]      *[a c]
+38 ::
+39 ::    *a               *a
+```
+\end{codelisting}
+
+The main challenge with Nock is not that it's particularly complicated in essence, but that it's difficult to read, which makes it look much more intimidating than it actually is. The "big blob of numbers" feeling, is why all real programming in Urbit happens with its functional programming language, Hoon. Unix runs C programs by compiling them to assembler, Urbit runs Hoon programs by compiling them to Nock.
+
+Just as C is a thin wrapper over the physical CPU, Hoon is a thin wrapper over the Nock virtual machine. Urbit is a tall stack made of thin layers, which is much easier to learn a layer at a time. Any programmer who wants to learn Hoon should have a decent understanding of how Nock works. Every Hoon programmer who has tried to learn Hoon first, without knowing Nock, has at some point circled back, gritted their teeth, and learned Nock. Although, to be fair, a few people have said that trying to tackle Hoon first made learning Nock a bit easier.
 
 Let's get start by learning how to use Urbit's operating system, Arvo, to
-evaluate Nock code.
+evaluate Nock code. The neat thing about this, that we'll see much later, is that since Arvo is written in Hoon and Hoon compiles to Nock, everything we type into Urbit is actually running as Nock. In principle, if you completely understandthe 39 lines of Nock, you understand everything that happens in Urbit.
 
 ## Getting Started
 \label{sec:getting_started}
@@ -533,9 +574,7 @@ Let's look at the tree of the other noun we played with, `[[44 45] 43]`:
 ```
 \end{codelisting}
 
-It should be pretty obvious that we could change the values of any of the atoms
-in the tree without changing the structure of the tree. That is to say, `[[44
-45] 43]` and `[[24 25] 23]` have the same tree structure:
+We could change the values of any of the atoms in the noun without changing the structure of the tree. For example, `[[44 45] 43]` and `[[24 25] 23]` have the same tree structure:
 
 \begin{codelisting}
 \label{code:noun_tree3}
@@ -566,26 +605,108 @@ And now, for a more complicated tree, here's the noun `[[[48 49] 45] [46 47]]`:
 \end{codelisting}
 
 
-So how do the above trees relate to running `.*(a [0 b])`? Every part
-of the tree gets mapped to an atomic address, called an *axis*. The mapping
-looks something like this:
+So how do the above trees relate to running `.*(a [0 b])`? 
 
-\begin{codelisting}
-\label{code:axis_tree1}
-\codecaption{an axis tree}
-```text
-           1
-       /       \
-     2           3
-   /   \       /   \
-  4     5     6     7
- / \   / \   / \   / \
-8   9 10 11 12 13 14 15
+
+In Nock, since we're always dealing with tree structures, we want to have a way to refer to individual pieces of that structure. Effectively, we want every piece of a noun to have a label, and we can produce that piece by using a Nock operator (specifically, Nock operator 0) to call the label. Since Nock is made up of atoms and cells, we want that label to be an atom.
+
+So we have to create a mapping between every possible piece of a noun and an atomic address that we'll call an *axis*. Since a noun can get arbitrarily large, whatever mapping we come up with has to work for arbitrarily large axes.
+
+Recall from the notes on Section 1:
+
+A noun is an atom or a cell.  An atom is a natural number.  A cell is an
+ordered pair of two nouns, i.e., two atoms, two cells, or a cell and an atom.
+
+A noun can be either an atom, meaning it has no fanout. Or it can be a cell, which will always contain two other nouns. The first noun in any cell is called the head and the second is called the tail:
 
 ```
-\end{codelisting}
+[head tail]
+```
 
-Or, because the lines are kind of ugly:
+Let's take an arbitrary noun:
+
+```
+        noun
+```
+
+if it's an atom, it contains nothing, because it's just a number:
+
+```
+      noun
+```
+
+but if the noun is a cell, it contains two sub-nouns:
+
+```
+        noun
+      /      \
+    noun    noun
+```
+
+
+Which can themselves be cells and contain more nouns:
+
+```
+              noun
+          /          \
+        noun         noun
+       /    \       /    \
+    noun    noun  noun   noun
+```
+
+
+But since all cells have to be pairs and atoms are indivisible, our mapping only has to account for either two or zero branches leading from any noun.
+
+Let's label the top noun 1 and by convention axes with a `/` character, so `/1`, which reads as "axis 1."
+
+```
+             noun (/1)
+             /     \
+         noun      noun
+```
+
+Let's label the next noun below `/1` on the left `/2`, and the one on the right `/3`
+
+```
+            noun (/1)
+          /          \
+     noun (/2)     noun (/3)
+```
+
+This is actually the fundamental pattern of the axis tree. Some root node, in this case `/1` and two nodes leading off of it, where the left-hand node, or head has an axis double that of the root, and the right-hand node, or tail, has an axis one greater than the head. 
+
+If the noun at `/2` was a cell, then since two doubled is four, the head of `/2` has to be `/4` and since four plus one is five, the tail has to be `/5`:
+
+```
+            noun (/2)
+          /          \
+     noun (/4)     noun (/5)
+```
+
+If we want to put these together:
+
+```
+                      noun (/1)
+                    /          \
+             noun (/2)     noun (/3)
+          /          \
+     noun (/4)     noun (/5)
+```
+
+And if the noun at `/3` is a cell, then twice three is `/6` and twice three plus one is `/7`.
+
+```
+                         noun (/1)
+                    /               \
+             noun (/2)               noun (/3)
+          /          \               /       \
+     noun (/4)     noun (/5)    noun (/6)     noun (/7)
+```
+
+
+Which is starting to look a little bulky.
+
+Cleaning up a little bit, the mapping looks something like this:
 
 \begin{codelisting}
 \label{code:axis_tree2}
@@ -594,19 +715,47 @@ Or, because the lines are kind of ugly:
          1
     2          3
  4    5     6     7
+```
+\end{codelisting}
+
+We can even add a whole additional layer here, for the sub-nouns of `/4`, `/5`, `/6` and `/7`
+
+\begin{codelisting}
+\label{code:axis_tree3}
+\codecaption{more axes}
+```text
+         1
+    2          3
+ 4    5     6     7
 8 9 10 11 12 13 14 15
 ```
 \end{codelisting}
 
+The fundamental rule here is:
 
-Of course, this only a very small part of the entire tree. We extend the tree
-by applying the rule: Every axis `/n` has a head with the axis`/2n` and a tail
-with the axis `/2n+1`. +++recast & expand [MDH]+++
+The head of axis `/n` is `/(2n)` and the tail of axis `/n` is `/(2n+1)`.
 
-+++Is `/n` read "slash n"?+++
+The head of `/1` is `/2` and the tail is `/3`
 
-We map from noun to axis by comparing the tree of the noun with the axis tree
-and seeing what matches. Like so, marking axes with a `/` character:
+The head of `/6` is `/12` and the tail is `/13`
+
+To think of it another way, imagine that we create our label map from noun to axis by comparing the tree of the noun with the axis tree and seeing what corresponds. 
+```text
+ [[44 45] 43]
+    /      \
+[44 45]    43
+ /   \
+44   45
+```
+
+```text
+        1
+    /      \
+   2        3
+ /   \
+4     5
+```
+
 ```text
   /1 : [[44 45] 43]
          /        \
@@ -614,9 +763,9 @@ and seeing what matches. Like so, marking axes with a `/` character:
       /     \
 /4 : 44      45 : /5
 ```
-Again, because it bears repeating: the head of axis `/n` is `/2n` and the tail
-of axis `/n` is `/2n+1`. Remember that the head is the left-hand noun and the
-tail the right-hand noun of a cell-pair.
+
+
+The head of axis `/n` is `/2n` and the tail of axis `/n` is `/2n+1`. Remember that the head is the left-hand noun and the tail the right-hand noun of a cell-pair.
 
 Start with 1. This is your root axis. All nouns have a valid axis `/1`, even
 atoms. and the axis `/1` just refers to the noun itself. In the above example,
@@ -634,7 +783,7 @@ layer 3    8 9 10 11 12 13 14 15
 which correspond to the nesting depth of the noun. If a noun is inside two
 cells, like `46` inside `[[[48 49] 45] [46 47]]` then its axis is at layer 2 of
 the tree. If its inside three cells like `48`, then its axis is at layer
-three.
+three. The left-most axis in any layer starts with 2^l, where l is the nesting depth, and every layer has 2^l elements.
 
 Recall the pattern we learned in Section~\ref{sec:getting_started_summary}:
 ```text
@@ -646,8 +795,53 @@ This, we now see, is a special case of
 ```
 The 0 in `*[a [0 b]]` is just an operator that means "axis". Nock maps simple
 operators and functions to atoms, instead of a character like `/` for example,
-because atoms (and cells) are all Nock knows. Fortunately for us,
-there are only eleven atoms that are operators, atoms `0` through `10.`
+because atoms (and cells) are all Nock knows. 
+
+Working through our original example Nock code again,
+
+\begin{codelisting}
+\label{code:noun_pieces2}
+\codecaption{Taking pieces of a noun}
+```text
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 1])
+[42 [46 47]]
+```
+\end{codelisting}
+
+`/1` of any noun is just the noun itself.
+
+```
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 2])
+42
+```
+
+`/2` of any noun is the head of the noun.
+
+```
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 3])
+[46 47]
+```
+
+and `/3` is the tail.
+
+```
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 4])
+! exit
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 5])
+! exit
+```
+
+Since `/2` of the noun `[42 [46 47]]` is the atom 42, `/4` and `/5` of this noundo not exist.
+
+```
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 6])
+46
+
+~tomsyt-balsen/try=> .*([42 [46 47]] [0 7])
+47
+```
+
+But `/6` and `/7` work just fine, because `/3` is a cell.
 
 
 ### Summary
@@ -928,21 +1122,37 @@ Atom `1` means "no."
 
 ### Exercises
 
-1. Run and compare
+1. With different values for `a` and `b`, run and compare
+
+\begin{codelisting}
+\label{code:ex1a}
+\codecaption{Exercise 1a}
 ```text
 ~tomsyt-balsen/try=> .*(a b)
 ```
-and +++add a listing and a listing reference [MDH]+++
+\end{codelisting}
+
+and
+
+\begin{codelisting}
+\label{code:ex1b}
+\codecaption{Exercise1b}
 ```text
 ~tomsyt-balsen/try=> .*(a [3 b])
 ```
-with different values for `a` and `b`. +++add a listing and a listing reference [MDH]+++
+\end{codelisting}
 
 2. Try finding a value for `b` that will return `1` if `a` is the atom `42`:
+
+\begin{codelisting}
+\label{code:ex2}
+\codecaption{Exercise 2}
 ```text
 ~tomsyt-balsen/try=> .*(42 [3 b])
 ```
-Not only is this possible, but you already know the formula to do it.
+\end{codelisting}
+
+Hint: remeber that `b` can be a formula.
 
 ## Nock 4
 \label{sec:nock_4}
@@ -1010,12 +1220,10 @@ If you said
 ~tomsyt-balsen/try=> .*([[44 45] 46] [4 [0 4]])
 45
 ```
-then you're starting to get the hang of this. +++recall from section ... that ... represents `/4`, which in the case of `[[44 45] 46]` is just `44`. Applying `Nock 4` to this yields `45`.+++
+then you're starting to get the hang of this. Recall from section Section~\ref{sec:noun_structure}, that `[0 4]` produces `/4`, which in the case of `[[44 45] 46]` is just `44`. Applying `Nock 4` to this yields `45`.
 
 
-Yes, ladies and gentlemen, `Nock
-4` is increment. Nock together your subject and the formula in your argument,
-and whatever that produces, add 1 to it.
+`Nock 4` is increment. Nock together your subject and the formula in your argument, and whatever that produces, add 1 to it.
 
 But what if `*[subject formula]` produces a cell instead of an atom? How do we
 add `1` to a cell? Simple---we don't. The Sun continues to rise in the east,
@@ -1042,8 +1250,12 @@ Nock 4:
 `+(x)` is, again, just some notation so we can write out both branches of Nock
 4.
 
-An interesting property of Nock 4 is that  we can chain it together to
+An interesting property of Nock 4 (as well as Nock 3) is that we can chain it together to
 increment successive times.
+
+\begin{codelisting}
+\label{code:chaining}
+\codecaption{A chain of Nock 4}
 ```text
 ~tomsyt-balsen/try=> .*(44 [4 [0 1]])
 45
@@ -1060,6 +1272,9 @@ increment successive times.
 ~tomsyt-balsen/try=> .*(44 [4 [4 [4 [4 [4 [0 4]]]]]])
 49
 ```
+\end{codelisting}
+
+
 Those brackets are starting to really pile up. Which is making this whole
 process a lot less legible than we would like.
 
@@ -1123,17 +1338,31 @@ We can't get rid of the last pair, though:
 ```
 
 This is just an artifact of Arvo's Nock interpreter, which we directly access
-with the `.*` function (pronounced `dottar`, a contraction of "dot-star"). `.*` takes two
-arguments, a subject and a formula:
+with the `.*` function (pronounced `dottar`, a contraction of "dot-star"). `.*`:
+
 ```text
 .*(subject [formula])
 ```
-And for inscrutable reasons  +++recast this; what are the actual reasons, if any?+++, the formula has to be in brackets. As does the
-subject, if it's a cell:
+
+Oddly, the formula has to be in brackets. As does the subject, if it's a cell. This is because `.*` is actually a Hoon operation, and needs to take two arguments, a subject and a formula. Hoon considers each noun for subject and formula as separate arguments, even though they get applied together in a unified structure.
+
+Giving `.*` one argument produces an error:
+
+```
+.*([44 [4 4 4 4 4 0 1]])
+~ <syntax error at [1 24]>
+```
+
+As does giving it three arguments:
+
 ```text
 ~tomsyt-balsen/try=> .*(44 45 [4 4 4 4 4 0 2])
 ~ <syntax error at [1 9]>
+```
 
+Two arguments only, one for subject, the other for formula:
+
+```
 ~tomsyt-balsen/try=> .*([44 45] [4 4 4 4 4 0 2])
 49
 ```
@@ -1177,7 +1406,7 @@ formula must be bracketed.
 So we've learned how to do some simple operations with Nock. Now we're going to get a little fancier.
 
 
-To jog your memory, we've seen the following operators so far: +++start adding massive repetition of what each `Nock n` is.+++
+To jog your memory, we've seen the following operators so far: 
 
 \begin{codelisting}
 \label{code:nock_review}
@@ -1188,7 +1417,6 @@ To jog your memory, we've seen the following operators so far: +++start adding m
 ~tomsyt-balsen/try=>
 ~tomsyt-balsen/try=>   .*([42 43] [0 1])
 [42 43]
-
 ~tomsyt-balsen/try=> :: Nock 1: The constant operator
 ~tomsyt-balsen/try=> :: *[a [1 b]]               b for every a
 ~tomsyt-balsen/try=>
@@ -1273,14 +1501,27 @@ Recalling from Listing~\ref{code:several_nock_formulas} that
 
 we see that the pattern we guessed continues to hold: Arvo is running both formulas and then just combining the results in a cell.
 
-+++For the example below, we should establish the values of `.*([42 43] [3 0 2])` and `.*([42 43] [4 0 3])`+++
-
 ```text
+~tomsyt-balsen/try=> .*([42 43] [3 0 1])
+0
+
+~tomsyt-balsen/try=> .*([42 43] [3 0 2])
+1
+
 ~tomsyt-balsen/try=> .*([42 43] [[3 0 1] 3 0 2])
 [0 1]
+```
+
+```text
+
+~tomsyt-balsen/try=> .*([42 43] [4 0 3])
+44
 
 ~tomsyt-balsen/try=> .*([42 43] [[3 0 1] 4 0 3])
 [0 44]
+
+~tomsyt-balsen/try=> .*([42 43] [1 [0 1]])
+[0 1]
 
 ~tomsyt-balsen/try=> .*([42 43] [[1 [0 1]] 4 0 3])
 [[0 1] 44]
@@ -1290,10 +1531,10 @@ we see that the pattern we guessed continues to hold: Arvo is running both formu
 ```
 
 Yup, the subject is definitely running through both formulas in parallel. The
-last example seems to do something like this +++it doesn't match the example+++:
+last example seems to do something like this:
 
 ```text
-*[[42 43] [4 0 3] 1 [55 73]]         [*[[42 43] [4 0 3]] *[[42 43] 1 [55 73]]]
+*[[42 43] [4 0 3] 1 [0 1]]         [*[[42 43] [4 0 3]] *[[42 43] 1 [0 1]]]
 ```
 
 which we can evaluate using Arvo:
@@ -1363,23 +1604,51 @@ from Listing~\ref{code:formula_pattern}, we see that in `*[a d]` the value of `d
 
 \begin{codelisting}
 \label{code:final_reduction}
-\codecaption{}
+\codecaption{formula distribution}
 ```text
 *[a [b c] d]     [*[a b c] *[a d]]
 ```
 \end{codelisting}
 
-What's really cool about the rule in Listing~\ref{code:final_reduction} that, like the operators, it also chains +++This does not appear to be of the form `*[a [b c] d]`+++:
+What's really cool about the formula distribution rule in Listing~\ref{code:final_reduction} that, like the operators, it also chains:
 
 ```text
 ~tomsyt-balsen/try=> .*([42 [46 47]] [[0 1] [3 0 1] [0 2]])
 [[42 46 47] 0 42]
 ```
+For clarity, the reduction looks like this:
+
+```
+*[[42 [46 47]] [0 1] [3 0 1] [0 2]]
+
+<<*[a [b c] d]     [*[a b c] *[a d]] >>
+
+[*[[42 46 47] [0 1]] *[[42 46 47] [3 0 1] [0 2]]]
+
+<<  Nock 0:       *[a [0 b]]          /b of a>>
+
+[[42 46 47] *[[42 46 47] [3 0 1] [0 2]]]
+
+<<*[a [b c] d]     [*[a b c] *[a d]]  >>
+
+[[42 46 47] [*[42 46 47] [3 0 1]] *[[42 46 47] [0 2]]]
+
+<<  Nock 3:       *[a [3 b]]          ?(*[a b])>>
+
+[[42 46 47] [0 *[[42 46 47] [0 2]]]
+
+<<  Nock 0:       *[a [0 b]]          /b of a>>
+
+[[42 46 47] [0 42]]
+```
+
+
+
 So if we wanted to produce our subject with all the atoms incremented, we could
 do that:
 
 ```text
-~tomsyt-balsen/try=> .*([42 [46 47]] [[4 0 1] [4 0 2] [4 0 3]])
+~tomsyt-balsen/try=> .*([42 46 47] [[4 0 1] [4 0 2] [4 0 3]])
 [43 47 48]
 ```
 We can make our chains as long as we like
@@ -1394,44 +1663,19 @@ parallel.
 
 But what if we want to run them in series?
 
-The expression `*[[42 43] [[4 0 3] 1 [0 1]]]` is a good example of how this might work +++Make explicit in what sense this is evaluation in "series"+++:
+The expression `*[[42 43] [[4 0 3] 1 [3 0 1]]]` is a good place to start. We want to apply two formulas successively to `[42 43]`, first, the we want to increment the tail by applying the formula `[4 0 3]`, and then we want to test the cellularity of the result of that with our second formula `[3 0 1]`.
 
 ```text
 ~tomsyt-balsen/try=> .*([42 43] [[4 0 3] 1 [3 0 1]])
 [44 [3 0 1]]
 ```
 
-Wouldn't it be interesting if we could run `[44 [3 0 1]]` through Nock again and end up with `*[44 [3 0 1]]` or just `1`? +++Why would this be interesting?+++
+The formula distribution rule can set up the the second formula with the product of the first formula, but it can't actually run the second computation. What we need is a way to insert a second `*`.
 
-We'd need a recursive operator to do that +++why?+++. Fortunately, we've got one, Nock 2 +++this is the first explicit mention of Nock 2,and the example is rather complicated+++:
 
-```text
-~tomsyt-balsen/try=> .*([42 43] [2 [4 0 3] 1 [3 0 1]])
-1
-```
-Obviously, this is a toy example because we could just do the same thing
-functionally with +++this is not obvious—so far as I can tell, this is the first time that the second cell in a formula has been of length 4+++:
+Fortunately, we've got a way, Nock 2, which is where we bring in the concept of recursion:
 
-```text
-~tomsyt-balsen/try=> .*([42 43] [3 4 0 3])
-1
-```
-But Nock 2 also lets us call a formula inside our subject. +++I'm completely confused at this point+++
-
-```text
-~tomsyt-balsen/try=> .*([[40 43] [4 0 1]] [2 [0 4] [0 3]])
-41
-
-~tomsyt-balsen/try=> .*([[40 43] [4 0 1]] [2 [0 5] [0 3]])
-44
-```
-Or we could completely separate the operator and arguments: +++Whaa?+++
-
-```text
-~tomsyt-balsen/try=> .*([[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]])
-44
-```
-We did a lot of slicing and dicing of nouns with the formula distribution rule.
+We've did a lot of slicing and dicing of nouns with the formula distribution rule.
 Nock 2 lets us run those reassembled nouns as expressions. We could think of
 Nock 2 as being exactly like the distribution rule:
 
@@ -1450,14 +1694,39 @@ which we can rewrite as:
 *[a 2 b c]            *[*[a b] *[a c]]
 ```
 
-Let's work through that last example again:
+```text
+~tomsyt-balsen/try=> .*([42 43] [2 [4 0 3] 1 [3 0 1]])
+1
+```
+This is kind of a toy example because we could just do the same thing
+functionally with:
+
+```text
+~tomsyt-balsen/try=> .*([42 43] [3 [4 0 3]])
+1
+```
+
+Since Nock operators 3 and 4 can chain natively, as discussed in Listing~\ref{code:chaining}. 
+
+What we frequently actually use Nock 2 for is to pull things out of our subject and run them as formulas: 
+
+Here the formula `[4 0 1]` is in the tail of our subject. We can pull it out with `[0 3]` and then apply it with Nock 2.
+
+```text
+~tomsyt-balsen/try=> .*([[40 43] [4 0 1]] [2 [0 4] [0 3]])
+41
+
+~tomsyt-balsen/try=> .*([[40 43] [4 0 1]] [2 [0 5] [0 3]])
+44
+```
+Or if we wanted to get really funky we could completely separate the operator and arguments, and reconstruct them with a lot of Nock 0's.
 
 ```text
 ~tomsyt-balsen/try=> .*([[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]])
 44
 ```
 
-So we've got our subject `[[40 43] [0 1 3 4]]` and four different formulas:
+Admttedly, this is horrendous, but let's work through it. We've got our subject `[[40 43] [0 1 3 4]]` and four different formulas:
 `[0 2] [0 31] [0 6] [0 30]`
 
 Let's apply each of these to our subject separately:
@@ -1483,7 +1752,7 @@ If instead of Nock 2, we had just used the formula distribution rule:
 [[40 43] 4 0 3]
 ```
 
-But since Nock 2 is recursive:
+But since Nock 2 is recursive, there's an extra `*`
 
 ```text
 *[[[40 43] [0 1 3 4]] [2 [0 2] [0 31] [0 6] [0 30]]]
@@ -1494,6 +1763,13 @@ reduces to:
 *[[40 43] 4 0 3]
 ```
 which is, of course, \(43 + 1\), or \(44\).
+
+does exactly the same thing as:
+
+```text
+~tomsyt-balsen/try=> .*([40 43] [4 0 3])
+44
+```
 
 Now that we understand how to slice up nouns in our subject, let's introduce Nock 5.
 
@@ -1519,12 +1795,45 @@ distribute formulas. See if you can figure it out from the following:
 
 ~tomsyt-balsen/try=> .*([[42 43] [42 43]] [5 [0 4] [0 3]])
 1
+```
+
+Nock 5 is an equality test, working through what the code is doing:
+
+```text
+~tomsyt-balsen/try=> .*([42 42] [5 [0 2] [0 3]])
+0
+42 = 42
+
+
+~tomsyt-balsen/try=> .*([42 43] [5 [0 2] [0 3]])
+1
+
+42 != 43
+
+~tomsyt-balsen/try=> .*([42 44] [5 [0 2] [0 3]])
+1
+
+42 !=43
 
 ~tomsyt-balsen/try=> .*([[42 42] [42 42]] [5 [0 2] [0 3]])
 0
+
+[42 42] = [42 42]
+
+
+~tomsyt-balsen/try=> .*([[42 43] [42 43]] [5 [0 2] [0 3]])
+0
+
+[42 43] = [42 43]
+
+
+~tomsyt-balsen/try=> .*([[42 43] [42 43]] [5 [0 4] [0 3]])
+1
+
+[42 43] != [42 43]
 ```
 
-Yes, Nock 5 is an equality test +++Instead of saying 'Yes', work through it in more detail+++:
+
 
 ```text
 *[a 5 b]
@@ -1749,7 +2058,7 @@ First thing is that since we're trying to make the Nock specification small, we 
 =atom               ! exit
 
 ```
-Then we can remove the words 'cell' and 'atom.' Since the rules in the Nock spec match top to bottom +++Has this convention yet been discussed? If not, this is the chance to introduce it.+++ we can specify matching a rule to a cells or atom by putting `[a b]` above `a`. A cell will match `[a b]` and an atom will not, because all cells will match `[a b]`, only atoms will match a below `[a b]`.
+Then we can remove the words 'cell' and 'atom.' The convention in Nock is that the rules in thespec match top to bottom. You take your noun and work down the list of rules, applying the first one that matches. We can specify matching a rule to a cells or atom by putting `[a b]` above `a`. A cell will match `[a b]` and an atom will not, because all cells will match `[a b]`, only atoms will match a below `[a b]`.
 
 ```text
 ?[a b]             0
