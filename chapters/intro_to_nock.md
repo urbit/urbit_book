@@ -10,7 +10,7 @@ assembly language in that (a) everything in Urbit executes as Nock; (b) you
 wouldn't want to program directly in Nock; and (c) learning to program directly
 in Nock is a great way to start understanding Urbit from the ground up.
 
-Nock is a simple mechanical device and is meant to feel that way.It has a simple data structure; just natural numbers and nested pairs of natural numbers. And eleven operations (six primitives, five macros) mapped to the numbers 0 through 10. Nock is only 39 lines long, which is short enough that we can print it here: 
+Nock is a simple mechanical device and is meant to feel that way. It has a simple data structure; just natural numbers and nested pairs of natural numbers. And eleven operations (six primitives, five macros) mapped to the numbers 0 through 10. Nock is only 39 lines long, which is short enough that we can print it here:
 
 \begin{codelisting}
 \label{code:nock_spec}
@@ -605,7 +605,7 @@ And now, for a more complicated tree, here's the noun `[[[48 49] 45] [46 47]]`:
 \end{codelisting}
 
 
-So how do the above trees relate to running `.*(a [0 b])`? 
+So how do the above trees relate to running `.*(a [0 b])`?
 
 
 In Nock, since we're always dealing with tree structures, we want to have a way to refer to individual pieces of that structure. Effectively, we want every piece of a noun to have a label, and we can produce that piece by using a Nock operator (specifically, Nock operator 0) to call the label. Since Nock is made up of atoms and cells, we want that label to be an atom.
@@ -673,7 +673,7 @@ Let's label the next noun below `/1` on the left `/2`, and the one on the right 
      noun (/2)     noun (/3)
 ```
 
-This is actually the fundamental pattern of the axis tree. Some root node, in this case `/1` and two nodes leading off of it, where the left-hand node, or head has an axis double that of the root, and the right-hand node, or tail, has an axis one greater than the head. 
+This is actually the fundamental pattern of the axis tree. Some root node, in this case `/1` and two nodes leading off of it, where the left-hand node, or head has an axis double that of the root, and the right-hand node, or tail, has an axis one greater than the head.
 
 If the noun at `/2` was a cell, then since two doubled is four, the head of `/2` has to be `/4` and since four plus one is five, the tail has to be `/5`:
 
@@ -739,7 +739,7 @@ The head of `/1` is `/2` and the tail is `/3`
 
 The head of `/6` is `/12` and the tail is `/13`
 
-To think of it another way, imagine that we create our label map from noun to axis by comparing the tree of the noun with the axis tree and seeing what corresponds. 
+To think of it another way, imagine that we create our label map from noun to axis by comparing the tree of the noun with the axis tree and seeing what corresponds.
 ```text
  [[44 45] 43]
     /      \
@@ -795,7 +795,7 @@ This, we now see, is a special case of
 ```
 The 0 in `*[a [0 b]]` is just an operator that means "axis". Nock maps simple
 operators and functions to atoms, instead of a character like `/` for example,
-because atoms (and cells) are all Nock knows. 
+because atoms (and cells) are all Nock knows.
 
 Working through our original example Nock code again,
 
@@ -1406,12 +1406,12 @@ formula must be bracketed.
 So we've learned how to do some simple operations with Nock. Now we're going to get a little fancier.
 
 
-To jog your memory, we've seen the following operators so far: 
+To jog your memory, we've seen the following operators so far:
 
 \begin{codelisting}
 \label{code:nock_review}
 \codecaption{A review of Nock 0, 1, 3, and 4.}
-```text, options: "hl_lines": [4, 5, 10, 11, 18, 19, 25, 26]
+```text, options: "hl_lines": [4, 5, 9, 10, 17, 18, 24, 25]
 ~tomsyt-balsen/try=> :: Nock 0: Tree address
 ~tomsyt-balsen/try=> :: *[a [0 b]]               /b of a
 ~tomsyt-balsen/try=>
@@ -1706,9 +1706,9 @@ functionally with:
 1
 ```
 
-Since Nock operators 3 and 4 can chain natively, as discussed in Listing~\ref{code:chaining}. 
+Since Nock operators 3 and 4 can chain natively, as discussed in Listing~\ref{code:chaining}.
 
-What we frequently actually use Nock 2 for is to pull things out of our subject and run them as formulas: 
+What we frequently actually use Nock 2 for is to pull things out of our subject and run them as formulas:
 
 Here the formula `[4 0 1]` is in the tail of our subject. We can pull it out with `[0 3]` and then apply it with Nock 2.
 
