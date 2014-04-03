@@ -1420,8 +1420,8 @@ To jog your memory, we've seen the following operators so far:
 ~tomsyt-balsen/try=> :: Nock 1: The constant operator
 ~tomsyt-balsen/try=> :: *[a [1 b]]               b for every a
 ~tomsyt-balsen/try=>
-~tomsyt-balsen/try=>   .*([42 43] [1 0])
-[42 43]
+~tomsyt-balsen/try=>   .*([42 43] [1 17])
+17
 
 ~tomsyt-balsen/try=> :: Nock 3: The cell tester
 ~tomsyt-balsen/try=> :: ?(cell)            0 ("yes")
@@ -1529,6 +1529,8 @@ we see that the pattern we guessed continues to hold: Arvo is running both formu
 ~tomsyt-balsen/try=> .*([42 43] [[4 0 3] 1 [0 1]])
 [44 [0 1]]
 ```
+
++++But `*[[42 43] [1 [0 1]]]` doesn't appear to be "combining the results into a cell". Instead, it matches `*[a [1 b]]`, where `b` is `[0 1]`. It's there only as a reminder for the fourth line; this was a source of some confusion.+++
 
 Yup, the subject is definitely running through both formulas in parallel. The
 last example seems to do something like this:
@@ -1663,19 +1665,16 @@ parallel.
 
 But what if we want to run them in series?
 
-The expression `*[[42 43] [[4 0 3] 1 [3 0 1]]]` is a good place to start. We want to apply two formulas successively to `[42 43]`, first, the we want to increment the tail by applying the formula `[4 0 3]`, and then we want to test the cellularity of the result of that with our second formula `[3 0 1]`.
+The expression `*[[42 43] [[4 0 3] 1 [3 0 1]]]` is a good place to start. +++I'm confused. What is the `1` doing there? If it's introducing a new idea, we should say so here.+++ We want to apply two formulas successively to `[42 43]`, first, then we want to increment the tail by applying the formula `[4 0 3]`, and then we want to test the cellularity of the result of that with our second formula `[3 0 1]`. +++The previous sentence needs to be rewritten for clarity. I tried to rewrite it but realized I didn't know what it means.+++
 
 ```text
 ~tomsyt-balsen/try=> .*([42 43] [[4 0 3] 1 [3 0 1]])
 [44 [3 0 1]]
 ```
 
-The formula distribution rule can set up the the second formula with the product of the first formula, but it can't actually run the second computation. What we need is a way to insert a second `*`.
+The formula distribution rule can set up the the second formula with the product of the first formula, but it can't actually run the second computation. What we need is a way to insert a second `*`. Fortunately, we've got a way, Nock 2, which is where we bring in the concept of recursion.
 
-
-Fortunately, we've got a way, Nock 2, which is where we bring in the concept of recursion:
-
-We've did a lot of slicing and dicing of nouns with the formula distribution rule.
+We've done a lot of slicing and dicing of nouns with the formula distribution rule.
 Nock 2 lets us run those reassembled nouns as expressions. We could think of
 Nock 2 as being exactly like the distribution rule:
 
@@ -1706,11 +1705,15 @@ functionally with:
 1
 ```
 
-Since Nock operators 3 and 4 can chain natively, as discussed in Listing~\ref{code:chaining}.
+This is because Nock operators 3 and 4 can chain natively, as discussed in Listing~\ref{code:chaining}.
 
 What we frequently actually use Nock 2 for is to pull things out of our subject and run them as formulas:
 
++++Should there be formulas here?+++
+
 Here the formula `[4 0 1]` is in the tail of our subject. We can pull it out with `[0 3]` and then apply it with Nock 2.
+
++++I got stuck here and have given up for the moment.+++
 
 ```text
 ~tomsyt-balsen/try=> .*([[40 43] [4 0 1]] [2 [0 4] [0 3]])
