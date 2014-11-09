@@ -334,7 +334,7 @@ Let's run a few examples:
 312
 
 ~tomsyt-balsen/try=> .*(374 [1 [44 48]])
-[42 43]
+[44 48]
 
 ~tomsyt-balsen/try=> .*([46 49] [1 [456 539]])
 [456 539]
